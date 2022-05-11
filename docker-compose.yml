@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+
+    database:
+        image: postgres
+        container_name: database_loshermanos_dashboard
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_USER=docker
+            - POSTGRES_PASSWORD=loshermanos_dashboard
+            - POSTGRES_DB=loshermanos_dashboard
+        volumes:
+            - pgdata:/data/postgres
+
+    app:
+        build: .
+        container_name: loshermanos_dashboard
+        restart: always
+        ports:
+            - 3333:3333
+        volumes:
+            - .:/usr/app
+        links:
+            - database
+        depends_on:
+            - database
+
+volumes:
+    pgdata:
+        driver: local
