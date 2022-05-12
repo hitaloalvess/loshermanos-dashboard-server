@@ -20,7 +20,7 @@ services:
         container_name: loshermanos_dashboard
         restart: always
         ports:
-            - 3333:3333
+            - 3334:3334
         volumes:
             - .:/usr/app
         links:

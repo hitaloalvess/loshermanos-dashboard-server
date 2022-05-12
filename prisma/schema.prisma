@@ -1,21 +1,17 @@
-
-
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-model User{
-    id String @id @default(uuid())
-    name String 
-    email String
-    username String @unique
-    password String
-    created_at DateTime @default(now())
+model Role {
+    id          String   @id @default(uuid())
+    name        String
+    description String
+    created_at  DateTime @default(now())
 
-    @@map("users")
+    @@map("roles")
 }
