@@ -5,6 +5,7 @@ import { ICreatePermissionDTO } from '../dtos/ICreatePermissionDTO';
 interface IPermissionsRepository {
     create(data: ICreatePermissionDTO): Promise<Permission>;
     findByName(name: string): Promise<Permission | undefined | null>;
+    findById(id: string): Promise<Permission | undefined | null>;
 }
 
 export { IPermissionsRepository };

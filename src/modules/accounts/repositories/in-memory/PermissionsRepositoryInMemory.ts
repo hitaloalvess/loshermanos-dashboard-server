@@ -5,7 +5,7 @@ import { ICreatePermissionDTO } from '../../dtos/ICreatePermissionDTO';
 import { IPermissionsRepository } from '../IPermissionsRepository';
 
 class PermissionsRepositoryInMemory implements IPermissionsRepository {
-    private Permissions: Permission[] = [];
+    private permissions: Permission[] = [];
 
     async create({
         name,
@@ -18,14 +18,20 @@ class PermissionsRepositoryInMemory implements IPermissionsRepository {
             created_at: new Date(),
         };
 
-        this.Permissions.push(permission);
+        this.permissions.push(permission);
 
         return Promise.resolve(permission);
     }
 
     async findByName(name: string): Promise<Permission | undefined | null> {
         return Promise.resolve(
-            this.Permissions.find(permission => permission.name === name),
+            this.permissions.find(permission => permission.name === name),
+        );
+    }
+
+    findById(id: string): Promise<Permission | undefined | null> {
+        return Promise.resolve(
+            this.permissions.find(permission => permission.id === id),
         );
     }
 }

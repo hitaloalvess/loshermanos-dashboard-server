@@ -1,11 +1,9 @@
 import { Router } from 'express';
 
-import { permissionsRoutes } from './permissions.routes';
-import { roulesRoutes } from './roles.routes';
+import { accountsRoutes } from './accounts.routes';
 
 const router = Router();
 
-router.use('/roles', roulesRoutes);
-router.use('/permissions', permissionsRoutes);
+router.use(accountsRoutes);
 
 export { router };

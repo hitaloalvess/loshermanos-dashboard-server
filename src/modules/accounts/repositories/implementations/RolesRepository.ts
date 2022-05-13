@@ -29,6 +29,14 @@ class RolesRepository implements IRolesRepository {
             },
         });
     }
+
+    findById(id: string): Promise<Role | null | undefined> {
+        return this.repository.role.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
 }
 
 export { RolesRepository };

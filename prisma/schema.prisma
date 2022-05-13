@@ -14,6 +14,7 @@ model Role {
     created_at  DateTime @default(now())
 
     @@map("roles")
+    PermissionRole PermissionRole[]
 }
 
 model Permission {
@@ -23,4 +24,15 @@ model Permission {
     created_at  DateTime @default(now())
 
     @@map("permissions")
+    PermissionRole PermissionRole[]
+}
+
+model PermissionRole {
+    id            String     @id @default(uuid())
+    id_permission String
+    permission    Permission @relation(fields: [id_permission], references: [id])
+    id_role       String
+    role          Role       @relation(fields: [id_role], references: [id])
+
+    @@map("permissions_roles")
 }

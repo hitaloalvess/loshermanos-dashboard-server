@@ -32,6 +32,14 @@ class PermissionsRepository implements IPermissionsRepository {
             },
         });
     }
+
+    async findById(id: string): Promise<Permission | null | undefined> {
+        return this.repository.permission.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
 }
 
 export { PermissionsRepository };
