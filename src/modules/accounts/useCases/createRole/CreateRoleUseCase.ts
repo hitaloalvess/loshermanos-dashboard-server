@@ -16,7 +16,7 @@ class CreateRoleUseCase {
         private rolesRepository: IRolesRepository,
     ) {}
 
-    async execute({ name, description }: IRequest): Promise<Role | AppError> {
+    async execute({ name, description }: IRequest): Promise<Role> {
         const roleAlreadyExists = await this.rolesRepository.findByName(name);
 
         if (roleAlreadyExists) {

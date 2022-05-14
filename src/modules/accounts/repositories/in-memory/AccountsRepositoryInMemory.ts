@@ -28,6 +28,12 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
             ),
         );
     }
+
+    async findById(id: string): Promise<Account | null | undefined> {
+        return Promise.resolve(
+            this.accounts.find(account => account.id === id),
+        );
+    }
 }
 
 export { AccountsRepositoryInMemory };

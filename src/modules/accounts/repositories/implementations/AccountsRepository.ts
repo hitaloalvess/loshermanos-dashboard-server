@@ -30,6 +30,14 @@ class AccountsRepository implements IAccountsRepository {
             },
         });
     }
+
+    async findById(id: string): Promise<Account | null | undefined> {
+        return this.repository.account.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
 }
 
 export { AccountsRepository };

@@ -4,6 +4,7 @@ import { AccountsRepository } from '../../modules/accounts/repositories/implemen
 import { PermissionsRepository } from '../../modules/accounts/repositories/implementations/PermissionsRepository';
 import { PermissionsRolesRepository } from '../../modules/accounts/repositories/implementations/PermissionsRolesRepository';
 import { RolesRepository } from '../../modules/accounts/repositories/implementations/RolesRepository';
+import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository';
 import { IPermissionsRepository } from '../../modules/accounts/repositories/IPermissionsRepository';
 import { IRolesRepository } from '../../modules/accounts/repositories/IRolesRepository';
 
@@ -25,4 +26,9 @@ container.registerSingleton<PermissionsRolesRepository>(
 container.registerSingleton<AccountsRepository>(
     'AccountsRepository',
     AccountsRepository,
+);
+
+container.registerSingleton<UsersRepository>(
+    'UsersRepository',
+    UsersRepository,
 );
