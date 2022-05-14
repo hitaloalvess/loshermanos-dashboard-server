@@ -13,7 +13,7 @@ describe('Create Permission', () => {
         );
     });
 
-    it('it should be able to create a new permission', async () => {
+    it('should be able to create a new permission', async () => {
         const permission = await createPermissionUseCase.execute({
             name: 'admin',
             description: 'Administrador',

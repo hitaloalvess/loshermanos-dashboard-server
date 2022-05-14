@@ -1,5 +1,6 @@
 import { container } from 'tsyringe';
 
+import { AccountsRepository } from '../../modules/accounts/repositories/implementations/AccountsRepository';
 import { PermissionsRepository } from '../../modules/accounts/repositories/implementations/PermissionsRepository';
 import { PermissionsRolesRepository } from '../../modules/accounts/repositories/implementations/PermissionsRolesRepository';
 import { RolesRepository } from '../../modules/accounts/repositories/implementations/RolesRepository';
@@ -19,4 +20,9 @@ container.registerSingleton<IPermissionsRepository>(
 container.registerSingleton<PermissionsRolesRepository>(
     'PermissionsRolesRepository',
     PermissionsRolesRepository,
+);
+
+container.registerSingleton<AccountsRepository>(
+    'AccountsRepository',
+    AccountsRepository,
 );

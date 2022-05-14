@@ -13,8 +13,8 @@ model Role {
     description String
     created_at  DateTime @default(now())
 
-    @@map("roles")
     PermissionRole PermissionRole[]
+    @@map("roles")
 }
 
 model Permission {
@@ -23,8 +23,8 @@ model Permission {
     description String
     created_at  DateTime @default(now())
 
-    @@map("permissions")
     PermissionRole PermissionRole[]
+    @@map("permissions")
 }
 
 model PermissionRole {
@@ -35,4 +35,12 @@ model PermissionRole {
     role          Role       @relation(fields: [id_role], references: [id])
 
     @@map("permissions_roles")
+}
+
+model Account {
+    id                String   @id @default(uuid())
+    name_stablishment String
+    created_at        DateTime @default(now())
+
+    @@map("accounts")
 }
