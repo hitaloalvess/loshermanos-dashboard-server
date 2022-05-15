@@ -11,6 +11,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
         email,
         username,
         password,
+        telefone,
         id_account,
         id_role,
     }: ICreateUserDTO): Promise<User> {
@@ -20,6 +21,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
             email,
             username,
             password,
+            telefone,
             created_at: new Date(),
             id_account,
             id_role,

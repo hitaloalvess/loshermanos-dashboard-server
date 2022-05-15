@@ -43,7 +43,8 @@ model Account {
     name_stablishment String
     created_at        DateTime @default(now())
 
-    User User[]
+    User    User[]
+    Product Product[]
     @@map("accounts")
 }
 
@@ -53,6 +54,7 @@ model User {
     email      String
     username   String   @unique
     password   String
+    telefone   String
     created_at DateTime @default(now())
     id_account String
     account    Account  @relation(fields: [id_account], references: [id])
@@ -60,4 +62,16 @@ model User {
     role       Role     @relation(fields: [id_role], references: [id])
 
     @@map("users")
+}
+
+model Product {
+    id         String   @id @default(uuid())
+    name       String
+    price      Decimal
+    url_banner String?
+    created_at DateTime @default(now())
+    id_account String
+    account    Account  @relation(fields: [id_account], references: [id])
+
+    @@map("products")
 }
