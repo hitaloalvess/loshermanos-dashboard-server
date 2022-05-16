@@ -1,5 +1,6 @@
 import { PrismaClient, User } from '@prisma/client';
 
+import { IUserWithRegisteredAccount } from '../../../../@types';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { IUsersRepository } from '../IUsersRepository';
@@ -39,6 +40,28 @@ class UsersRepository implements IUsersRepository {
         return this.repository.user.findFirst({
             where: {
                 username,
+            },
+        });
+    }
+
+    async findById(id: string): Promise<User | null | undefined> {
+        return this.repository.user.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
+
+    async listUserAndRoleAndAccountDataById(
+        id_user: string,
+    ): Promise<IUserWithRegisteredAccount | null | undefined> {
+        return this.repository.user.findFirst({
+            where: {
+                id: id_user,
+            },
+            include: {
+                role: true,
+                account: true,
             },
         });
     }

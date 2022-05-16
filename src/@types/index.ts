@@ -1,9 +1,11 @@
 interface IUserWithRegisteredAccount {
+    id?: string;
     name: string;
     email: string;
     username: string;
     password: string;
     telefone: string;
+    created_at?: Date;
     account: {
         id: string;
         name_stablishment: string;
