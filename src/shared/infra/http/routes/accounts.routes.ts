@@ -6,6 +6,7 @@ import { CreatePermissionController } from '../../../../modules/accounts/useCase
 import { CreatePermissionRoleController } from '../../../../modules/accounts/useCases/createPermissionRole/CreatePermissionRoleController';
 import { CreateRoleController } from '../../../../modules/accounts/useCases/createRole/CreateRoleController';
 import { CreateUserController } from '../../../../modules/accounts/useCases/createUser/CreateUserController';
+import { ensuredAuthenticated } from '../middlewares/ensuredAuthenticated';
 
 const accountsRoutes = Router();
 
@@ -16,10 +17,18 @@ const createAccountWithAdminUserController =
     new CreateAccountWithAdminUserController();
 const createUserController = new CreateUserController();
 
-accountsRoutes.post('/permission', createPermissionController.handle);
-accountsRoutes.post('/role', createRoleController.handle);
-accountsRoutes.post('/permissionRole', createPermissionRoleController.handle);
+accountsRoutes.post('/role', ensuredAuthenticated, createRoleController.handle);
+accountsRoutes.post(
+    '/permission',
+    ensuredAuthenticated,
+    createPermissionController.handle,
+);
+accountsRoutes.post(
+    '/permissionRole',
+    ensuredAuthenticated,
+    createPermissionRoleController.handle,
+);
 accountsRoutes.post('/account', createAccountWithAdminUserController.handle);
-accountsRoutes.post('/user', createUserController.handle);
+accountsRoutes.post('/user', ensuredAuthenticated, createUserController.handle);
 
 export { accountsRoutes };

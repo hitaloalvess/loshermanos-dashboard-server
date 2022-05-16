@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
 import { IUserWithRegisteredAccount } from '../../../../@types';
@@ -45,11 +46,13 @@ class CreateAccountWithAdminUserUseCase {
         if (!role) {
             throw new AppError('Role not exists');
         }
+
+        const passwordHash = await hash(password, 8);
         const user = await this.usersRepository.create({
             name,
             email,
             username,
-            password,
+            password: passwordHash,
             telefone,
             id_account: account.id,
             id_role: role.id,
