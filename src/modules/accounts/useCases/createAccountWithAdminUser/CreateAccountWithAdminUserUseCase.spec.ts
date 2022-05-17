@@ -1,14 +1,17 @@
 import { AppError } from '../../../../shared/errors/AppError';
+import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
+import { IRolesRepository } from '../../repositories/IRolesRepository';
+import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { CreateAccountWithAdminUserUseCase } from './CreateAccountWithAdminUserUseCase';
 
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 
-let accountsRepositoryInMemory: AccountsRepositoryInMemory;
-let rolesRepositoryInMemory: RolesRepositoryInMemory;
-let usersRepositoryInMemory: UsersRepositoryInMemory;
+let accountsRepositoryInMemory: IAccountsRepository;
+let rolesRepositoryInMemory: IRolesRepository;
+let usersRepositoryInMemory: IUsersRepository;
 
 describe('Create account with admin user', () => {
     beforeEach(async () => {
@@ -24,7 +27,7 @@ describe('Create account with admin user', () => {
     });
 
     it('should be able to create a new account with admin user', async () => {
-        const role = await rolesRepositoryInMemory.create({
+        await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
         });

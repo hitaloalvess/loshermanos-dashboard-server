@@ -1,9 +1,10 @@
 import { AppError } from '../../../../shared/errors/AppError';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
+import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { CreateRoleUseCase } from './CreateRoleUseCase';
 
 let createRoleUseCase: CreateRoleUseCase;
-let rolesRepositoryInMemory: RolesRepositoryInMemory;
+let rolesRepositoryInMemory: IRolesRepository;
 
 describe('Create role', () => {
     beforeEach(() => {

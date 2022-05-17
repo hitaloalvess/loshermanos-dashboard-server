@@ -1,9 +1,10 @@
 import { AppError } from '../../../../shared/errors/AppError';
 import { PermissionsRepositoryInMemory } from '../../repositories/in-memory/PermissionsRepositoryInMemory';
+import { IPermissionsRepository } from '../../repositories/IPermissionsRepository';
 import { CreatePermissionUseCase } from './CreatePermissionUseCase';
 
 let createPermissionUseCase: CreatePermissionUseCase;
-let permissionsRepositoryInMemory: PermissionsRepositoryInMemory;
+let permissionsRepositoryInMemory: IPermissionsRepository;
 
 describe('Create Permission', () => {
     beforeEach(() => {

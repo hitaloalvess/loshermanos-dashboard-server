@@ -2,12 +2,15 @@ import { AppError } from '../../../../shared/errors/AppError';
 import { PermissionsRepositoryInMemory } from '../../repositories/in-memory/PermissionsRepositoryInMemory';
 import { PermissionsRolesRepositoryInMemory } from '../../repositories/in-memory/PermissionsRolesRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
+import { IPermissionsRepository } from '../../repositories/IPermissionsRepository';
+import { IPermissionsRolesRepository } from '../../repositories/IPermissionsRolesRepository';
+import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { CreatePermissionRoleUseCase } from './CreatePermissionRoleUseCase';
 
 let createPermissionRoleUseCase: CreatePermissionRoleUseCase;
-let rolesRepositoryInMemory: RolesRepositoryInMemory;
-let permissionsRepositoryInMemory: PermissionsRepositoryInMemory;
-let permissionsRolesRepositoryInMemory: PermissionsRolesRepositoryInMemory;
+let rolesRepositoryInMemory: IRolesRepository;
+let permissionsRepositoryInMemory: IPermissionsRepository;
+let permissionsRolesRepositoryInMemory: IPermissionsRolesRepository;
 
 describe('Create relationship between permission and role', () => {
     beforeEach(() => {

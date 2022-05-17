@@ -1,9 +1,10 @@
 import { AppError } from '../../../../shared/errors/AppError';
+import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
 
 let createAccountUseCase: CreateAccountUseCase;
-let accountsRepositoryInMemory: AccountsRepositoryInMemory;
+let accountsRepositoryInMemory: IAccountsRepository;
 
 describe('Create new account', () => {
     beforeEach(() => {
