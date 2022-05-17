@@ -61,7 +61,19 @@ model User {
     id_role    String
     role       Role     @relation(fields: [id_role], references: [id])
 
+    UserTokens UserTokens[]
     @@map("users")
+}
+
+model UserTokens {
+    id            String   @id @default(uuid())
+    refresh_token String
+    expires_date  DateTime
+    created_at    DateTime @default(now())
+    id_user       String
+    user          User     @relation(fields: [id_user], references: [id])
+
+    @@map("users_token")
 }
 
 model Product {

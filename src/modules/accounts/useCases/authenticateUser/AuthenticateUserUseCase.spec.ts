@@ -1,15 +1,23 @@
-import { IUserWithRegisteredAccount } from '../../../../@types';
+import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
+import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
+import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
+import { UsersTokensRepositoryInMemory } from '../../repositories/in-memory/UsersTokensRepositoryInMemory';
+import { IRolesRepository } from '../../repositories/IRolesRepository';
+import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
 import { CreateAccountWithAdminUserUseCase } from '../createAccountWithAdminUser/CreateAccountWithAdminUserUseCase';
 import { CreateRoleUseCase } from '../createRole/CreateRoleUseCase';
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
-let accountsRepositoryInMemory: AccountsRepositoryInMemory;
-let rolesRepositoryInMemory: RolesRepositoryInMemory;
-let usersRepositoryInMemory: UsersRepositoryInMemory;
+let dayjsDateProvider: IDateProvider;
+let usersTokensRepositoryInMemory: IUsersTokensRepository;
+let accountsRepositoryInMemory: IAccountsRepository;
+let rolesRepositoryInMemory: IRolesRepository;
+let usersRepositoryInMemory: IUsersRepository;
 
 let createRoleUseCase: CreateRoleUseCase;
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
@@ -17,6 +25,8 @@ let authenticateUserUseCase: AuthenticateUserUseCase;
 
 describe('Authenticate user', () => {
     beforeEach(async () => {
+        dayjsDateProvider = new DayjsDateProvider();
+        usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
         accountsRepositoryInMemory = new AccountsRepositoryInMemory();
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
@@ -31,6 +41,8 @@ describe('Authenticate user', () => {
 
         authenticateUserUseCase = new AuthenticateUserUseCase(
             usersRepositoryInMemory,
+            dayjsDateProvider,
+            usersTokensRepositoryInMemory,
         );
 
         await createRoleUseCase.execute({

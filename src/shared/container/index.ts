@@ -5,8 +5,11 @@ import { PermissionsRepository } from '../../modules/accounts/repositories/imple
 import { PermissionsRolesRepository } from '../../modules/accounts/repositories/implementations/PermissionsRolesRepository';
 import { RolesRepository } from '../../modules/accounts/repositories/implementations/RolesRepository';
 import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository';
+import { UsersTokensRepository } from '../../modules/accounts/repositories/implementations/UsersTokensRepository';
 import { IPermissionsRepository } from '../../modules/accounts/repositories/IPermissionsRepository';
 import { IRolesRepository } from '../../modules/accounts/repositories/IRolesRepository';
+
+import './providers';
 
 container.registerSingleton<IRolesRepository>(
     'RolesRepository',
@@ -31,4 +34,9 @@ container.registerSingleton<AccountsRepository>(
 container.registerSingleton<UsersRepository>(
     'UsersRepository',
     UsersRepository,
+);
+
+container.registerSingleton<UsersTokensRepository>(
+    'UsersTokensRepository',
+    UsersTokensRepository,
 );

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import auth from '../../../../config/auth';
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
 import { AppError } from '../../../errors/AppError';
 
@@ -21,7 +22,7 @@ const ensuredAuthenticated = () => {
         try {
             const { sub: user_id } = verify(
                 token,
-                'e51ab2c42f8daf19ebfcee7c5a4c96eb',
+                auth.secret_token,
             ) as IPayload;
 
             const usersRepository = new UsersRepository();
