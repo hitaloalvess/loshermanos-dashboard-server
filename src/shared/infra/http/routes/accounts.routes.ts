@@ -6,7 +6,7 @@ import { CreatePermissionController } from '../../../../modules/accounts/useCase
 import { CreatePermissionRoleController } from '../../../../modules/accounts/useCases/createPermissionRole/CreatePermissionRoleController';
 import { CreateRoleController } from '../../../../modules/accounts/useCases/createRole/CreateRoleController';
 import { CreateUserController } from '../../../../modules/accounts/useCases/createUser/CreateUserController';
-import { ensuredAuthenticated } from '../middlewares/ensuredAuthenticated';
+import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
 
 const accountsRoutes = Router();
 

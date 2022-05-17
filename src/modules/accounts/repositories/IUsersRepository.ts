@@ -10,6 +10,7 @@ interface IUsersRepository {
     listUserAndRoleAndAccountDataById(
         id_user: string,
     ): Promise<IUserWithRegisteredAccount | undefined | null>;
+    findByAccountId(id_account: string): Promise<User[]>;
 }
 
 export { IUsersRepository };

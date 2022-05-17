@@ -65,6 +65,14 @@ class UsersRepository implements IUsersRepository {
             },
         });
     }
+
+    async findByAccountId(id_account: string): Promise<User[]> {
+        return this.repository.user.findMany({
+            where: {
+                id_account,
+            },
+        });
+    }
 }
 
 export { UsersRepository };

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
+import { AppError } from '../../../errors/AppError';
 
 function is(role: string) {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -11,7 +12,7 @@ function is(role: string) {
         const user = await userRepository.listUserAndRoleAndAccountDataById(id);
 
         if (!user) {
-            return res.status(400).json('User does not exists');
+            throw new AppError('User does not exists');
         }
 
         const roleExists = user.role.name === role;

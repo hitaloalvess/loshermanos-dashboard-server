@@ -67,6 +67,12 @@ class UsersRepositoryInMemory implements IUsersRepository {
             },
         });
     }
+
+    async findByAccountId(id_account: string): Promise<User[]> {
+        const users = this.users.filter(user => user.id_account === id_account);
+
+        return Promise.resolve(users);
+    }
 }
 
 export { UsersRepositoryInMemory };

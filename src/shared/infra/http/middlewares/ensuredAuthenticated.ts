@@ -9,38 +9,37 @@ interface IPayload {
     sub: string;
 }
 
-const ensuredAuthenticated = () => {
-    return async (req: Request, res: Response, next: NextFunction) => {
-        const authHeaders = req.headers.authorization;
+export default function ensuredAuthenticated(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) {
+    const authHeaders = req.headers.authorization;
 
-        if (!authHeaders) {
-            return new AppError('Token is missing', 401);
+    if (!authHeaders) {
+        throw new AppError('Token is missing', 401);
+    }
+
+    const [, token] = authHeaders.split(' ');
+
+    try {
+        const { sub: user_id } = verify(token, auth.secret_token) as IPayload;
+
+        const usersRepository = new UsersRepository();
+        const user = usersRepository.findById(user_id);
+
+        if (!user) {
+            throw new AppError('User does not exists', 401);
         }
 
-        const [, token] = authHeaders.split(' ');
+        req.user = {
+            id: user_id,
+        };
 
-        try {
-            const { sub: user_id } = verify(
-                token,
-                auth.secret_token,
-            ) as IPayload;
+        next();
+    } catch (err) {
+        throw new AppError('Invalid token', 401);
+    }
+}
 
-            const usersRepository = new UsersRepository();
-            const user = usersRepository.findById(user_id);
-
-            if (!user) {
-                return new AppError('User does not exists', 401);
-            }
-
-            req.user = {
-                id: user_id,
-            };
-
-            return next();
-        } catch (err) {
-            return res.status(401).end();
-        }
-    };
-};
-
-export { ensuredAuthenticated };
+// export { ensuredAuthenticated };
