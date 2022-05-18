@@ -11,8 +11,9 @@ interface IUsersRepository {
     listUserAndRoleAndAccountDataById(
         id_user: string,
     ): Promise<IUserWithRegisteredAccount | undefined | null>;
-    findByAccountId(id_account: string): Promise<User[]>;
+    listUsersByAccountId(id_account: string): Promise<User[]>;
     updateUser(data: IUpdateUserDTO): Promise<User>;
+    deleteUserById(id_user: string): Promise<User>;
 }
 
 export { IUsersRepository };

@@ -67,7 +67,7 @@ class UsersRepository implements IUsersRepository {
         });
     }
 
-    async findByAccountId(id_account: string): Promise<User[]> {
+    async listUsersByAccountId(id_account: string): Promise<User[]> {
         return this.repository.user.findMany({
             where: {
                 id_account,
@@ -84,6 +84,16 @@ class UsersRepository implements IUsersRepository {
         });
 
         return newUser;
+    }
+
+    async deleteUserById(id_user: string): Promise<User> {
+        const user = await this.repository.user.delete({
+            where: {
+                id: id_user,
+            },
+        });
+
+        return user;
     }
 }
 
