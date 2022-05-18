@@ -8,7 +8,7 @@ import { IProductsRepository } from '../../repositories/IProductsRepository';
 
 interface IRequest {
     description: string;
-    price: number;
+    price: Decimal;
     id_account: string;
 }
 
@@ -33,6 +33,16 @@ class CreateProductUseCase {
 
         if (!accountExists) {
             throw new AppError('Account does not exists');
+        }
+
+        const productExists = await this.productsRepository.findByDescription(
+            description,
+        );
+
+        if (productExists) {
+            throw new AppError(
+                'There is already a product with this description',
+            );
         }
 
         const product = await this.productsRepository.create({

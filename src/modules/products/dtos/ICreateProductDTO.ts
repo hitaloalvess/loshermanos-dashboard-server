@@ -2,7 +2,7 @@ import { Decimal } from '@prisma/client/runtime';
 
 interface ICreateProductDTO {
     description: string;
-    price: number;
+    price: Decimal;
     id_account: string;
 }
 

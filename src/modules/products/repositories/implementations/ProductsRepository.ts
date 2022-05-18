@@ -1,5 +1,4 @@
 import { PrismaClient, Product } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
 
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateProductDTO } from '../../dtos/ICreateProductDTO';
@@ -22,6 +21,18 @@ class ProductsRepository implements IProductsRepository {
                 description,
                 price,
                 id_account,
+            },
+        });
+
+        return product;
+    }
+
+    async findByDescription(
+        description: string,
+    ): Promise<Product | null | undefined> {
+        const product = await this.repository.product.findFirst({
+            where: {
+                description,
             },
         });
 

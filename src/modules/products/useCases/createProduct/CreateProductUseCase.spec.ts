@@ -32,7 +32,7 @@ describe('Create new product', () => {
     it('should be able to create a new product', async () => {
         const product = await createProductUseCase.execute({
             description: 'Pizza de frango',
-            price: 35,
+            price: new Decimal(35),
             id_account: account.id,
         });
 
@@ -43,9 +43,27 @@ describe('Create new product', () => {
         expect(
             createProductUseCase.execute({
                 description: 'Pizza de frango',
-                price: 35,
+                price: new Decimal(35),
                 id_account: '2412124',
             }),
         ).rejects.toEqual(new AppError('Account does not exists'));
+    });
+
+    it('should not be able to create a new product with existing description', async () => {
+        await createProductUseCase.execute({
+            description: 'Pizza de frango',
+            price: new Decimal(35),
+            id_account: account.id,
+        });
+
+        await expect(
+            createProductUseCase.execute({
+                description: 'Pizza de frango',
+                price: new Decimal(39),
+                id_account: account.id,
+            }),
+        ).rejects.toEqual(
+            new AppError('There is already a product with this description'),
+        );
     });
 });
