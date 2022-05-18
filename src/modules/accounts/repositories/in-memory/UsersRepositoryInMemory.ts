@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { IUserWithRegisteredAccount } from '../../../../@types';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
+import { IUpdateUserDTO } from '../../dtos/IUpdateUserDTO';
 import { IUsersRepository } from '../IUsersRepository';
 
 class UsersRepositoryInMemory implements IUsersRepository {
@@ -72,6 +73,29 @@ class UsersRepositoryInMemory implements IUsersRepository {
         const users = this.users.filter(user => user.id_account === id_account);
 
         return Promise.resolve(users);
+    }
+
+    async updateUser({
+        id_user,
+        data: { name, email, username, password, telefone, id_role },
+    }: IUpdateUserDTO): Promise<User> {
+        const user = this.users.find(user => user.id === id_user) as User;
+
+        const index = this.users.indexOf(user);
+
+        const newUser = {
+            ...user,
+            name,
+            email,
+            username,
+            password,
+            telefone,
+            id_role,
+        };
+
+        this.users.splice(index, 1, newUser);
+
+        return Promise.resolve(newUser);
     }
 }
 

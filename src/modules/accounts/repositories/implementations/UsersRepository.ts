@@ -3,6 +3,7 @@ import { PrismaClient, User } from '@prisma/client';
 import { IUserWithRegisteredAccount } from '../../../../@types';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
+import { IUpdateUserDTO } from '../../dtos/IUpdateUserDTO';
 import { IUsersRepository } from '../IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
@@ -72,6 +73,17 @@ class UsersRepository implements IUsersRepository {
                 id_account,
             },
         });
+    }
+
+    async updateUser({ id_user, data }: IUpdateUserDTO): Promise<User> {
+        const newUser = await this.repository.user.update({
+            where: {
+                id: id_user,
+            },
+            data,
+        });
+
+        return newUser;
     }
 }
 
