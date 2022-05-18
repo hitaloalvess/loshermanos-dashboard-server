@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
 import { AppError } from '../../../errors/AppError';
 
-function is(role: string) {
+function is(roles: string[]) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.user;
 
@@ -15,10 +15,10 @@ function is(role: string) {
             throw new AppError('User does not exists');
         }
 
-        const roleExists = user.role.name === role;
+        const roleExists = roles.includes(user.role.name);
 
         if (!roleExists) {
-            return res.status(400).end();
+            throw new AppError('User does not have permission');
         }
 
         return next();
