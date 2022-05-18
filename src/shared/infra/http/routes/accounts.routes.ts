@@ -14,17 +14,9 @@ const createPermissionRoleController = new CreatePermissionRoleController();
 const createAccountWithAdminUserController =
     new CreateAccountWithAdminUserController();
 
-accountsRoutes.post('/role', ensuredAuthenticated, createRoleController.handle);
-accountsRoutes.post(
-    '/permission',
-    ensuredAuthenticated,
-    createPermissionController.handle,
-);
-accountsRoutes.post(
-    '/permissionRole',
-    ensuredAuthenticated,
-    createPermissionRoleController.handle,
-);
+accountsRoutes.post('/role', createRoleController.handle);
+accountsRoutes.post('/permission', createPermissionController.handle);
+accountsRoutes.post('/permissionRole', createPermissionRoleController.handle);
 accountsRoutes.post('/account', createAccountWithAdminUserController.handle);
 
 export { accountsRoutes };
