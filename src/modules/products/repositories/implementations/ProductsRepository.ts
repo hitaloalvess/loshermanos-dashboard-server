@@ -38,6 +38,16 @@ class ProductsRepository implements IProductsRepository {
 
         return product;
     }
+
+    async findById(id: string): Promise<Product | null | undefined> {
+        const product = this.repository.product.findFirst({
+            where: {
+                id,
+            },
+        });
+
+        return product;
+    }
 }
 
 export { ProductsRepository };

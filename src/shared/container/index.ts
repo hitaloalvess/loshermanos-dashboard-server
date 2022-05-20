@@ -8,6 +8,7 @@ import { UsersRepository } from '../../modules/accounts/repositories/implementat
 import { UsersTokensRepository } from '../../modules/accounts/repositories/implementations/UsersTokensRepository';
 import { IPermissionsRepository } from '../../modules/accounts/repositories/IPermissionsRepository';
 import { IRolesRepository } from '../../modules/accounts/repositories/IRolesRepository';
+import { ProductsImageRepository } from '../../modules/products/repositories/implementations/ProductsImageRepository';
 import { ProductsRepository } from '../../modules/products/repositories/implementations/ProductsRepository';
 
 import './providers';
@@ -45,4 +46,9 @@ container.registerSingleton<UsersTokensRepository>(
 container.registerSingleton<ProductsRepository>(
     'ProductsRepository',
     ProductsRepository,
+);
+
+container.registerSingleton<ProductsImageRepository>(
+    'ProductsImageRepository',
+    ProductsImageRepository,
 );

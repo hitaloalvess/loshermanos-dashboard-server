@@ -84,5 +84,16 @@ model Product {
     id_account  String
     account     Account  @relation(fields: [id_account], references: [id])
 
+    ProductImage ProductImage[]
     @@map("products")
+}
+
+model ProductImage {
+    id         String   @id @default(uuid())
+    image_name String
+    created_at DateTime @default(now())
+    id_product String
+    product    Product  @relation(fields: [id_product], references: [id])
+
+    @@map("products_image")
 }
