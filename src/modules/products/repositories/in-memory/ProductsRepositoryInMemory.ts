@@ -10,12 +10,14 @@ class ProductsRepositoryInMemory implements IProductsRepository {
     async create({
         description,
         price,
+        url_image,
         id_account,
     }: ICreateProductDTO): Promise<Product> {
         const product: Product = {
             id: uuid(),
             description,
             price,
+            url_image,
             id_account,
             created_at: new Date(),
         };

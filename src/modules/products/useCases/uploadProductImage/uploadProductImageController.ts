@@ -12,16 +12,11 @@ class UploadProductImageController {
         const uploadProductImageUseCase = container.resolve(
             UploadProductImageUseCase,
         );
+        const { filename } = req.file as IFile;
 
-        const { id_product } = req.params;
-        const image = req.file as IFile;
+        const url = await uploadProductImageUseCase.execute(filename);
 
-        await uploadProductImageUseCase.execute({
-            id_product,
-            image_name: image.filename,
-        });
-
-        return res.status(201).send();
+        return res.status(201).json({ url });
     }
 }
 

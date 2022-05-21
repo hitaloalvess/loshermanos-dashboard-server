@@ -1,43 +1,37 @@
+import fs from 'fs';
+import { resolve } from 'path';
 import { inject, injectable } from 'tsyringe';
 
+import upload from '../../../../config/upload';
+import { IStorageProvider } from '../../../../shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '../../../../shared/errors/AppError';
-import { IProductsImageRepository } from '../../repositories/IProductsImageRepository';
-import { IProductsRepository } from '../../repositories/IProductsRepository';
-
-interface IRequest {
-    id_product: string;
-    image_name: string;
-}
 
 @injectable()
 class UploadProductImageUseCase {
     constructor(
-        @inject('ProductsImageRepository')
-        private productImageRepository: IProductsImageRepository,
-
         @inject('StorageProvider')
         private storageProvider: IStorageProvider,
-
-        @inject('ProductsRepository')
-        private productRepository: IProductsRepository,
     ) {}
-    async execute({ id_product, image_name }: IRequest): Promise<void> {
-        const productExists = await this.productRepository.findById(id_product);
+    async execute(filename: string, folder?: string): Promise<string> {
+        const fileName = !folder
+            ? resolve(`${upload.tmpFolder}`, filename)
+            : resolve(`${upload.tmpFolder}/${folder}`, filename);
 
-        if (!productExists) {
-            throw new AppError('Product does not exists');
+        const fileExists = await fs.promises.stat(fileName).catch(err => false);
+
+        if (!fileExists) {
+            throw new AppError('File does not exists');
         }
 
-        const productContainsImage =
-            await this.productImageRepository.findByProductId(id_product);
+        const file = await this.storageProvider.save(filename, 'products');
 
-        if (productContainsImage) {
-            await this.storageProvider.delete(image_name, '');
-            throw new AppError('Product already contains image');
+        if (!file) {
+            throw new AppError('Could not save file to storage');
         }
 
-        await this.storageProvider.save(image_name, 'products');
-        await this.productImageRepository.create(id_product, image_name);
+        const url = `${process.env.APP_URL}/products/${filename}`;
+
+        return url;
     }
 }
 
