@@ -33,7 +33,7 @@ describe('Create new product', () => {
         const product = await createProductUseCase.execute({
             description: 'Pizza de frango',
             price: new Decimal(35),
-            url_image: 'http://localhost:3333/products/image',
+            image_name: 'logo.png',
             id_account: account.id,
         });
 
@@ -45,7 +45,7 @@ describe('Create new product', () => {
             createProductUseCase.execute({
                 description: 'Pizza de frango',
                 price: new Decimal(35),
-                url_image: 'http://localhost:3333/products/image',
+                image_name: 'logo.png',
                 id_account: '2412124',
             }),
         ).rejects.toEqual(new AppError('Account does not exists'));
@@ -55,7 +55,7 @@ describe('Create new product', () => {
         await createProductUseCase.execute({
             description: 'Pizza de frango',
             price: new Decimal(35),
-            url_image: 'http://localhost:3333/products/image',
+            image_name: 'logo.png',
             id_account: account.id,
         });
 
@@ -63,7 +63,7 @@ describe('Create new product', () => {
             createProductUseCase.execute({
                 description: 'Pizza de frango',
                 price: new Decimal(39),
-                url_image: 'http://localhost:3333/products/image',
+                image_name: 'logo.png',
                 id_account: account.id,
             }),
         ).rejects.toEqual(

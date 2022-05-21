@@ -15,7 +15,9 @@ class ListUsersLinkedToAccountUseCase {
     ) {}
 
     async execute({ id_account }: IRequest): Promise<User[]> {
-        const users = await this.usersRepository.findByAccountId(id_account);
+        const users = await this.usersRepository.listUsersByAccountId(
+            id_account,
+        );
 
         return users;
     }
