@@ -14,12 +14,14 @@ class ProductsRepository implements IProductsRepository {
     async create({
         description,
         price,
+        url_image,
         id_account,
     }: ICreateProductDTO): Promise<Product> {
         const product = await this.repository.product.create({
             data: {
                 description,
                 price,
+                url_image,
                 id_account,
             },
         });
