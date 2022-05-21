@@ -66,6 +66,17 @@ class ProductsRepositoryInMemory implements IProductsRepository {
 
         return Promise.resolve(newProduct);
     }
+
+    async deleteById(id_product: string): Promise<Product> {
+        const product = this.products.find(
+            product => product.id === id_product,
+        ) as Product;
+        const index = this.products.indexOf(product);
+
+        this.products.splice(index, 1);
+
+        return Promise.resolve(product);
+    }
 }
 
 export { ProductsRepositoryInMemory };

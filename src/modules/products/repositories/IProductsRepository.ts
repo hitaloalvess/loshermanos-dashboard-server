@@ -8,6 +8,7 @@ interface IProductsRepository {
     findByDescription(description: string): Promise<Product | undefined | null>;
     findById(id: string): Promise<Product | undefined | null>;
     update(data: IUpdateProductDTO): Promise<Product>;
+    deleteById(id_product: string): Promise<Product>;
 }
 
 export { IProductsRepository };
