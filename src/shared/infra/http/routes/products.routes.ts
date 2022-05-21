@@ -3,6 +3,7 @@ import multer from 'multer';
 
 import uploadConfig from '../../../../config/upload';
 import { CreateProductController } from '../../../../modules/products/useCases/createProduct/CreateProductController';
+import { UpdateProductController } from '../../../../modules/products/useCases/updateProduct/UpdateProductController';
 import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/uploadProductImageController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
 import { is } from '../middlewares/permissions';
@@ -12,6 +13,7 @@ const upload = multer(uploadConfig);
 
 const uploadProductImageController = new UploadProductImageController();
 const createProductController = new CreateProductController();
+const updateProductController = new UpdateProductController();
 
 productsRoutes.post(
     '/image',
@@ -26,6 +28,13 @@ productsRoutes.post(
     ensuredAuthenticated,
     is(['admin']),
     createProductController.handle,
+);
+
+productsRoutes.put(
+    '/:id_product',
+    ensuredAuthenticated,
+    is(['admin']),
+    updateProductController.handle,
 );
 
 export { productsRoutes };

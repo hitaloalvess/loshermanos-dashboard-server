@@ -2,6 +2,7 @@ import { PrismaClient, Product } from '@prisma/client';
 
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateProductDTO } from '../../dtos/ICreateProductDTO';
+import { IUpdateProductDTO } from '../../dtos/IUpdateProductDTO';
 import { IProductsRepository } from '../IProductsRepository';
 
 class ProductsRepository implements IProductsRepository {
@@ -45,6 +46,26 @@ class ProductsRepository implements IProductsRepository {
         const product = await this.repository.product.findFirst({
             where: {
                 id,
+            },
+        });
+
+        return product;
+    }
+
+    async update({
+        description,
+        price,
+        url_image,
+        id_product,
+    }: IUpdateProductDTO): Promise<Product> {
+        const product = await this.repository.product.update({
+            where: {
+                id: id_product,
+            },
+            data: {
+                description,
+                price,
+                url_image,
             },
         });
 
