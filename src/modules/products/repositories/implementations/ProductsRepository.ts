@@ -15,14 +15,14 @@ class ProductsRepository implements IProductsRepository {
     async create({
         description,
         price,
-        url_image,
+        image_name,
         id_account,
     }: ICreateProductDTO): Promise<Product> {
         const product = await this.repository.product.create({
             data: {
                 description,
                 price,
-                url_image,
+                image_name,
                 id_account,
             },
         });
@@ -55,7 +55,7 @@ class ProductsRepository implements IProductsRepository {
     async update({
         description,
         price,
-        url_image,
+        image_name,
         id_product,
     }: IUpdateProductDTO): Promise<Product> {
         const product = await this.repository.product.update({
@@ -65,7 +65,7 @@ class ProductsRepository implements IProductsRepository {
             data: {
                 description,
                 price,
-                url_image,
+                image_name,
             },
         });
 

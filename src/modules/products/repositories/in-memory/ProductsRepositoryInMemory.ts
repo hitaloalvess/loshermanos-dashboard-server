@@ -11,14 +11,14 @@ class ProductsRepositoryInMemory implements IProductsRepository {
     async create({
         description,
         price,
-        url_image,
+        image_name,
         id_account,
     }: ICreateProductDTO): Promise<Product> {
         const product: Product = {
             id: uuid(),
             description,
             price,
-            url_image,
+            image_name,
             id_account,
             created_at: new Date(),
         };
@@ -47,7 +47,7 @@ class ProductsRepositoryInMemory implements IProductsRepository {
     async update({
         description,
         price,
-        url_image,
+        image_name,
         id_product,
     }: IUpdateProductDTO): Promise<Product> {
         const product = this.products.find(
@@ -59,7 +59,7 @@ class ProductsRepositoryInMemory implements IProductsRepository {
             ...product,
             description,
             price,
-            url_image,
+            image_name,
         };
 
         this.products.splice(index, 1, newProduct);

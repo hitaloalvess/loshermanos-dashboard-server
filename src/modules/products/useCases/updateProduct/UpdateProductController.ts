@@ -8,12 +8,12 @@ class UpdateProductController {
         const updateProductUseCase = container.resolve(UpdateProductUseCase);
 
         const { id_product } = req.params;
-        const { description, price, url_image } = req.body;
+        const { description, price, image_name } = req.body;
 
         const product = await updateProductUseCase.execute({
             description,
             price,
-            url_image,
+            image_name,
             id_product,
         });
 

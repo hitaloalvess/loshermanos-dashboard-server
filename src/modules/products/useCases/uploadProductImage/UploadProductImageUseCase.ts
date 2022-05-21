@@ -23,15 +23,16 @@ class UploadProductImageUseCase {
             throw new AppError('File does not exists');
         }
 
-        const file = await this.storageProvider.save(filename, 'products');
+        const image_name = await this.storageProvider.save(
+            filename,
+            'products',
+        );
 
-        if (!file) {
+        if (!image_name) {
             throw new AppError('Could not save file to storage');
         }
 
-        const url = `${process.env.APP_URL}/products/${filename}`;
-
-        return url;
+        return image_name;
     }
 }
 

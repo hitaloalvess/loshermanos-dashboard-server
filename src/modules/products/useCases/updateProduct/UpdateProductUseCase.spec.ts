@@ -30,7 +30,7 @@ describe('Update product', () => {
         product = await productsRepositoryInMemory.create({
             description: 'Pizza teste',
             price: new Decimal(99),
-            url_image: 'http://localhost:3333/test/logo.png',
+            image_name: 'logo.png',
             id_account: account.id,
         });
     });
@@ -39,7 +39,7 @@ describe('Update product', () => {
         const productUpdated = await updateProductUseCase.execute({
             description: 'Nova pizza',
             price: new Decimal(45),
-            url_image: 'https://localhost:3333/products/logo.png',
+            image_name: 'logo.png',
             id_product: product.id,
         });
 
@@ -52,7 +52,7 @@ describe('Update product', () => {
             updateProductUseCase.execute({
                 description: 'Nova pizza',
                 price: new Decimal(45),
-                url_image: 'https://localhost:3333/products/logo.png',
+                image_name: 'logo.png',
                 id_product: '123124124',
             }),
         ).rejects.toEqual(new AppError('Product does not exists'));

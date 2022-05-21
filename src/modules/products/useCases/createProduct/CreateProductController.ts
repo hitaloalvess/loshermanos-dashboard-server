@@ -9,12 +9,12 @@ class CreateProductController {
 
         const { id_account } = req.params;
 
-        const { description, price, url_image } = req.body;
+        const { description, price, image_name } = req.body;
 
         const product = await createProductUseCase.execute({
             description,
             price,
-            url_image,
+            image_name,
             id_account,
         });
 

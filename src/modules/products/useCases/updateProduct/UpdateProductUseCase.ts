@@ -8,7 +8,7 @@ import { IProductsRepository } from '../../repositories/IProductsRepository';
 interface IRequest {
     description: string;
     price: Decimal;
-    url_image: string;
+    image_name: string;
     id_product: string;
 }
 
@@ -22,7 +22,7 @@ class UpdateProductUseCase {
     async execute({
         description,
         price,
-        url_image,
+        image_name,
         id_product,
     }: IRequest): Promise<Product> {
         const productsExists = await this.productsRepository.findById(
@@ -36,7 +36,7 @@ class UpdateProductUseCase {
         const product = await this.productsRepository.update({
             description,
             price,
-            url_image,
+            image_name,
             id_product,
         });
 
