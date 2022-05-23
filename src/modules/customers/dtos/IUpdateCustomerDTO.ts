@@ -1,5 +1,5 @@
-interface ICreateCustomerDTO {
-    id?: string;
+interface IUpdateCustomerDTO {
+    id_customer: string;
     name: string;
     cpf: string;
     road: string;
@@ -8,8 +8,6 @@ interface ICreateCustomerDTO {
     city: string;
     phone: string;
     zip_code: string;
-    created_at?: Date;
-    id_account: string;
 }
 
-export { ICreateCustomerDTO };
+export { IUpdateCustomerDTO };

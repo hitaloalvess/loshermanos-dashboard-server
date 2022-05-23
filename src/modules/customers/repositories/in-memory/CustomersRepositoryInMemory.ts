@@ -2,6 +2,7 @@ import { Customer } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
 import { ICreateCustomerDTO } from '../../dtos/ICreateCustomerDTO';
+import { IUpdateCustomerDTO } from '../../dtos/IUpdateCustomerDTO';
 import { ICustomersRepository } from '../ICustomersRepository';
 
 class CustomersRepositoryInMemory implements ICustomersRepository {
@@ -37,9 +38,50 @@ class CustomersRepositoryInMemory implements ICustomersRepository {
         return Promise.resolve(customer);
     }
 
+    update({
+        name,
+        cpf,
+        road,
+        district,
+        number,
+        city,
+        phone,
+        zip_code,
+        id_customer,
+    }: IUpdateCustomerDTO): Promise<Customer> {
+        const customer = this.customers.find(
+            customer => customer.id === id_customer,
+        ) as Customer;
+        const index = this.customers.indexOf(customer);
+
+        const newCustomer: Customer = {
+            ...customer,
+            name,
+            cpf,
+            road,
+            district,
+            number,
+            city,
+            phone,
+            zip_code,
+        };
+
+        this.customers.splice(index, 1, newCustomer);
+
+        return Promise.resolve(newCustomer);
+    }
+
     async findByCpf(cpf: string): Promise<Customer> {
         const customer = this.customers.find(
             customer => customer.cpf === cpf,
+        ) as Customer;
+
+        return Promise.resolve(customer);
+    }
+
+    async findById(id_customer: string): Promise<Customer> {
+        const customer = this.customers.find(
+            customer => customer.id === id_customer,
         ) as Customer;
 
         return Promise.resolve(customer);
