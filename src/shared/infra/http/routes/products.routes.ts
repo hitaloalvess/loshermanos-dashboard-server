@@ -4,6 +4,7 @@ import multer from 'multer';
 import uploadConfig from '../../../../config/upload';
 import { CreateProductController } from '../../../../modules/products/useCases/createProduct/CreateProductController';
 import { DeleteProductController } from '../../../../modules/products/useCases/deleteProduct/DeleteProductController';
+import { ListAllProductsController } from '../../../../modules/products/useCases/listAllProducts/ListAllProductsController';
 import { UpdateProductController } from '../../../../modules/products/useCases/updateProduct/UpdateProductController';
 import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/uploadProductImageController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
@@ -16,6 +17,7 @@ const uploadProductImageController = new UploadProductImageController();
 const createProductController = new CreateProductController();
 const updateProductController = new UpdateProductController();
 const deleteProductController = new DeleteProductController();
+const listAllProductsController = new ListAllProductsController();
 
 productsRoutes.post(
     '/image',
@@ -44,6 +46,12 @@ productsRoutes.delete(
     ensuredAuthenticated,
     is(['admin']),
     deleteProductController.handle,
+);
+
+productsRoutes.get(
+    '/:id_account',
+    ensuredAuthenticated,
+    listAllProductsController.handle,
 );
 
 export { productsRoutes };

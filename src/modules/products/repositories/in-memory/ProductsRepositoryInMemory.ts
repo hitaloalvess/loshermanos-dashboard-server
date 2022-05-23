@@ -28,22 +28,6 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         return product;
     }
 
-    async findByDescription(
-        description: string,
-    ): Promise<Product | undefined | null> {
-        const product = this.products.find(
-            product => product.description === description,
-        );
-
-        return Promise.resolve(product);
-    }
-
-    async findById(id: string): Promise<Product | null | undefined> {
-        const product = this.products.find(product => product.id === id);
-
-        return Promise.resolve(product);
-    }
-
     async update({
         description,
         price,
@@ -76,6 +60,30 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         this.products.splice(index, 1);
 
         return Promise.resolve(product);
+    }
+
+    async findByDescription(
+        description: string,
+    ): Promise<Product | undefined | null> {
+        const product = this.products.find(
+            product => product.description === description,
+        );
+
+        return Promise.resolve(product);
+    }
+
+    async findById(id: string): Promise<Product | null | undefined> {
+        const product = this.products.find(product => product.id === id);
+
+        return Promise.resolve(product);
+    }
+
+    async findAll(id_account: string): Promise<Product[]> {
+        const products = this.products.filter(
+            product => product.id_account === id_account,
+        );
+
+        return Promise.resolve(products);
     }
 }
 

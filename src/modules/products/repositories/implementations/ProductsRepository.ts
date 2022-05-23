@@ -30,28 +30,6 @@ class ProductsRepository implements IProductsRepository {
         return product;
     }
 
-    async findByDescription(
-        description: string,
-    ): Promise<Product | null | undefined> {
-        const product = await this.repository.product.findFirst({
-            where: {
-                description,
-            },
-        });
-
-        return product;
-    }
-
-    async findById(id: string): Promise<Product | null | undefined> {
-        const product = await this.repository.product.findFirst({
-            where: {
-                id,
-            },
-        });
-
-        return product;
-    }
-
     async update({
         description,
         price,
@@ -80,6 +58,38 @@ class ProductsRepository implements IProductsRepository {
         });
 
         return product;
+    }
+
+    async findByDescription(
+        description: string,
+    ): Promise<Product | null | undefined> {
+        const product = await this.repository.product.findFirst({
+            where: {
+                description,
+            },
+        });
+
+        return product;
+    }
+
+    async findById(id: string): Promise<Product | null | undefined> {
+        const product = await this.repository.product.findFirst({
+            where: {
+                id,
+            },
+        });
+
+        return product;
+    }
+
+    findAll(id_account: string): Promise<Product[]> {
+        const products = this.repository.product.findMany({
+            where: {
+                id_account,
+            },
+        });
+
+        return products;
     }
 }
 
