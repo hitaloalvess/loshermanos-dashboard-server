@@ -43,8 +43,9 @@ model Account {
     name_stablishment String
     created_at        DateTime @default(now())
 
-    User    User[]
-    Product Product[]
+    User     User[]
+    Product  Product[]
+    Customer Customer[]
     @@map("accounts")
 }
 
@@ -86,4 +87,22 @@ model Product {
     account     Account  @relation(fields: [id_account], references: [id])
 
     @@map("products")
+}
+
+model Customer {
+
+    id         String   @id @default(uuid())
+    name       String
+    cpf        String   @unique
+    road       String
+    district   String
+    number     String
+    city       String
+    phone      String
+    zip_code   String
+    created_at DateTime @default(now())
+    id_account String
+    account    Account  @relation(fields: [id_account], references: [id])
+
+    @@map("customers")
 }
