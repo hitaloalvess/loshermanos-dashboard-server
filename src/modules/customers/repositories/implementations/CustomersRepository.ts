@@ -70,6 +70,16 @@ class CustomersRepository implements ICustomersRepository {
         return customer;
     }
 
+    async deleteById(id_customer: string): Promise<Customer> {
+        const deletedCustomer = await this.repository.customer.delete({
+            where: {
+                id: id_customer,
+            },
+        });
+
+        return deletedCustomer;
+    }
+
     async findByCpf(cpf: string): Promise<Customer> {
         const customer = (await this.repository.customer.findFirst({
             where: {
@@ -88,6 +98,16 @@ class CustomersRepository implements ICustomersRepository {
         })) as Customer;
 
         return customer;
+    }
+
+    async findAll(id_account: string): Promise<Customer[]> {
+        const customers = await this.repository.customer.findMany({
+            where: {
+                id_account,
+            },
+        });
+
+        return customers;
     }
 }
 

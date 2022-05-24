@@ -86,6 +86,25 @@ class CustomersRepositoryInMemory implements ICustomersRepository {
 
         return Promise.resolve(customer);
     }
+
+    async deleteById(id_customer: string): Promise<Customer> {
+        const customer = this.customers.find(
+            customer => customer.id === id_customer,
+        ) as Customer;
+        const index = this.customers.indexOf(customer);
+
+        this.customers.splice(index, 1);
+
+        return Promise.resolve(customer);
+    }
+
+    async findAll(id_account: string): Promise<Customer[]> {
+        const customers = this.customers.filter(
+            customer => customer.id_account === id_account,
+        );
+
+        return Promise.resolve(customers);
+    }
 }
 
 export { CustomersRepositoryInMemory };
