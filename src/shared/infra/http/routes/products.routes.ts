@@ -28,7 +28,7 @@ productsRoutes.post(
 );
 
 productsRoutes.post(
-    '/:id_account',
+    '/',
     ensuredAuthenticated,
     is(['admin']),
     createProductController.handle,

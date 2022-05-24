@@ -7,9 +7,7 @@ class CreateProductController {
     async handle(req: Request, res: Response): Promise<Response> {
         const createProductUseCase = container.resolve(CreateProductUseCase);
 
-        const { id_account } = req.params;
-
-        const { description, price, image_name } = req.body;
+        const { description, price, image_name, id_account } = req.body;
 
         const product = await createProductUseCase.execute({
             description,
