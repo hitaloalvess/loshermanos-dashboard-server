@@ -10,6 +10,7 @@ import { IPermissionsRepository } from '../../modules/accounts/repositories/IPer
 import { IRolesRepository } from '../../modules/accounts/repositories/IRolesRepository';
 import { CustomersRepository } from '../../modules/customers/repositories/implementations/CustomersRepository';
 import { ProductsRepository } from '../../modules/products/repositories/implementations/ProductsRepository';
+import { SalesRepository } from '../../modules/sales/repositories/implementations/SalesRepository';
 
 import './providers';
 
@@ -51,4 +52,9 @@ container.registerSingleton<ProductsRepository>(
 container.registerSingleton<CustomersRepository>(
     'CustomersRepository',
     CustomersRepository,
+);
+
+container.registerSingleton<SalesRepository>(
+    'SalesRepository',
+    SalesRepository,
 );

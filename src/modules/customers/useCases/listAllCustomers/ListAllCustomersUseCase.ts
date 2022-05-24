@@ -1,3 +1,4 @@
+import { Customer } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '../../../../shared/errors/AppError';
@@ -14,7 +15,7 @@ class ListAllCustomersUseCase {
         private accountsRepository: IAccountsRepository,
     ) {}
 
-    async execute(id_account: string) {
+    async execute(id_account: string): Promise<Customer[]> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );

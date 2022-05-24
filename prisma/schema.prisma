@@ -46,6 +46,7 @@ model Account {
     User     User[]
     Product  Product[]
     Customer Customer[]
+    Sale     Sale[]
     @@map("accounts")
 }
 
@@ -104,5 +105,27 @@ model Customer {
     id_account String
     account    Account  @relation(fields: [id_account], references: [id])
 
+    Sale Sale[]
     @@map("customers")
+}
+
+model Sale {
+    id          String    @id @default(uuid())
+    total       Decimal   @db.Money
+    value_pay   Decimal   @default(0) @db.Money
+    descount    Decimal   @db.Money
+    sale_type   Sale_type @default(PENDING)
+    updated_at  DateTime
+    created_at  DateTime  @default(now())
+    id_account  String
+    account     Account   @relation(fields: [id_account], references: [id])
+    id_customer String
+    customer    Customer  @relation(fields: [id_customer], references: [id])
+
+    @@map("sales")
+}
+
+enum Sale_type {
+    PENDING
+    PAID_OUT
 }
