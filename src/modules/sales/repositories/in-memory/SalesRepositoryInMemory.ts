@@ -31,6 +31,12 @@ class SalesRepositoryInMemory implements ISalesRepository {
 
         return Promise.resolve(sale);
     }
+
+    async findById(id_sale: string): Promise<Sale> {
+        const sale = this.sales.find(sale => sale.id === id_sale) as Sale;
+
+        return Promise.resolve(sale);
+    }
 }
 
 export { SalesRepositoryInMemory };

@@ -34,6 +34,16 @@ class SalesRepository implements ISalesRepository {
 
         return sale;
     }
+
+    async findById(id_sale: string): Promise<Sale> {
+        const sale = (await this.repository.sale.findFirst({
+            where: {
+                id: id_sale,
+            },
+        })) as Sale;
+
+        return sale;
+    }
 }
 
 export { SalesRepository };

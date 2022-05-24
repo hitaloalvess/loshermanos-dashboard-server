@@ -15,6 +15,7 @@ class CreateSaleController {
             updated_at,
             id_account,
             id_customer,
+            products,
         } = req.body;
 
         const sale = await createSaleUseCase.execute({
@@ -25,6 +26,7 @@ class CreateSaleController {
             updated_at,
             id_account,
             id_customer,
+            products,
         });
 
         return res.status(201).json(sale);

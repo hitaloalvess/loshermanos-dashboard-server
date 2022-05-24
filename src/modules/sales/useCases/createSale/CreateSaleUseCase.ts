@@ -1,10 +1,11 @@
-import { Sale, Sale_type } from '@prisma/client';
+import { Product, Sale, Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { ICustomersRepository } from '../../../customers/repositories/ICustomersRepository';
+import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 interface IRequest {
@@ -15,6 +16,20 @@ interface IRequest {
     updated_at: Date;
     id_account: string;
     id_customer: string;
+    products: Product[];
+}
+
+interface IReturnSale {
+    id: string;
+    total: Decimal;
+    value_pay: Decimal;
+    descount: Decimal;
+    sale_type: Sale_type;
+    updated_at: Date;
+    created_at: Date;
+    id_account: string;
+    id_customer: string;
+    products: Product[];
 }
 
 @injectable()
@@ -28,6 +43,9 @@ class CreateSaleUseCase {
 
         @inject('CustomersRepository')
         private customersRepository: ICustomersRepository,
+
+        @inject('SaleProductsRepository')
+        private saleProductsRepository: ISaleProductsRepository,
     ) {}
     async execute({
         total,
@@ -37,7 +55,8 @@ class CreateSaleUseCase {
         updated_at,
         id_account,
         id_customer,
-    }: IRequest): Promise<Sale> {
+        products,
+    }: IRequest): Promise<IReturnSale> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );
@@ -54,6 +73,10 @@ class CreateSaleUseCase {
             throw new AppError('Customer does not exists');
         }
 
+        if (products.length <= 0) {
+            throw new AppError('Cannot create a sale without product');
+        }
+
         const sale = await this.salesRepository.create({
             total,
             value_pay,
@@ -64,7 +87,14 @@ class CreateSaleUseCase {
             id_customer,
         });
 
-        return sale;
+        products.map(async product => {
+            await this.saleProductsRepository.create(sale.id, product.id);
+        });
+
+        return {
+            ...sale,
+            products,
+        };
     }
 }
 
