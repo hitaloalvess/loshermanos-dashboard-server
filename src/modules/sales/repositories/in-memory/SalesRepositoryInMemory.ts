@@ -1,8 +1,10 @@
 import { Sale } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime';
 import { v4 as uuid } from 'uuid';
 
 import { ICreateSaleDTO } from '../../dtos/ICreateSaleDTO';
 import { IUpdateSaleDTO } from '../../dtos/IUpdateSaleDTO';
+import { IUpdateSalePaymentDTO } from '../../dtos/IUpdateSalePaymentDTO';
 import { ISalesRepository } from '../ISalesRepository';
 
 class SalesRepositoryInMemory implements ISalesRepository {
@@ -56,6 +58,25 @@ class SalesRepositoryInMemory implements ISalesRepository {
         this.sales.splice(index, 1, newSale);
 
         return Promise.resolve(newSale);
+    }
+
+    async updatePayment({
+        id_sale,
+        value_pay,
+        sale_type,
+    }: IUpdateSalePaymentDTO): Promise<Sale> {
+        const sale = this.sales.find(sale => sale.id === id_sale) as Sale;
+        const index = this.sales.indexOf(sale);
+
+        const updatedSale: Sale = {
+            ...sale,
+            value_pay: new Decimal(Number(sale.value_pay) + Number(value_pay)),
+            sale_type: sale_type || sale.sale_type,
+        };
+
+        this.sales.splice(index, 1, updatedSale);
+
+        return Promise.resolve(updatedSale);
     }
 
     async findById(id_sale: string): Promise<Sale> {
