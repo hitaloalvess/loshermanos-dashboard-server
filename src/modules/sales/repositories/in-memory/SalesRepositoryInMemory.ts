@@ -70,7 +70,7 @@ class SalesRepositoryInMemory implements ISalesRepository {
 
         const updatedSale: Sale = {
             ...sale,
-            value_pay: new Decimal(Number(sale.value_pay) + Number(value_pay)),
+            value_pay,
             sale_type: sale_type || sale.sale_type,
         };
 
