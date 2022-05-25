@@ -21,14 +21,14 @@ class AccountsRepository implements IAccountsRepository {
         return account;
     }
 
-    async findByName(
-        name_stablishment: string,
-    ): Promise<Account | null | undefined> {
-        return this.repository.account.findFirst({
+    async findByName(name_stablishment: string): Promise<Account> {
+        const account = (await this.repository.account.findFirst({
             where: {
                 name_stablishment,
             },
-        });
+        })) as Account;
+
+        return account;
     }
 
     async findById(id: string): Promise<Account | null | undefined> {

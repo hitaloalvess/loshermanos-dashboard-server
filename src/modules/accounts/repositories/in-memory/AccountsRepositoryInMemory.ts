@@ -19,14 +19,12 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
         return Promise.resolve(account);
     }
 
-    async findByName(
-        name_stablishment: string,
-    ): Promise<Account | undefined | null> {
-        return Promise.resolve(
-            this.accounts.find(
-                account => account.name_stablishment === name_stablishment,
-            ),
-        );
+    async findByName(name_stablishment: string): Promise<Account> {
+        const account = this.accounts.find(
+            account => account.name_stablishment === name_stablishment,
+        ) as Account;
+
+        return Promise.resolve(account);
     }
 
     async findById(id: string): Promise<Account | null | undefined> {
