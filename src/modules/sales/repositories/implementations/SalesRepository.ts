@@ -79,6 +79,16 @@ class SalesRepository implements ISalesRepository {
         return updatedSale;
     }
 
+    async deleteById(id_sale: string): Promise<Sale> {
+        const deletedSale = await this.repository.sale.delete({
+            where: {
+                id: id_sale,
+            },
+        });
+
+        return deletedSale;
+    }
+
     async findById(id_sale: string): Promise<Sale> {
         const sale = (await this.repository.sale.findFirst({
             where: {
@@ -87,6 +97,16 @@ class SalesRepository implements ISalesRepository {
         })) as Sale;
 
         return sale;
+    }
+
+    async findAll(id_account: string): Promise<Sale[]> {
+        const sales = await this.repository.sale.findMany({
+            where: {
+                id_account,
+            },
+        });
+
+        return sales;
     }
 }
 

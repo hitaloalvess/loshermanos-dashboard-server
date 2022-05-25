@@ -79,10 +79,27 @@ class SalesRepositoryInMemory implements ISalesRepository {
         return Promise.resolve(updatedSale);
     }
 
+    async deleteById(id_sale: string): Promise<Sale> {
+        const deletedSale = this.sales.find(
+            sale => sale.id === id_sale,
+        ) as Sale;
+        const index = this.sales.indexOf(deletedSale);
+
+        this.sales.splice(index, 1);
+
+        return Promise.resolve(deletedSale);
+    }
+
     async findById(id_sale: string): Promise<Sale> {
         const sale = this.sales.find(sale => sale.id === id_sale) as Sale;
 
         return Promise.resolve(sale);
+    }
+
+    async findAll(id_account: string): Promise<Sale[]> {
+        const sales = this.sales.filter(sale => sale.id_account === id_account);
+
+        return Promise.resolve(sales);
     }
 }
 

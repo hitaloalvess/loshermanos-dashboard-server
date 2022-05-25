@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { CreateSaleController } from '../../../../modules/sales/useCases/createSale/CreateSaleController';
+import { DeleteSaleController } from '../../../../modules/sales/useCases/deleteSale/DeleteSaleController';
 import { SalePaymentController } from '../../../../modules/sales/useCases/salePayment/SalePaymentController';
 import { UpdateSaleController } from '../../../../modules/sales/useCases/updateSale/UpdateSaleController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
@@ -11,6 +12,7 @@ const salesRoutes = Router();
 const createSaleController = new CreateSaleController();
 const updateSaleController = new UpdateSaleController();
 const salePaymentController = new SalePaymentController();
+const deleteSaleController = new DeleteSaleController();
 
 salesRoutes.post('/', ensuredAuthenticated, createSaleController.handle);
 
@@ -25,6 +27,13 @@ salesRoutes.patch(
     '/payment/:id_sale',
     ensuredAuthenticated,
     salePaymentController.handle,
+);
+
+salesRoutes.delete(
+    '/:id_sale',
+    ensuredAuthenticated,
+    is(['admin']),
+    deleteSaleController.handle,
 );
 
 export { salesRoutes };

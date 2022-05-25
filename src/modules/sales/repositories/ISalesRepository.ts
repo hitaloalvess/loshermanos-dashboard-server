@@ -8,7 +8,9 @@ interface ISalesRepository {
     create(data: ICreateSaleDTO): Promise<Sale>;
     update(data: IUpdateSaleDTO): Promise<Sale>;
     updatePayment(data: IUpdateSalePaymentDTO): Promise<Sale>;
+    deleteById(id_sale: string): Promise<Sale>;
     findById(id_sale: string): Promise<Sale>;
+    findAll(id_account: string): Promise<Sale[]>;
 }
 
 export { ISalesRepository };
