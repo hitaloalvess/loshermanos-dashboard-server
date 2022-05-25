@@ -1,3 +1,4 @@
+import { SaleProduct } from '@prisma/client';
 import { inject } from 'tsyringe';
 
 import { AppError } from '../../../../shared/errors/AppError';
@@ -20,7 +21,7 @@ class CreateSaleProductUseCase {
         @inject('SalesRepository')
         private salesRepository: ISalesRepository,
     ) {}
-    async execute({ id_product, id_sale }: IRequest) {
+    async execute({ id_product, id_sale }: IRequest): Promise<SaleProduct> {
         const productsExists = await this.productsRepository.findById(
             id_product,
         );

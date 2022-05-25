@@ -5,6 +5,7 @@ import { inject, injectable } from 'tsyringe';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { ICustomersRepository } from '../../../customers/repositories/ICustomersRepository';
+import { ISaleResponseDTO } from '../../dtos/ISaleResponseDTO';
 import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
@@ -14,19 +15,6 @@ interface IRequest {
     descount: Decimal;
     sale_type: Sale_type;
     updated_at: Date;
-    id_account: string;
-    id_customer: string;
-    products: Product[];
-}
-
-interface IReturnSale {
-    id: string;
-    total: Decimal;
-    value_pay: Decimal;
-    descount: Decimal;
-    sale_type: Sale_type;
-    updated_at: Date;
-    created_at: Date;
     id_account: string;
     id_customer: string;
     products: Product[];
@@ -56,7 +44,7 @@ class CreateSaleUseCase {
         id_account,
         id_customer,
         products,
-    }: IRequest): Promise<IReturnSale> {
+    }: IRequest): Promise<ISaleResponseDTO> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );

@@ -16,6 +16,14 @@ class SaleProductsRepositoryInMemory implements ISaleProductsRepository {
 
         return Promise.resolve(saleProduct);
     }
+
+    async deleteAllProductsSale(id_sale: string): Promise<void> {
+        const newList = this.saleProducts.filter(
+            saleProduct => saleProduct.id_sale !== id_sale,
+        );
+
+        this.saleProducts = newList;
+    }
 }
 
 export { SaleProductsRepositoryInMemory };

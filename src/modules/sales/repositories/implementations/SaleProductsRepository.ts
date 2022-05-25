@@ -9,6 +9,7 @@ class SaleProductsRepository implements ISaleProductsRepository {
     constructor() {
         this.repository = prismaClient;
     }
+
     async create(id_sale: string, id_product: string): Promise<SaleProduct> {
         const saleProduct = await this.repository.saleProduct.create({
             data: {
@@ -18,6 +19,14 @@ class SaleProductsRepository implements ISaleProductsRepository {
         });
 
         return saleProduct;
+    }
+
+    async deleteAllProductsSale(id_sale: string): Promise<void> {
+        await this.repository.saleProduct.deleteMany({
+            where: {
+                id_sale,
+            },
+        });
     }
 }
 
