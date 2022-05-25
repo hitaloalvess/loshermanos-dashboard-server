@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
@@ -38,7 +39,9 @@ class AuthenticateUserUseCase {
     ) {}
 
     async execute({ username, password }: IRequest): Promise<IResponse> {
-        const user = await this.usersRepository.findByUsername(username);
+        const user = (await this.usersRepository.findByUsername(
+            username,
+        )) as User;
         const {
             secret_token,
             expires_in_token,
@@ -57,7 +60,7 @@ class AuthenticateUserUseCase {
         }
 
         const token = sign({}, secret_token, {
-            subject: user?.id,
+            subject: user.id,
             expiresIn: expires_in_token,
         });
 
@@ -86,10 +89,10 @@ class AuthenticateUserUseCase {
         return {
             token,
             user: {
-                name: user?.name,
-                email: user?.email,
-                username: user?.username,
-                telefone: user?.telefone,
+                name: user.name,
+                email: user.email,
+                username: user.username,
+                telefone: user.telefone,
             },
             refresh_token,
         };

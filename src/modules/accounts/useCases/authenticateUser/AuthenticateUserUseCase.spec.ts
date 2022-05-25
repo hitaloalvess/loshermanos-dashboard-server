@@ -1,3 +1,4 @@
+import { IUserWithRegisteredAccount } from '../../../../@types';
 import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
@@ -23,6 +24,7 @@ let createRoleUseCase: CreateRoleUseCase;
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
+let user: IUserWithRegisteredAccount;
 describe('Authenticate user', () => {
     beforeEach(async () => {
         dayjsDateProvider = new DayjsDateProvider();
@@ -49,10 +51,8 @@ describe('Authenticate user', () => {
             name: 'admin',
             description: 'Administrador',
         });
-    });
 
-    it('should be able to authenticate an user', async () => {
-        const user = await createAccountWithAdminUserUseCase.execute({
+        user = await createAccountWithAdminUserUseCase.execute({
             name: 'Teste',
             email: 'teste@teste',
             username: 'Teste123',
@@ -60,7 +60,9 @@ describe('Authenticate user', () => {
             telefone: '12345',
             name_stablishment: 'Teste stablishment',
         });
+    });
 
+    it('should be able to authenticate an user', async () => {
         const result = await authenticateUserUseCase.execute({
             username: user.username,
             password: 'teste123',
@@ -73,7 +75,7 @@ describe('Authenticate user', () => {
         await expect(
             authenticateUserUseCase.execute({
                 username: 'Teste12345',
-                password: '1234',
+                password: user.password,
             }),
         ).rejects.toEqual(new AppError('Username or password incorrect', 401));
     });
@@ -81,7 +83,7 @@ describe('Authenticate user', () => {
     it('should not be able to authenticate with incorrect password', async () => {
         await expect(
             authenticateUserUseCase.execute({
-                username: 'Teste123',
+                username: user.username,
                 password: 'incorrectPassword',
             }),
         ).rejects.toEqual(new AppError('Username or password incorrect', 401));
