@@ -23,16 +23,20 @@ class PermissionsRepositoryInMemory implements IPermissionsRepository {
         return Promise.resolve(permission);
     }
 
-    async findByName(name: string): Promise<Permission | undefined | null> {
-        return Promise.resolve(
-            this.permissions.find(permission => permission.name === name),
-        );
+    async findByName(name: string): Promise<Permission> {
+        const permission = this.permissions.find(
+            permission => permission.name === name,
+        ) as Permission;
+
+        return Promise.resolve(permission);
     }
 
-    findById(id: string): Promise<Permission | undefined | null> {
-        return Promise.resolve(
-            this.permissions.find(permission => permission.id === id),
-        );
+    async findById(id: string): Promise<Permission> {
+        const permission = this.permissions.find(
+            permission => permission.id === id,
+        ) as Permission;
+
+        return Promise.resolve(permission);
     }
 }
 

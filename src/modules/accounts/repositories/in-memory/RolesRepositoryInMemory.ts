@@ -20,12 +20,16 @@ class RolesRepositoryInMemory implements IRolesRepository {
         return Promise.resolve(role);
     }
 
-    async findByName(name: string): Promise<Role | undefined | null> {
-        return Promise.resolve(this.roles.find(role => role.name === name));
+    async findByName(name: string): Promise<Role> {
+        const role = this.roles.find(role => role.name === name) as Role;
+
+        return Promise.resolve(role);
     }
 
-    findById(id: string): Promise<Role | null | undefined> {
-        return Promise.resolve(this.roles.find(role => role.id === id));
+    async findById(id: string): Promise<Role> {
+        const role = this.roles.find(role => role.id === id) as Role;
+
+        return Promise.resolve(role);
     }
 }
 

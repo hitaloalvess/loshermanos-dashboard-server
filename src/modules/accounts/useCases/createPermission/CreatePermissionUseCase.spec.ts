@@ -29,7 +29,7 @@ describe('Create Permission', () => {
             description: 'Administrador',
         });
 
-        expect(
+        await expect(
             createPermissionUseCase.execute({
                 name: 'admin',
                 description: 'Administrador 1',

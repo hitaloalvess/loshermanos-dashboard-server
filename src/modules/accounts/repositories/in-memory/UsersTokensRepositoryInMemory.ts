@@ -28,14 +28,14 @@ class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
     async findByUserIdAndRefreshToken(
         user_id: string,
         refresh_token: string,
-    ): Promise<UserTokens | null | undefined> {
-        return Promise.resolve(
-            this.usersTokens.find(
-                userToken =>
-                    userToken.id_user === user_id &&
-                    userToken.refresh_token === refresh_token,
-            ),
-        );
+    ): Promise<UserTokens> {
+        const userTokens = this.usersTokens.find(
+            userToken =>
+                userToken.id_user === user_id &&
+                userToken.refresh_token === refresh_token,
+        ) as UserTokens;
+
+        return Promise.resolve(userTokens);
     }
 
     async deleteById(id: string): Promise<void> {
