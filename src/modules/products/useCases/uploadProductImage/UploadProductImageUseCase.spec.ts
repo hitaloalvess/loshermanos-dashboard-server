@@ -25,7 +25,7 @@ describe('Upload product image', () => {
             '..',
             '..',
             'tmp',
-            'test',
+            'test.png',
         );
     });
 
@@ -42,8 +42,16 @@ describe('Upload product image', () => {
     });
 
     it('should not be possible to upload the image for a non-existent product', async () => {
-        expect(
-            uploadProductImageUseCase.execute('C://test', 'test'),
+        await expect(
+            uploadProductImageUseCase.execute('test', 'test'),
         ).rejects.toEqual(new AppError('File does not exists'));
     });
+
+    it('should not be possible to upload the image to a product without saving it to storage', async () => {
+        await expect(uploadProductImageUseCase.execute('')).rejects.toEqual(
+            new AppError('Could not save file to storage'),
+        );
+    });
+
+    // TESTAR UM SEM PASSAR O PARAMETRO FOLDER
 });

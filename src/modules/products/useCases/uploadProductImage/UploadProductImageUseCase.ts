@@ -13,22 +13,28 @@ class UploadProductImageUseCase {
         private storageProvider: IStorageProvider,
     ) {}
     async execute(filename: string, folder?: string): Promise<string> {
-        const fileName = !folder
-            ? resolve(`${upload.tmpFolder}`, filename)
-            : resolve(`${upload.tmpFolder}/${folder}`, filename);
+        let fileName: string;
 
-        const fileExists = await fs.promises.stat(fileName).catch(err => false);
+        if (!folder) {
+            fileName = resolve(`${upload.tmpFolder}`, filename);
+        } else {
+            fileName = resolve(`${upload.tmpFolder}/${folder}`, filename);
+        }
 
-        if (!fileExists) {
+        try {
+            await fs.promises.stat(fileName);
+        } catch (error) {
             throw new AppError('File does not exists');
         }
 
-        const image_name = await this.storageProvider.save(
-            filename,
-            'products',
-        );
+        let image_name: string;
 
-        if (!image_name) {
+        try {
+            image_name = await this.storageProvider.save(
+                filename,
+                folder as string,
+            );
+        } catch {
             throw new AppError('Could not save file to storage');
         }
 
