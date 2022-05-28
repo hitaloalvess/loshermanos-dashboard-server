@@ -37,26 +37,26 @@ class UsersRepository implements IUsersRepository {
         return user;
     }
 
-    async findByUsername(username: string): Promise<User | null | undefined> {
-        return this.repository.user.findFirst({
+    async findByUsername(username: string): Promise<User> {
+        return (await this.repository.user.findFirst({
             where: {
                 username,
             },
-        });
+        })) as User;
     }
 
-    async findById(id: string): Promise<User | null | undefined> {
-        return this.repository.user.findFirst({
+    async findById(id: string): Promise<User> {
+        return (await this.repository.user.findFirst({
             where: {
                 id,
             },
-        });
+        })) as User;
     }
 
     async listUserAndRoleAndAccountDataById(
         id_user: string,
-    ): Promise<IUserWithRegisteredAccount | null | undefined> {
-        return this.repository.user.findFirst({
+    ): Promise<IUserWithRegisteredAccount> {
+        return (await this.repository.user.findFirst({
             where: {
                 id: id_user,
             },
@@ -64,7 +64,7 @@ class UsersRepository implements IUsersRepository {
                 role: true,
                 account: true,
             },
-        });
+        })) as IUserWithRegisteredAccount;
     }
 
     async listUsersByAccountId(id_account: string): Promise<User[]> {

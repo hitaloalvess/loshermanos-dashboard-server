@@ -25,20 +25,24 @@ class PermissionsRepository implements IPermissionsRepository {
         return permission;
     }
 
-    async findByName(name: string): Promise<Permission | undefined | null> {
-        return this.repository.permission.findFirst({
+    async findByName(name: string): Promise<Permission> {
+        const permissions = (await this.repository.permission.findFirst({
             where: {
                 name,
             },
-        });
+        })) as Permission;
+
+        return permissions;
     }
 
-    async findById(id: string): Promise<Permission | null | undefined> {
-        return this.repository.permission.findFirst({
+    async findById(id: string): Promise<Permission> {
+        const permission = (await this.repository.permission.findFirst({
             where: {
                 id,
             },
-        });
+        })) as Permission;
+
+        return permission;
     }
 }
 

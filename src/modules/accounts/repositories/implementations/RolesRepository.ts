@@ -22,20 +22,24 @@ class RolesRepository implements IRolesRepository {
         return role;
     }
 
-    async findByName(name: string): Promise<Role | undefined | null> {
-        return this.repository.role.findFirst({
+    async findByName(name: string): Promise<Role> {
+        const role = (await this.repository.role.findFirst({
             where: {
                 name,
             },
-        });
+        })) as Role;
+
+        return role;
     }
 
-    findById(id: string): Promise<Role | null | undefined> {
-        return this.repository.role.findFirst({
+    async findById(id: string): Promise<Role> {
+        const role = (await this.repository.role.findFirst({
             where: {
                 id,
             },
-        });
+        })) as Role;
+
+        return role;
     }
 }
 

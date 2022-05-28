@@ -15,6 +15,19 @@ services:
         volumes:
             - pgdata:/data/postgres
 
+    database_test:
+            image: postgres
+            container_name: loshermanos_test
+            restart: always
+            ports:
+                - 5433:5432
+            environment:
+                - POSTGRES_USER=docker
+                - POSTGRES_PASSWORD=loshermanos_dashboard
+                - POSTGRES_DB=loshermanos_dashboard_test
+            volumes:
+                - pgdata:/data/postgres
+
     app:
         build: .
         container_name: loshermanos_dashboard

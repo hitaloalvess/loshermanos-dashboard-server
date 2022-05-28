@@ -34,34 +34,32 @@ class UsersRepositoryInMemory implements IUsersRepository {
         return Promise.resolve(user);
     }
 
-    async findByUsername(username: string): Promise<User | undefined | null> {
+    async findByUsername(username: string): Promise<User> {
         return Promise.resolve(
-            this.users.find(user => user.username === username),
+            this.users.find(user => user.username === username) as User,
         );
     }
 
-    async findById(id: string): Promise<User | null | undefined> {
-        return Promise.resolve(this.users.find(user => user.id === id));
+    async findById(id: string): Promise<User> {
+        return Promise.resolve(this.users.find(user => user.id === id) as User);
     }
 
     async listUserAndRoleAndAccountDataById(
         id_user: string,
-    ): Promise<IUserWithRegisteredAccount | null | undefined> {
-        const user = this.users.find(user => user.id === id_user);
-
-        if (!user) {
-            return undefined;
-        }
+    ): Promise<IUserWithRegisteredAccount> {
+        const user = (await this.users.find(
+            user => user.id === id_user,
+        )) as User;
 
         return Promise.resolve({
             ...user,
             account: {
-                id: user?.id_account,
+                id: user.id_account,
                 name_stablishment: 'Teste',
                 created_at: new Date(),
             },
             role: {
-                id: user?.id_role,
+                id: user.id_role,
                 name: 'Teste',
                 description: 'Teste description',
                 created_at: new Date(),
