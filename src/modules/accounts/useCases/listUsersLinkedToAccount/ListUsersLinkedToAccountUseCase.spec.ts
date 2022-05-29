@@ -1,10 +1,12 @@
+import { Account, Role, User } from '@prisma/client';
+
+import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
 import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
-import { CreateAccountWithAdminUserUseCase } from '../createAccountWithAdminUser/CreateAccountWithAdminUserUseCase';
 import { ListUsersLinkedToAccountUseCase } from './ListUsersLinkedToAccountUseCase';
 
 let accountsRepositoryInMemory: IAccountsRepository;
@@ -12,36 +14,31 @@ let rolesRepositoryInMemory: IRolesRepository;
 let usersRepositoryInMemory: IUsersRepository;
 
 let listUsersLinkedToAccountUseCase: ListUsersLinkedToAccountUseCase;
-let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
+
+let role: Role;
+let account: Account;
+let user: User;
 describe('List users linked to account', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         accountsRepositoryInMemory = new AccountsRepositoryInMemory();
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
 
-        createAccountWithAdminUserUseCase =
-            new CreateAccountWithAdminUserUseCase(
-                accountsRepositoryInMemory,
-                rolesRepositoryInMemory,
-                usersRepositoryInMemory,
-            );
-
         listUsersLinkedToAccountUseCase = new ListUsersLinkedToAccountUseCase(
             usersRepositoryInMemory,
+            accountsRepositoryInMemory,
         );
-    });
 
-    it('should be able to list all users linked to account', async () => {
-        const role = await rolesRepositoryInMemory.create({
+        role = await rolesRepositoryInMemory.create({
             name: 'Admin',
             description: 'Administrador',
         });
 
-        const account = await accountsRepositoryInMemory.create({
+        account = await accountsRepositoryInMemory.create({
             name_stablishment: 'TesteTeste',
         });
 
-        const user = await usersRepositoryInMemory.create({
+        user = await usersRepositoryInMemory.create({
             name: 'Teste',
             email: 'teste@teste.com',
             username: 'teste123',
@@ -50,11 +47,21 @@ describe('List users linked to account', () => {
             id_account: account.id,
             id_role: role.id,
         });
+    });
 
+    it('should be able to list all users linked to account', async () => {
         const users = await listUsersLinkedToAccountUseCase.execute({
             id_account: account.id,
         });
 
         expect(users).toEqual([user]);
+    });
+
+    it('should not be able to list users from a non-existent account', async () => {
+        await expect(
+            listUsersLinkedToAccountUseCase.execute({
+                id_account: 'incorrectID',
+            }),
+        ).rejects.toEqual(new AppError('Account does not exists'));
     });
 });

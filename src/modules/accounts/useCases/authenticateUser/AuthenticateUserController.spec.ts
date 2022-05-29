@@ -8,18 +8,6 @@ import { app } from '../../../../shared/infra/http/app';
 let user: User;
 describe('Authenticate user', () => {
     beforeAll(async () => {
-        const account = await prismaClient.account.create({
-            data: {
-                name_stablishment: 'Test',
-            },
-        });
-
-        const role = await prismaClient.role.create({
-            data: {
-                name: 'admin',
-                description: 'Administrador',
-            },
-        });
         user = await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
@@ -27,8 +15,17 @@ describe('Authenticate user', () => {
                 username: 'admin',
                 password: await hash('12345', 8),
                 telefone: '213213124',
-                id_account: account.id,
-                id_role: role.id,
+                role: {
+                    create: {
+                        name: 'admin',
+                        description: 'Administrador',
+                    },
+                },
+                account: {
+                    create: {
+                        name_stablishment: 'LosHermanos',
+                    },
+                },
             },
         });
     });

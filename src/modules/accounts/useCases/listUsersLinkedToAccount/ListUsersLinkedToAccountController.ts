@@ -5,7 +5,6 @@ import { ListUsersLinkedToAccountUseCase } from './ListUsersLinkedToAccountUseCa
 
 class ListUsersLinkedToAccountController {
     async handle(req: Request, res: Response): Promise<Response> {
-        console.log('Dentro do controller');
         const listUsersLinkedToAccountUseCase = container.resolve(
             ListUsersLinkedToAccountUseCase,
         );
