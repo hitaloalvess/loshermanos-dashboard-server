@@ -35,7 +35,7 @@ describe('Upload product image', () => {
             'execute',
         );
 
-        const url = await uploadProductImageUseCase.execute(imageFile, 'test');
+        const url = await uploadProductImageUseCase.execute(imageFile);
 
         expect(typeof url).toBe('string');
         expect(uploadImageMock).toHaveReturned();
@@ -43,7 +43,7 @@ describe('Upload product image', () => {
 
     it('should not be possible to upload the image for a non-existent product', async () => {
         await expect(
-            uploadProductImageUseCase.execute('test', 'test'),
+            uploadProductImageUseCase.execute('test1'),
         ).rejects.toEqual(new AppError('File does not exists'));
     });
 
@@ -52,6 +52,4 @@ describe('Upload product image', () => {
             new AppError('Could not save file to storage'),
         );
     });
-
-    // TESTAR UM SEM PASSAR O PARAMETRO FOLDER
 });

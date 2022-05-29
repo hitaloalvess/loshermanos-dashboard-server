@@ -12,14 +12,8 @@ class UploadProductImageUseCase {
         @inject('StorageProvider')
         private storageProvider: IStorageProvider,
     ) {}
-    async execute(filename: string, folder?: string): Promise<string> {
-        let fileName: string;
-
-        if (!folder) {
-            fileName = resolve(`${upload.tmpFolder}`, filename);
-        } else {
-            fileName = resolve(`${upload.tmpFolder}/${folder}`, filename);
-        }
+    async execute(filename: string): Promise<string> {
+        const fileName = resolve(`${upload.tmpFolder}`, filename);
 
         try {
             await fs.promises.stat(fileName);
@@ -30,10 +24,7 @@ class UploadProductImageUseCase {
         let image_name: string;
 
         try {
-            image_name = await this.storageProvider.save(
-                filename,
-                folder as string,
-            );
+            image_name = await this.storageProvider.save(filename, 'products');
         } catch {
             throw new AppError('Could not save file to storage');
         }

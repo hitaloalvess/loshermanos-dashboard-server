@@ -6,7 +6,7 @@ import { CreateProductController } from '../../../../modules/products/useCases/c
 import { DeleteProductController } from '../../../../modules/products/useCases/deleteProduct/DeleteProductController';
 import { ListAllProductsController } from '../../../../modules/products/useCases/listAllProducts/ListAllProductsController';
 import { UpdateProductController } from '../../../../modules/products/useCases/updateProduct/UpdateProductController';
-import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/uploadProductImageController';
+import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/UploadProductImageController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
 import { is } from '../middlewares/permissions';
 

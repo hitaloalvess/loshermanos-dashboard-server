@@ -16,7 +16,7 @@ class CreateProductController {
             id_account,
         });
 
-        return res.json(product);
+        return res.status(201).json(product);
     }
 }
 export { CreateProductController };
