@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { CreateCustomerController } from '../../../../modules/customers/useCases/createCustomer/CreateCustomerControlle';
+import { CreateCustomerController } from '../../../../modules/customers/useCases/createCustomer/CreateCustomerController';
 import { DeleteCustomerController } from '../../../../modules/customers/useCases/deleteCustomer/DeleteCustomerController';
 import { ListAllCustomersController } from '../../../../modules/customers/useCases/listAllCustomers/ListAllCustomersController';
 import { UpdateCustomerController } from '../../../../modules/customers/useCases/updateCustomer/UpdateCustomerController';
