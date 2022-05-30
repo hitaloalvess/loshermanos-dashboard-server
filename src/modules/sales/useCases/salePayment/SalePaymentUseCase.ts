@@ -2,6 +2,7 @@ import { Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '../../../../shared/errors/AppError';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 interface IRequest {
@@ -18,6 +19,10 @@ class SalePaymentUseCase {
 
     async execute({ id_sale, value_pay }: IRequest): Promise<Sale> {
         const sale = await this.salesRepository.findById(id_sale);
+
+        if (!sale) {
+            throw new AppError('Sale does not exists');
+        }
 
         const calc_payment = Number(sale.value_pay) + Number(value_pay);
         const new_value_pay = new Decimal(calc_payment);

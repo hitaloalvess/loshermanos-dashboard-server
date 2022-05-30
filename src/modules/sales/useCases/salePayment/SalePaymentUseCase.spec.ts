@@ -2,6 +2,7 @@ import { Account, Product, Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { v4 as uuid } from 'uuid';
 
+import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import { ICustomersRepository } from '../../../customers/repositories/ICustomersRepository';
@@ -92,6 +93,17 @@ describe('Sale payment', () => {
 
         expect(updatedSale).toHaveProperty('id');
         expect(updatedSale.value_pay).toEqual(current_amount_paid);
+    });
+
+    it('should not be able to pay for a non-existent sale', async () => {
+        const value_pay = new Decimal(10);
+
+        await expect(
+            salePaymentUseCase.execute({
+                id_sale: 'incorrectID',
+                value_pay,
+            }),
+        ).rejects.toEqual(new AppError('Sale does not exists'));
     });
 
     it('should not be able to update the value of sale_type when value_pay is less than total', async () => {
