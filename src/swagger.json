@@ -1,0 +1,969 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Los Hermanos Dashboard Documentation",
+        "description": "This is an API los hermanos",
+        "version": "1.0.0",
+        "contact": {
+            "email": "hitalo.ralves@outlook.com"
+        }
+    },
+    "paths": {
+        "/customers": {
+            "post": {
+                "tags": ["Customers"],
+                "summary": "Create customer",
+                "description": "Create a new customer",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": ["Customer already exists", "Account does not exists"]
+                    }
+                }
+            }
+        },
+        "/customers/{id_account}": {
+            "get": {
+                "tags": ["Customers"],
+                "summary": "List customers",
+                "description": "List all customers",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_account",
+                    "in": "path",
+                    "description": "Account id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "itens": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Customer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Account does not exists"
+                    }
+                }
+            }
+        },
+        "/customers/{id_customer}": {
+            "delete": {
+                "tags": ["Customers"],
+                "summary": "Delete customers",
+                "description": "Delete customer by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_customer",
+                    "in": "path",
+                    "description": "Customer id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Customer does not exists"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Customers"],
+                "summary": "Update customers",
+                "description": "Update customer by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_customer",
+                    "in": "path",
+                    "description": "Customer id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "road": {
+                                        "type": "string"
+                                    },
+                                    "district": {
+                                        "type": "string"
+                                    },
+                                    "number": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "zip_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Customer does not exists"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "post": {
+                "tags": ["Products"],
+                "summary": "Create product",
+                "description": "Create a new product",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Account does not exists"
+                    }
+                }
+            }
+        },
+        "/products/{id_account}": {
+            "get": {
+                "tags": ["Products"],
+                "summary": "List products",
+                "description": "List all products",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_account",
+                    "in": "path",
+                    "description": "Account id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "itens": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Product"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Account does not exists"
+                    }
+                }
+            }
+        },
+        "/products/image": {
+            "post": {
+                "tags": ["Products"],
+                "summary": "Upload product image",
+                "description": "Upload product image",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "filename": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "File does not exists"
+                    }
+                }
+            }
+        },
+        "/products/{id_product}": {
+            "delete": {
+                "tags": ["Products"],
+                "summary": "Delete products",
+                "description": "Delete product by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_product",
+                    "in": "path",
+                    "description": "Product id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "Product does not exists"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Products"],
+                "summary": "Update products",
+                "description": "Update product by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_product",
+                    "in": "path",
+                    "description": "Product id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "image_name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Product does not exists"
+                    }
+                }
+            }
+        },
+        "/session": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Authentication user",
+                "description": "Authentication user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Email or password incorrect"
+                    }
+                }
+            }
+        },
+        "/refresh_token": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Refresh token user",
+                "description": "Refresh token user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Refresh token does not exists!"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create user",
+                "description": "Create a new user",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "User already exists"
+                    }
+                }
+            }
+        },
+        "/users/{id_account}": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "List users",
+                "description": "List all users",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_account",
+                    "in": "path",
+                    "description": "Account id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "itens": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Account does not exists"
+                    }
+                }
+            }
+        },
+        "/users/{id_user}": {
+            "delete": {
+                "tags": ["Users"],
+                "summary": "Delete users",
+                "description": "Delete user by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_user",
+                    "in": "path",
+                    "description": "User id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted"
+                    },
+                    "400": {
+                        "description": "User does not exists"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Users"],
+                "summary": "Update users",
+                "description": "Update user by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_user",
+                    "in": "path",
+                    "description": "User id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "telefone": {
+                                        "type": "string"
+                                    },
+                                    "id_role": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/sales": {
+            "post": {
+                "tags": ["Sales"],
+                "summary": "Create sale",
+                "description": "Create a new sale",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Sale"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Customer or account does not exists"
+                    }
+                }
+            }
+        },
+        "/sales/{id_account}": {
+            "get": {
+                "tags": ["Sales"],
+                "summary": "List sales",
+                "description": "List all sales",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_account",
+                    "in": "path",
+                    "description": "Account id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "itens": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Sale"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/sales/{id_sale}": {
+            "delete": {
+                "tags": ["Sales"],
+                "summary": "Delete sales",
+                "description": "Delete sale by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_sale",
+                    "in": "path",
+                    "description": "Sale id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Sales"],
+                "summary": "Update sales",
+                "description": "Update sale by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_sale",
+                    "in": "path",
+                    "description": "Sale id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "total": {
+                                        "type": "number"
+                                    },
+                                    "value_pay": {
+                                        "type": "number"
+                                    },
+                                    "descount": {
+                                        "type": "number"
+                                    },
+                                    "saleType": {
+                                        "type": "string"
+                                    },
+                                    "updated_at": {
+                                        "type": "date-time"
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "type": "number"
+                                                },
+                                                "image_name": {
+                                                    "type": "string"
+                                                },
+                                                "id_account": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/sales/payment/{id_sale}": {
+            "patch": {
+                "tags": ["Sales"],
+                "summary": "Update sale payment",
+                "description": "Update sale payment by id",
+                "security": [
+                    { "bearerAuth": [] }
+                ],
+                "parameters": {
+                    "name": "id_sale",
+                    "in": "path",
+                    "description": "Sale id",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "value_pay": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Sale does not exists"
+                    }
+                }
+            }
+        },
+        "/role": {
+            "post": {
+                "tags": ["Accounts"],
+                "summary": "Create role",
+                "description": "Create a new role",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Role already exists"
+                    }
+                }
+            }
+        },
+        "/permission": {
+            "post": {
+                "tags": ["Accounts"],
+                "summary": "Create permission",
+                "description": "Create a new permission",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Permission already exists"
+                    }
+                }
+            }
+        },
+        "/account": {
+            "post": {
+                "tags": ["Accounts"],
+                "summary": "Create permission",
+                "description": "Create a new permission",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Account"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Role does not exists"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Customer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "cpf": {
+                    "type": "string"
+                },
+                "road": {
+                    "type": "string"
+                },
+                "district": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "date-time"
+                },
+                "id_account": {
+                    "type": "string"
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "image_name": {
+                    "type": "string"
+                },
+                "id_account": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "telefone": {
+                    "type": "string"
+                },
+                "id_account": {
+                    "type": "string"
+                },
+                "id_role": {
+                    "type": "string"
+                }
+            }
+        },
+        "Sale": {
+            "type": "object",
+            "properties": {
+                "total": {
+                    "type": "number"
+                },
+                "value_pay": {
+                    "type": "number"
+                },
+                "descount": {
+                    "type": "number"
+                },
+                "saleType": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "date-time"
+                },
+                "id_account": {
+                    "type": "string"
+                },
+                "id_customer": {
+                    "type": "string"
+                }
+            }
+        },
+        "Account": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "telefone": {
+                    "type": "string"
+                },
+                "name_stablishment": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
