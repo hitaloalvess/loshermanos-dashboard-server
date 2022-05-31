@@ -19,7 +19,7 @@ describe('Create account with admin user', () => {
 
     it('should be able to create a new account with admin user', async () => {
         const responseCreateAccountWithAdminUser = await request(app)
-            .post('/accountWithAdminUser')
+            .post('/account')
             .send({
                 name: 'Hitalo',
                 email: 'hitalo.ralves@hotmail.com',
