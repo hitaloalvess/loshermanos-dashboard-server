@@ -8,8 +8,12 @@ import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepositor
 
 interface IPayload {
     sub: string;
+    name: string;
     email: string;
     username: string;
+    telefone: string;
+    role: string;
+    id_account: string;
 }
 
 interface ITokenResponse {
@@ -29,8 +33,12 @@ class RefreshTokenUseCase {
 
     async execute(token: string): Promise<ITokenResponse | null> {
         const {
+            name,
             email,
             username,
+            telefone,
+            role,
+            id_account,
             sub: user_id,
         } = verify(token, auth.secret_refresh_token) as IPayload;
 
@@ -68,10 +76,21 @@ class RefreshTokenUseCase {
             expires_date,
         });
 
-        const newToken = sign({}, auth.secret_token, {
-            subject: user_id,
-            expiresIn: auth.expires_in_token,
-        });
+        const newToken = sign(
+            {
+                name,
+                email,
+                username,
+                telefone,
+                role,
+                id_account,
+            },
+            auth.secret_token,
+            {
+                subject: user_id,
+                expiresIn: auth.expires_in_token,
+            },
+        );
 
         return {
             token: newToken,

@@ -4,6 +4,7 @@ import { verify } from 'jsonwebtoken';
 import auth from '../../../../config/auth';
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
 import { AppError } from '../../../errors/AppError';
+import { authenticateRoutes } from '../routes/authenticate.routes';
 
 interface IPayload {
     sub: string;
@@ -15,11 +16,9 @@ export default function ensuredAuthenticated(
     next: NextFunction,
 ) {
     const authHeaders = req.headers.authorization;
-
     if (!authHeaders) {
         throw new AppError('Token is missing', 401);
     }
-
     const [, token] = authHeaders.split(' ');
 
     try {

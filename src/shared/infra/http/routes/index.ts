@@ -9,8 +9,8 @@ import { usersRoutes } from './users.routes';
 
 const router = Router();
 
-router.use(accountsRoutes);
 router.use(authenticateRoutes);
+router.use(accountsRoutes);
 router.use('/users', usersRoutes);
 router.use('/products', productsRoutes);
 router.use('/customers', customersRoutes);

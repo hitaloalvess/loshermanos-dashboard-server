@@ -42,6 +42,9 @@ class UsersRepository implements IUsersRepository {
             where: {
                 username,
             },
+            include: {
+                role: true,
+            },
         })) as User;
     }
 
@@ -71,6 +74,9 @@ class UsersRepository implements IUsersRepository {
         return this.repository.user.findMany({
             where: {
                 id_account,
+            },
+            include: {
+                role: true,
             },
         });
     }

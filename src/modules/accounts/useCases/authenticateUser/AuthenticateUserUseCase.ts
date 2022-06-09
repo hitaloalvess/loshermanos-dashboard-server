@@ -6,6 +6,7 @@ import { inject, injectable } from 'tsyringe';
 import auth from '../../../../config/auth';
 import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
+import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
 
@@ -21,6 +22,7 @@ interface IResponse {
         email: string;
         username: string;
         telefone: string;
+        role: string;
     };
     refresh_token: string;
 }
@@ -36,12 +38,16 @@ class AuthenticateUserUseCase {
 
         @inject('UsersTokensRepository')
         private usersTokensRepository: IUsersTokensRepository,
+
+        @inject('RolesRepository')
+        private rolesRepository: IRolesRepository,
     ) {}
 
     async execute({ username, password }: IRequest): Promise<IResponse> {
         const user = (await this.usersRepository.findByUsername(
             username,
         )) as User;
+
         const {
             secret_token,
             expires_in_token,
@@ -59,15 +65,32 @@ class AuthenticateUserUseCase {
             throw new AppError('Username or password incorrect', 401);
         }
 
-        const token = sign({}, secret_token, {
-            subject: user.id,
-            expiresIn: expires_in_token,
-        });
+        const role = await this.rolesRepository.findById(user.id_role);
+
+        const token = sign(
+            {
+                name: user.name,
+                email: user.email,
+                username: user.username,
+                telefone: user.telefone,
+                role: role.name,
+                id_account: user.id_account,
+            },
+            secret_token,
+            {
+                subject: user.id,
+                expiresIn: expires_in_token,
+            },
+        );
 
         const refresh_token = sign(
             {
-                username: user.username,
+                name: user.name,
                 email: user.email,
+                username: user.username,
+                telefone: user.telefone,
+                role: role.name,
+                id_account: user.id_account,
             },
             secret_refresh_token,
             {
@@ -93,6 +116,7 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
+                role: role.name,
             },
             refresh_token,
         };
