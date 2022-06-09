@@ -1,6 +1,4 @@
-import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
-import { v4 as uuid } from 'uuid';
 
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';

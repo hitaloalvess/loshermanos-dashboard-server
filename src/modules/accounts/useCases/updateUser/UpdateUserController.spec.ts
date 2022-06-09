@@ -21,6 +21,7 @@ describe('Update user', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

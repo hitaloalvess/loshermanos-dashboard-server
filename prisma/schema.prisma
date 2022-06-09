@@ -12,30 +12,11 @@ model Role {
     name        String
     description String
     created_at  DateTime @default(now())
+    id_account  String
+    account     Account  @relation(fields: [id_account], references: [id])
 
-    PermissionRole PermissionRole[]
-    User           User[]
+    User User[]
     @@map("roles")
-}
-
-model Permission {
-    id          String   @id @default(uuid())
-    name        String
-    description String
-    created_at  DateTime @default(now())
-
-    PermissionRole PermissionRole[]
-    @@map("permissions")
-}
-
-model PermissionRole {
-    id            String     @id @default(uuid())
-    id_permission String
-    permission    Permission @relation(fields: [id_permission], references: [id])
-    id_role       String
-    role          Role       @relation(fields: [id_role], references: [id])
-
-    @@map("permissions_roles")
 }
 
 model Account {
@@ -47,6 +28,7 @@ model Account {
     Product  Product[]
     Customer Customer[]
     Sale     Sale[]
+    Role     Role[]
     @@map("accounts")
 }
 

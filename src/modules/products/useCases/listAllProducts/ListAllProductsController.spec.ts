@@ -21,6 +21,7 @@ describe('List all products', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

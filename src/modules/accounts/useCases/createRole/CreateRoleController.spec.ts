@@ -1,9 +1,19 @@
+import { Account } from '@prisma/client';
 import request from 'supertest';
 
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
+let account: Account;
 describe('Create role', () => {
+    beforeAll(async () => {
+        account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'Teste',
+            },
+        });
+    });
+
     afterAll(async () => {
         await prismaClient.$disconnect();
     });
@@ -12,6 +22,7 @@ describe('Create role', () => {
         const responseCreateRole = await request(app).post('/role').send({
             name: 'manager',
             description: 'Gerente',
+            id_account: account.id,
         });
 
         expect(responseCreateRole.status).toBe(201);
@@ -22,6 +33,7 @@ describe('Create role', () => {
         const responseCreateRole = await request(app).post('/role').send({
             name: 'manager',
             description: 'Gerente 2',
+            id_account: account.id,
         });
 
         expect(responseCreateRole.status).toBe(400);

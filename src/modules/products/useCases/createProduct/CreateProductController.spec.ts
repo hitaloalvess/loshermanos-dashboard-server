@@ -20,6 +20,7 @@ describe('Create a new product', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

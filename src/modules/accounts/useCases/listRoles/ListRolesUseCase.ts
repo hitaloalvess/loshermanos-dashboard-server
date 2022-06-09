@@ -6,13 +6,11 @@ import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { IRolesRepository } from '../../repositories/IRolesRepository';
 
 interface IRequest {
-    name: string;
-    description: string;
     id_account: string;
 }
 
 @injectable()
-class CreateRoleUseCase {
+class ListRolesUseCase {
     constructor(
         @inject('AccountsRepository')
         private accountsRepository: IAccountsRepository,
@@ -21,7 +19,7 @@ class CreateRoleUseCase {
         private rolesRepository: IRolesRepository,
     ) {}
 
-    async execute({ name, description, id_account }: IRequest): Promise<Role> {
+    async execute({ id_account }: IRequest): Promise<Role[]> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );
@@ -30,19 +28,10 @@ class CreateRoleUseCase {
             throw new AppError('Account does not exists');
         }
 
-        const roleAlreadyExists = await this.rolesRepository.findByName(name);
+        const roles = this.rolesRepository.findAll(id_account);
 
-        if (roleAlreadyExists) {
-            throw new AppError('Role already exists');
-        }
-
-        const role = await this.rolesRepository.create({
-            name,
-            description,
-            id_account,
-        });
-        return role;
+        return roles;
     }
 }
 
-export { CreateRoleUseCase };
+export { ListRolesUseCase };

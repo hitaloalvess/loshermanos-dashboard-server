@@ -20,6 +20,7 @@ describe('List all customers', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

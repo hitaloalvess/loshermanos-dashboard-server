@@ -1,3 +1,5 @@
+import { Account } from '@prisma/client';
+
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -5,13 +7,17 @@ import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepos
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
 import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { CreateAccountUseCase } from '../createAccount/CreateAccountUseCase';
 import { CreateAccountWithAdminUserUseCase } from './CreateAccountWithAdminUserUseCase';
 
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
+let createAccountUseCase: CreateAccountUseCase;
 
 let accountsRepositoryInMemory: IAccountsRepository;
 let rolesRepositoryInMemory: IRolesRepository;
 let usersRepositoryInMemory: IUsersRepository;
+
+let account: Account;
 
 describe('Create account with admin user', () => {
     beforeEach(async () => {
@@ -24,12 +30,21 @@ describe('Create account with admin user', () => {
                 rolesRepositoryInMemory,
                 usersRepositoryInMemory,
             );
+
+        createAccountUseCase = new CreateAccountUseCase(
+            accountsRepositoryInMemory,
+        );
+
+        account = await createAccountUseCase.execute({
+            name_stablishment: 'Teste',
+        });
     });
 
     it('should be able to create a new account with admin user', async () => {
         await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
+            id_account: account.id,
         });
 
         const accountWithAdminUser =

@@ -11,11 +11,16 @@ class RolesRepository implements IRolesRepository {
         this.repository = prismaClient;
     }
 
-    async create({ name, description }: ICreateRoleDTO): Promise<Role> {
+    async create({
+        name,
+        description,
+        id_account,
+    }: ICreateRoleDTO): Promise<Role> {
         const role = this.repository.role.create({
             data: {
                 name,
                 description,
+                id_account,
             },
         });
 
@@ -40,6 +45,16 @@ class RolesRepository implements IRolesRepository {
         })) as Role;
 
         return role;
+    }
+
+    async findAll(id_account: string): Promise<Role[]> {
+        const roles = await this.repository.role.findMany({
+            where: {
+                id_account,
+            },
+        });
+
+        return roles;
     }
 }
 

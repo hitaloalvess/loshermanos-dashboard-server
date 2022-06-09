@@ -23,13 +23,14 @@ describe('Delete user', () => {
     });
 
     it('should be able to delete user', async () => {
+        const account = await accountsRepositoryInMemory.create({
+            name_stablishment: 'Teste',
+        });
+
         const role = await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
-        });
-
-        const account = await accountsRepositoryInMemory.create({
-            name_stablishment: 'Teste',
+            id_account: account.id,
         });
 
         const user = await usersRepositoryInMemory.create({

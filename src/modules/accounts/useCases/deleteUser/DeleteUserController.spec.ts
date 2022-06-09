@@ -21,6 +21,7 @@ describe('Delete user', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

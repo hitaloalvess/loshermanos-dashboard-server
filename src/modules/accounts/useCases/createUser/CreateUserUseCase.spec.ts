@@ -27,7 +27,10 @@ describe('Create a new User', () => {
             accountsRepositoryInMemory,
         );
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
-        createRoleUseCase = new CreateRoleUseCase(rolesRepositoryInMemory);
+        createRoleUseCase = new CreateRoleUseCase(
+            accountsRepositoryInMemory,
+            rolesRepositoryInMemory,
+        );
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         createUserUseCase = new CreateUserUseCase(
             usersRepositoryInMemory,
@@ -42,6 +45,7 @@ describe('Create a new User', () => {
         role = await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
+            id_account: account.id,
         });
     });
 

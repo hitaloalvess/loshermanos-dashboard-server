@@ -1,4 +1,4 @@
-import { Product, Sale, Sale_type } from '@prisma/client';
+import { Product, Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 

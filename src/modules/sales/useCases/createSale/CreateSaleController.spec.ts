@@ -12,16 +12,17 @@ let token: string;
 let product: Product;
 describe('Create sale', () => {
     beforeAll(async () => {
+        account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'LosHermanos',
+            },
+        });
+
         const role = await prismaClient.role.create({
             data: {
                 name: 'admin',
                 description: 'Administrator',
-            },
-        });
-
-        account = await prismaClient.account.create({
-            data: {
-                name_stablishment: 'LosHermanos',
+                id_account: account.id,
             },
         });
 

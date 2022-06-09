@@ -1,16 +1,15 @@
-import { Account, Customer } from '@prisma/client';
+import { Account } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
+let account: Account;
 let token: string;
-let customer: Customer;
-
-describe('Delete customer', () => {
+describe('List all roles', () => {
     beforeAll(async () => {
-        const account = await prismaClient.account.create({
+        account = await prismaClient.account.create({
             data: {
                 name_stablishment: 'LosHermanos',
             },
@@ -20,20 +19,6 @@ describe('Delete customer', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
-            },
-        });
-
-        customer = await prismaClient.customer.create({
-            data: {
-                name: 'Test',
-                cpf: '1234345435',
-                road: 'Rua test',
-                district: 'District test',
-                number: '330',
-                city: 'Test city',
-                phone: '(17)2222222',
-                zip_code: '11111-111',
                 id_account: account.id,
             },
         });
@@ -62,25 +47,26 @@ describe('Delete customer', () => {
         await prismaClient.$disconnect();
     });
 
-    it('should be able to delete customer', async () => {
-        const responseDeleteCustomer = await request(app)
-            .delete(`/customers/${customer.id}`)
+    it('should be able to list all roles', async () => {
+        const responseListRoles = await request(app)
+            .get(`/role/${account.id}`)
             .set({
                 Authorization: `Bearer ${token}`,
             });
 
-        expect(responseDeleteCustomer.status).toBe(200);
-        expect(responseDeleteCustomer.error).toBeFalsy();
+        expect(responseListRoles.status).toBe(200);
+        expect(responseListRoles.error).toBeFalsy();
+        expect(responseListRoles.body.length).toEqual(1);
     });
 
-    it('should not be able to delete a non-existent customer', async () => {
-        const responseDeleteCustomer = await request(app)
-            .delete(`/customers/incorrectID`)
+    it('should not be able to list roles from a non-existent account', async () => {
+        const responseListRoles = await request(app)
+            .get(`/role/incorrectID`)
             .set({
                 Authorization: `Bearer ${token}`,
             });
 
-        expect(responseDeleteCustomer.status).toBe(400);
-        expect(responseDeleteCustomer.error).toBeTruthy();
+        expect(responseListRoles.status).toBe(400);
+        expect(responseListRoles.error).toBeTruthy();
     });
 });

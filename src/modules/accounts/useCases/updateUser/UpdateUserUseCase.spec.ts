@@ -27,18 +27,20 @@ describe('Update user', () => {
 
         updateUserUseCase = new UpdateUserUseCase(usersRepositoryInMemory);
 
+        account = await accountsRepositoryInMemory.create({
+            name_stablishment: 'LosHermanos',
+        });
+
         roleAtendente = await rolesRepositoryInMemory.create({
             name: 'atendent',
             description: 'Atendente',
+            id_account: account.id,
         });
 
         roleAdmin = await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
-        });
-
-        account = await accountsRepositoryInMemory.create({
-            name_stablishment: 'LosHermanos',
+            id_account: account.id,
         });
 
         user = await usersRepositoryInMemory.create({

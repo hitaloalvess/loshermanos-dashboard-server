@@ -29,13 +29,14 @@ describe('List users linked to account', () => {
             accountsRepositoryInMemory,
         );
 
+        account = await accountsRepositoryInMemory.create({
+            name_stablishment: 'TesteTeste',
+        });
+
         role = await rolesRepositoryInMemory.create({
             name: 'Admin',
             description: 'Administrador',
-        });
-
-        account = await accountsRepositoryInMemory.create({
-            name_stablishment: 'TesteTeste',
+            id_account: account.id,
         });
 
         user = await usersRepositoryInMemory.create({

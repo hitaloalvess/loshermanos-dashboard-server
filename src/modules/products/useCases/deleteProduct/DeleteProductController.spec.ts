@@ -20,6 +20,7 @@ describe('Delete product', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

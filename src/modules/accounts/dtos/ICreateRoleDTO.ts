@@ -3,6 +3,7 @@ interface ICreateRoleDTO {
     name: string;
     description: string;
     created_at?: Date;
+    id_account: string;
 }
 
 export { ICreateRoleDTO };
