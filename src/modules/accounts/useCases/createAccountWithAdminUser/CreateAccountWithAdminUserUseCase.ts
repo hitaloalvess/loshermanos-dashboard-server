@@ -41,10 +41,14 @@ class CreateAccountWithAdminUserUseCase {
             name_stablishment,
         });
 
-        const role = await this.rolesRepository.findByName('admin');
+        let role = await this.rolesRepository.findByName('admin');
 
         if (!role) {
-            throw new AppError('Role not exists');
+            role = await this.rolesRepository.create({
+                name: 'admin',
+                description: 'Administrador',
+                id_account: account.id,
+            });
         }
 
         const passwordHash = await hash(password, 8);

@@ -18,9 +18,8 @@ app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use(router);
-
 app.use('/products', express.static(`${upload.tmpFolder}/products`));
+app.use(router);
 
 app.use(
     (err: Error, _request: Request, response: Response, next: NextFunction) => {

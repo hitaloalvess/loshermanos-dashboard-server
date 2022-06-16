@@ -23,7 +23,7 @@ productsRoutes.post(
     '/image',
     ensuredAuthenticated,
     is(['admin']),
-    upload.single('image'),
+    upload.single('image_name'),
     uploadProductImageController.handle,
 );
 

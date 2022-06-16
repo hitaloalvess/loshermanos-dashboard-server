@@ -22,7 +22,12 @@ interface IResponse {
         email: string;
         username: string;
         telefone: string;
-        role: string;
+        role: {
+            id: string;
+            name: string;
+            description: string;
+        };
+        id_account: string;
     };
     refresh_token: string;
 }
@@ -73,7 +78,11 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: role.name,
+                role: {
+                    id: role.id,
+                    name: role.name,
+                    description: role.description,
+                },
                 id_account: user.id_account,
             },
             secret_token,
@@ -89,7 +98,11 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: role.name,
+                role: {
+                    id: role.id,
+                    name: role.name,
+                    description: role.description,
+                },
                 id_account: user.id_account,
             },
             secret_refresh_token,
@@ -116,7 +129,12 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: role.name,
+                role: {
+                    id: role.id,
+                    name: role.name,
+                    description: role.description,
+                },
+                id_account: user.id_account,
             },
             refresh_token,
         };

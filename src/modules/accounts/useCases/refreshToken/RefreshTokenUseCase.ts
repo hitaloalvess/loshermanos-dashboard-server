@@ -12,7 +12,11 @@ interface IPayload {
     email: string;
     username: string;
     telefone: string;
-    role: string;
+    role: {
+        id: string;
+        name: string;
+        description: string;
+    };
     id_account: string;
 }
 
@@ -41,7 +45,6 @@ class RefreshTokenUseCase {
             id_account,
             sub: user_id,
         } = verify(token, auth.secret_refresh_token) as IPayload;
-
         const userToken =
             await this.usersTokensRepository.findByUserIdAndRefreshToken(
                 user_id,
@@ -56,12 +59,16 @@ class RefreshTokenUseCase {
 
         const newRefreshToken = sign(
             {
-                username,
+                name,
                 email,
+                username,
+                telefone,
+                role,
+                id_account,
             },
             auth.secret_refresh_token,
             {
-                subject: userToken.id,
+                subject: userToken.id_user,
                 expiresIn: auth.expires_in_refresh_token,
             },
         );

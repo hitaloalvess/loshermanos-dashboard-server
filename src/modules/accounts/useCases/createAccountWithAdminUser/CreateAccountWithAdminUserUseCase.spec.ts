@@ -61,17 +61,4 @@ describe('Create account with admin user', () => {
         expect(accountWithAdminUser.account).toHaveProperty('id');
         expect(accountWithAdminUser.role.name).toEqual('admin');
     });
-
-    it('should not be able to create an account with a user with non-existent role', () => {
-        expect(
-            createAccountWithAdminUserUseCase.execute({
-                name: 'Teste name1',
-                email: 'Teste email1',
-                username: 'Teste username1',
-                password: 'Teste password1',
-                telefone: 'Teste telefone1',
-                name_stablishment: 'Teste name stablishment1',
-            }),
-        ).rejects.toEqual(new AppError('Role not exists'));
-    });
 });
