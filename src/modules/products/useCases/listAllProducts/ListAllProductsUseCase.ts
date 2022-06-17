@@ -23,7 +23,7 @@ class ListAllProductsUseCase {
             throw new AppError('Account does not exists');
         }
 
-        const products = await this.productsRepository.findAll(id_account);
+        const products = await this.productsRepository.findAll({ id_account });
 
         return products;
     }

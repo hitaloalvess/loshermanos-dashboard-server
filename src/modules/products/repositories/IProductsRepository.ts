@@ -1,5 +1,6 @@
 import { Product } from '@prisma/client';
 
+import { IFunFindAllParams } from '../../../@types';
 import { ICreateProductDTO } from '../dtos/ICreateProductDTO';
 import { IUpdateProductDTO } from '../dtos/IUpdateProductDTO';
 
@@ -9,7 +10,7 @@ interface IProductsRepository {
     deleteById(id_product: string): Promise<Product>;
     findByDescription(description: string): Promise<Product | undefined | null>;
     findById(id: string): Promise<Product | undefined | null>;
-    findAll(id_account: string): Promise<Product[]>;
+    findAll({ id_account, limit, skip }: IFunFindAllParams): Promise<Product[]>;
 }
 
 export { IProductsRepository };

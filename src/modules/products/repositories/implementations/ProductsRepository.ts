@@ -1,5 +1,6 @@
 import { PrismaClient, Product } from '@prisma/client';
 
+import { IFunFindAllParams } from '../../../../@types';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateProductDTO } from '../../dtos/ICreateProductDTO';
 import { IUpdateProductDTO } from '../../dtos/IUpdateProductDTO';
@@ -82,11 +83,17 @@ class ProductsRepository implements IProductsRepository {
         return product;
     }
 
-    findAll(id_account: string): Promise<Product[]> {
+    findAll({
+        id_account,
+        page,
+        limit,
+    }: IFunFindAllParams): Promise<Product[]> {
         const products = this.repository.product.findMany({
             where: {
                 id_account,
             },
+            skip: page || undefined,
+            take: limit || undefined,
         });
 
         return products;

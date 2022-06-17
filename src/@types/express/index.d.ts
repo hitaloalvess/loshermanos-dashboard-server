@@ -4,5 +4,18 @@ declare namespace Express {
         user: {
             id: string;
         };
+
+        paginatedResults: {
+            next?: {
+                page: number;
+                limit: number;
+            };
+            previous?: {
+                page: number;
+                limit: number;
+            };
+            totalPage?: number;
+            data?: T;
+        };
     }
 }

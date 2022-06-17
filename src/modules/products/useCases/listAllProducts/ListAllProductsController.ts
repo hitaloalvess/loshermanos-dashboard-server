@@ -11,6 +11,12 @@ class ListAllProductsController {
 
         const { id_account } = req.params;
 
+        const pagination = req.paginatedResults;
+
+        if (pagination) {
+            return res.json(pagination);
+        }
+
         const products = await listAllProductsUseCase.execute(id_account);
 
         return res.json(products);
