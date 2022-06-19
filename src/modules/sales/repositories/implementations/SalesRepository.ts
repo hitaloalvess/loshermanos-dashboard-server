@@ -104,6 +104,9 @@ class SalesRepository implements ISalesRepository {
             where: {
                 id_account,
             },
+            include: {
+                customer: true,
+            },
         });
 
         return sales;

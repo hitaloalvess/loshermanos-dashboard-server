@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -13,7 +14,7 @@ class SalePaymentController {
 
         const updatedSale = await salePaymentUseCase.execute({
             id_sale,
-            value_pay,
+            value_pay: new Decimal(value_pay),
         });
 
         return res.json(updatedSale);

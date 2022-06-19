@@ -39,7 +39,7 @@ function pagination({ entity }: IPaginationProps) {
 
         if (endIndex < registersTotal.length) {
             results.next = {
-                page: page - 1,
+                page: page + 1,
                 limit,
             };
         }
