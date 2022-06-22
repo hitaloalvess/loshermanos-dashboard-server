@@ -12,17 +12,14 @@ const repositories = {
     products: new ProductsRepository(),
 };
 
-function pagination({ entity }: IPaginationProps) {
+export default function pagination({ entity }: IPaginationProps) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const limit = Number(req.query.limit as string);
         const page = Number(req.query.page as string);
 
         if (!limit && !page) {
             next();
-        }
-
-        if (page <= 0) {
-            throw new AppError('Page value must not be less than 1', 401);
+            return;
         }
 
         const { id_account } = req.params;
@@ -58,7 +55,7 @@ function pagination({ entity }: IPaginationProps) {
                 limit,
             });
 
-            req.paginatedResults = results;
+            res.paginatedResults = results;
 
             next();
         } catch (err) {
@@ -66,5 +63,3 @@ function pagination({ entity }: IPaginationProps) {
         }
     };
 }
-
-export { pagination };

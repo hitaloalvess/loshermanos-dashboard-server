@@ -8,7 +8,7 @@ import { ListAllProductsController } from '../../../../modules/products/useCases
 import { UpdateProductController } from '../../../../modules/products/useCases/updateProduct/UpdateProductController';
 import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/UploadProductImageController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
-import { pagination } from '../middlewares/pagination';
+import pagination from '../middlewares/pagination';
 import { is } from '../middlewares/permissions';
 
 const productsRoutes = Router();

@@ -4,7 +4,10 @@ declare namespace Express {
         user: {
             id: string;
         };
+    }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    export interface Response {
         paginatedResults: {
             next?: {
                 page: number;

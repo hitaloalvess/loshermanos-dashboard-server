@@ -11,7 +11,7 @@ class ListAllProductsController {
 
         const { id_account } = req.params;
 
-        const pagination = req.paginatedResults;
+        const pagination = res.paginatedResults;
 
         if (pagination) {
             return res.json(pagination);
