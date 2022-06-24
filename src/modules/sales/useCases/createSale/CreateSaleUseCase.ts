@@ -1,8 +1,10 @@
-import { Product, Sale_type } from '@prisma/client';
+import { Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { Product, Sale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
+import { avoidDuplicateElements } from '../../../../util/avoidDuplicateElements';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { ICustomersRepository } from '../../../customers/repositories/ICustomersRepository';
 import { ISaleResponseDTO } from '../../dtos/ISaleResponseDTO';
@@ -65,7 +67,7 @@ class CreateSaleUseCase {
             throw new AppError('Cannot create a sale without product');
         }
 
-        const sale = await this.salesRepository.create({
+        const sale = (await this.salesRepository.create({
             total,
             value_pay,
             descount,
@@ -73,15 +75,24 @@ class CreateSaleUseCase {
             updated_at,
             id_account,
             id_customer,
+        })) as Sale;
+
+        // Evita produtos duplicados
+        const newProducts = avoidDuplicateElements<Product>({
+            elements: products,
         });
 
-        products.map(async product => {
-            await this.saleProductsRepository.create(sale.id, product.id);
+        newProducts.map(async product => {
+            await this.saleProductsRepository.create({
+                id_sale: sale.id as string,
+                id_product: product.id as string,
+                amount: product.amount as Decimal,
+            });
         });
 
         return {
             ...sale,
-            products,
+            products: newProducts,
         };
     }
 }

@@ -1,5 +1,6 @@
-import { PrismaClient, Sale } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
+import { Sale } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateSaleDTO } from '../../dtos/ICreateSaleDTO';
 import { IUpdateSaleDTO } from '../../dtos/IUpdateSaleDTO';
@@ -22,7 +23,7 @@ class SalesRepository implements ISalesRepository {
         id_account,
         id_customer,
     }: ICreateSaleDTO): Promise<Sale> {
-        const sale = await this.repository.sale.create({
+        const sale = (await this.repository.sale.create({
             data: {
                 total,
                 value_pay,
@@ -32,9 +33,9 @@ class SalesRepository implements ISalesRepository {
                 id_account,
                 id_customer,
             },
-        });
+        })) as Sale;
 
-        return sale;
+        return sale as Sale;
     }
 
     async update({

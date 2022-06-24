@@ -1,6 +1,9 @@
-import { PrismaClient, SaleProduct } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime';
 
+import { ProductSale } from '../../../../database/entities/ProductSale';
 import { prismaClient } from '../../../../database/prismaClient';
+import { ICreateSaleProductDTO } from '../../dtos/ICreateSaleProductDTO';
 import { ISaleProductsRepository } from '../ISaleProductsRepository';
 
 class SaleProductsRepository implements ISaleProductsRepository {
@@ -10,11 +13,16 @@ class SaleProductsRepository implements ISaleProductsRepository {
         this.repository = prismaClient;
     }
 
-    async create(id_sale: string, id_product: string): Promise<SaleProduct> {
+    async create({
+        id_sale,
+        id_product,
+        amount,
+    }: ICreateSaleProductDTO): Promise<ProductSale> {
         const saleProduct = await this.repository.saleProduct.create({
             data: {
                 id_sale,
                 id_product,
+                amount,
             },
         });
 
@@ -27,6 +35,19 @@ class SaleProductsRepository implements ISaleProductsRepository {
                 id_sale,
             },
         });
+    }
+
+    async findAll(id_sale: string): Promise<ProductSale[]> {
+        const all = await this.repository.saleProduct.findMany({
+            where: {
+                id_sale,
+            },
+            include: {
+                product: true,
+            },
+        });
+
+        return all;
     }
 }
 

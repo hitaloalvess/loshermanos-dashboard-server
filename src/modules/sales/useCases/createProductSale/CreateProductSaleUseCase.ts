@@ -1,6 +1,6 @@
-import { SaleProduct } from '@prisma/client';
 import { inject } from 'tsyringe';
 
+import { ProductSale } from '../../../../database/entities/ProductSale';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IProductsRepository } from '../../../products/repositories/IProductsRepository';
 import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
@@ -9,8 +9,9 @@ import { ISalesRepository } from '../../repositories/ISalesRepository';
 interface IRequest {
     id_sale: string;
     id_product: string;
+    amount: number;
 }
-class CreateSaleProductUseCase {
+class CreateProductSaleUseCase {
     constructor(
         @inject('SaleProductsRepository')
         private saleProductsRepository: ISaleProductsRepository,
@@ -21,7 +22,11 @@ class CreateSaleProductUseCase {
         @inject('SalesRepository')
         private salesRepository: ISalesRepository,
     ) {}
-    async execute({ id_product, id_sale }: IRequest): Promise<SaleProduct> {
+    async execute({
+        id_product,
+        id_sale,
+        amount,
+    }: IRequest): Promise<ProductSale> {
         const productsExists = await this.productsRepository.findById(
             id_product,
         );
@@ -36,13 +41,14 @@ class CreateSaleProductUseCase {
             throw new AppError('Sale does not exists');
         }
 
-        const saleProduct = await this.saleProductsRepository.create(
+        const productSale = await this.saleProductsRepository.create({
             id_sale,
             id_product,
-        );
+            amount,
+        });
 
-        return saleProduct;
+        return productSale;
     }
 }
 
-export { CreateSaleProductUseCase };
+export { CreateProductSaleUseCase };

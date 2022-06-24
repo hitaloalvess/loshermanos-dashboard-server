@@ -1,7 +1,10 @@
+import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { Product, Sale, SaleWithProducts } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
+import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 @injectable()
@@ -12,6 +15,9 @@ class ListAllSalesUseCase {
 
         @inject('AccountsRepository')
         private accountsRepository: IAccountsRepository,
+
+        @inject('SaleProductsRepository')
+        private saleProductsRepository: ISaleProductsRepository,
     ) {}
     async execute(id_account: string) {
         const accountExists = await this.accountsRepository.findById(
@@ -22,7 +28,27 @@ class ListAllSalesUseCase {
             throw new AppError('Sale does not exists');
         }
 
-        const sales = await this.salesRepository.findAll(id_account);
+        const allSales = await this.salesRepository.findAll(id_account);
+
+        const sales = await Promise.all(
+            allSales.map(async sale => {
+                const productsSale = await this.saleProductsRepository.findAll(
+                    sale.id as string,
+                );
+
+                const products = productsSale.map(item => {
+                    return {
+                        ...(item.product as Product),
+                        amount: item.amount,
+                    };
+                });
+
+                return {
+                    ...sale,
+                    products,
+                };
+            }),
+        );
 
         return sales;
     }

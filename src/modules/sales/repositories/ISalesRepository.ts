@@ -1,5 +1,4 @@
-import { Sale } from '@prisma/client';
-
+import { Sale } from '../../../database/entities';
 import { ICreateSaleDTO } from '../dtos/ICreateSaleDTO';
 import { IUpdateSaleDTO } from '../dtos/IUpdateSaleDTO';
 import { IUpdateSalePaymentDTO } from '../dtos/IUpdateSalePaymentDTO';

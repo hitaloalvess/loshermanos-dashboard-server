@@ -13,7 +13,7 @@ import { SaleProductsRepositoryInMemory } from '../../repositories/in-memory/Sal
 import { SalesRepositoryInMemory } from '../../repositories/in-memory/SalesRepositoryInMemory';
 import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
-import { CreateSaleProductUseCase } from './CreateSaleProductUseCase';
+import { CreateSaleProductUseCase } from './CreateProductSaleUseCase';
 
 let salesRepositoryInMemory: ISalesRepository;
 let productsRepositoryInMemory: IProductsRepository;
