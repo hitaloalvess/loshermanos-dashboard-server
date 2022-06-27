@@ -28,7 +28,7 @@ class ListSaleByIdUseCase {
         const products = productsSale.map(item => {
             return {
                 ...(item.product as Product),
-                amout: item.amount,
+                amount: item.amount,
             };
         });
 

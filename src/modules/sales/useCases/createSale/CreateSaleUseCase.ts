@@ -86,7 +86,7 @@ class CreateSaleUseCase {
             await this.saleProductsRepository.create({
                 id_sale: sale.id as string,
                 id_product: product.id as string,
-                amount: product.amount as Decimal,
+                amount: product.amount as number,
             });
         });
 

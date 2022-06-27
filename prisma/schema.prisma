@@ -13,7 +13,7 @@ model Role {
     description String
     created_at  DateTime @default(now())
     id_account  String
-    account     Account  @relation(fields: [id_account], references: [id])
+    account     Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
 
     User User[]
     @@map("roles")
@@ -41,9 +41,9 @@ model User {
     telefone   String
     created_at DateTime @default(now())
     id_account String
-    account    Account  @relation(fields: [id_account], references: [id])
+    account    Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
     id_role    String
-    role       Role     @relation(fields: [id_role], references: [id])
+    role       Role     @relation(fields: [id_role], references: [id], onDelete: Cascade)
 
     UserTokens UserTokens[]
     @@map("users")
@@ -55,7 +55,7 @@ model UserTokens {
     expires_date  DateTime
     created_at    DateTime @default(now())
     id_user       String
-    user          User     @relation(fields: [id_user], references: [id])
+    user          User     @relation(fields: [id_user], references: [id], onDelete: Cascade)
 
     @@map("users_token")
 }
@@ -67,7 +67,7 @@ model Product {
     image_name  String
     created_at  DateTime @default(now())
     id_account  String
-    account     Account  @relation(fields: [id_account], references: [id])
+    account     Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
 
     SaleProduct SaleProduct[]
     @@map("products")
@@ -86,7 +86,7 @@ model Customer {
     zip_code   String
     created_at DateTime @default(now())
     id_account String
-    account    Account  @relation(fields: [id_account], references: [id])
+    account    Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
 
     Sale Sale[]
     @@map("customers")
@@ -101,9 +101,9 @@ model Sale {
     updated_at  DateTime
     created_at  DateTime  @default(now())
     id_account  String
-    account     Account   @relation(fields: [id_account], references: [id])
+    account     Account   @relation(fields: [id_account], references: [id], onDelete: Cascade)
     id_customer String
-    customer    Customer  @relation(fields: [id_customer], references: [id])
+    customer    Customer  @relation(fields: [id_customer], references: [id], onDelete: Cascade)
 
     SaleProduct SaleProduct[]
     @@map("sales")
@@ -116,9 +116,9 @@ enum Sale_type {
 
 model SaleProduct {
     id_sale    String
-    sale       Sale    @relation(fields: [id_sale], references: [id])
+    sale       Sale    @relation(fields: [id_sale], references: [id], onDelete: Cascade)
     id_product String
-    product    Product @relation(fields: [id_product], references: [id])
+    product    Product @relation(fields: [id_product], references: [id], onDelete: Cascade)
     amount     Int     @default(dbgenerated("0"))
 
     @@id([id_sale, id_product])
