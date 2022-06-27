@@ -1,16 +1,15 @@
-import { Account, Customer } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Customer } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
 let token: string;
-let account: Account;
-
-describe('List all customers', () => {
+let customerMock: Customer;
+describe('List customer by id', () => {
     beforeAll(async () => {
-        account = await prismaClient.account.create({
+        const account = await prismaClient.account.create({
             data: {
                 name_stablishment: 'LosHermanos',
             },
@@ -24,7 +23,7 @@ describe('List all customers', () => {
             },
         });
 
-        const customer = await prismaClient.customer.create({
+        customerMock = await prismaClient.customer.create({
             data: {
                 name: 'Test',
                 cpf: '1234345435',
@@ -62,21 +61,20 @@ describe('List all customers', () => {
         await prismaClient.$disconnect();
     });
 
-    it('should be able to list all customers', async () => {
-        const responseListAllCustomers = await request(app)
-            .get(`/customers/all/${account.id}`)
+    it('should be able to list customer', async () => {
+        const responseCustomerById = await request(app)
+            .get(`/customers/${customerMock.id}`)
             .set({
                 Authorization: `Bearer ${token}`,
             });
 
-        expect(responseListAllCustomers.status).toBe(200);
-        expect(responseListAllCustomers.error).toBeFalsy();
-        expect(responseListAllCustomers.body.length).toBe(1);
+        expect(responseCustomerById.status).toBe(200);
+        expect(responseCustomerById.error).toBeFalsy();
     });
 
-    it('should not be ablet to list users from a non-existent account', async () => {
+    it('should not be ablet to list non-existent customer', async () => {
         const responseListAllCustomers = await request(app)
-            .get(`/customers/all/incorrectID`)
+            .get(`/customers/incorrectID`)
             .set({
                 Authorization: `Bearer ${token}`,
             });

@@ -1,4 +1,3 @@
-import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
 import { Product, SaleWithProducts } from '../../../../database/entities';

@@ -1,6 +1,6 @@
-import { Sale } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { Sale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';

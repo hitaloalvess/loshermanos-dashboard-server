@@ -1,6 +1,8 @@
-import { Account, Customer } from '@prisma/client';
+import { Account } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { v4 as uuid } from 'uuid';
+
+import { Customer } from './Customer';
 
 class Sale {
     id?: string;

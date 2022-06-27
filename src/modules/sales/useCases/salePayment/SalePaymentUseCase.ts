@@ -1,7 +1,7 @@
-import { Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { Sale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 

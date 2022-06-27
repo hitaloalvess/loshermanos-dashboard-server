@@ -1,7 +1,8 @@
-import { Product, Sale_type } from '@prisma/client';
+import { Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { Product } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { ISaleResponseDTO } from '../../dtos/ISaleResponseDTO';
 import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
@@ -59,7 +60,11 @@ class UpdateSaleUseCase {
         await this.saleProductsRepository.deleteAllProductsSale(id_sale);
 
         products.map(async product => {
-            await this.saleProductsRepository.create(id_sale, product.id);
+            await this.saleProductsRepository.create({
+                id_sale,
+                id_product: product.id as string,
+                amount: product.amount as number,
+            });
         });
 
         const saleProducts: ISaleResponseDTO = {
