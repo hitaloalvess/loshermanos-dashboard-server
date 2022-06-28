@@ -1,9 +1,9 @@
 import { inject } from 'tsyringe';
 
-import { ProductSale } from '../../../../database/entities/ProductSale';
+import { ProductSale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IProductsRepository } from '../../../products/repositories/IProductsRepository';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 interface IRequest {
@@ -14,7 +14,7 @@ interface IRequest {
 class CreateProductSaleUseCase {
     constructor(
         @inject('SaleProductsRepository')
-        private saleProductsRepository: ISaleProductsRepository,
+        private saleProductsRepository: IProductsSaleRepository,
 
         @inject('ProductsRepository')
         private productsRepository: IProductsRepository,

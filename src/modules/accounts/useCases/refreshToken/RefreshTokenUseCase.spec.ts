@@ -1,7 +1,7 @@
-import { Account } from '@prisma/client';
 import { sign } from 'jsonwebtoken';
 
 import auth from '../../../../config/auth';
+import { Account } from '../../../../database/entities';
 import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
@@ -63,7 +63,7 @@ describe('Refresh user token', () => {
         await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         await createAccountWithAdminUser.execute({

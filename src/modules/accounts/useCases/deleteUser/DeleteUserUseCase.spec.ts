@@ -30,7 +30,7 @@ describe('Delete user', () => {
         const role = await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         const user = await usersRepositoryInMemory.create({
@@ -39,13 +39,13 @@ describe('Delete user', () => {
             username: 'teste123',
             password: '123455',
             telefone: '123455',
-            id_account: account.id,
-            id_role: role.id,
+            id_account: account.id as string,
+            id_role: role.id as string,
         });
 
-        const userDelete = await deleteUserUseCase.execute(user.id);
+        const userDelete = await deleteUserUseCase.execute(user.id as string);
         const listUsers = await usersRepositoryInMemory.listUsersByAccountId(
-            account.id,
+            account.id as string,
         );
 
         expect(listUsers).not.toContainEqual(userDelete);

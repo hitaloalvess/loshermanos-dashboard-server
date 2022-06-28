@@ -1,6 +1,3 @@
-import { Product, Sale_type } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
-
 interface IUserWithRegisteredAccount {
     id?: string;
     name: string;
@@ -10,15 +7,15 @@ interface IUserWithRegisteredAccount {
     telefone: string;
     created_at?: Date;
     account: {
-        id: string;
+        id?: string;
         name_stablishment: string;
-        created_at: Date;
+        created_at?: Date;
     };
     role: {
-        id: string;
+        id?: string;
         name: string;
         description: string;
-        created_at: Date;
+        created_at?: Date;
     };
 }
 

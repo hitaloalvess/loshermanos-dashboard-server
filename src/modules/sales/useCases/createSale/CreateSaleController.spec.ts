@@ -1,8 +1,8 @@
-import { Account, Customer, Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, Customer, Product } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -22,7 +22,7 @@ describe('Create sale', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -36,7 +36,7 @@ describe('Create sale', () => {
                 city: 'Test city',
                 phone: '(17)2222222',
                 zip_code: '11111-111',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -47,8 +47,8 @@ describe('Create sale', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
-                id_role: role.id,
+                id_account: account.id as string,
+                id_role: role.id as string,
             },
         });
 
@@ -57,7 +57,7 @@ describe('Create sale', () => {
                 description: 'Teste',
                 price: new Decimal(44),
                 image_name: 'logo.png',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 

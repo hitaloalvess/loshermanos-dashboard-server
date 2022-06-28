@@ -1,9 +1,9 @@
-import { Account } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import request from 'supertest';
 
 import auth from '../../../../config/auth';
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -35,7 +35,7 @@ describe('Refresh user token', () => {
                     create: {
                         name: 'admin',
                         description: 'Administrator',
-                        id_account: account.id,
+                        id_account: account.id as string,
                     },
                 },
             },

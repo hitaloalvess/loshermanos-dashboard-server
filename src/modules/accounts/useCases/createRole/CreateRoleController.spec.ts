@@ -1,6 +1,6 @@
-import { Account } from '@prisma/client';
 import request from 'supertest';
 
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 

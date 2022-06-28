@@ -1,5 +1,4 @@
-import { Account } from '@prisma/client';
-
+import { Account } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -38,7 +37,7 @@ describe('Create role', () => {
         const role = await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
-            id_account: accountMock.id,
+            id_account: accountMock.id as string,
         });
 
         expect(role).toHaveProperty('id');
@@ -48,14 +47,14 @@ describe('Create role', () => {
         await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
-            id_account: accountMock.id,
+            id_account: accountMock.id as string,
         });
 
         await expect(
             createRoleUseCase.execute({
                 name: 'admin',
                 description: 'Administrador 1',
-                id_account: accountMock.id,
+                id_account: accountMock.id as string,
             }),
         ).rejects.toEqual(new AppError('Role already exists'));
     });

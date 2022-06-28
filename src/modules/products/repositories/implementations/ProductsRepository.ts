@@ -1,13 +1,12 @@
-import { PrismaClient, Product } from '@prisma/client';
-
 import { IFunFindAllParams } from '../../../../@types';
+import { Product } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateProductDTO } from '../../dtos/ICreateProductDTO';
 import { IUpdateProductDTO } from '../../dtos/IUpdateProductDTO';
 import { IProductsRepository } from '../IProductsRepository';
 
 class ProductsRepository implements IProductsRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;

@@ -2,16 +2,10 @@ import { v4 as uuid } from 'uuid';
 
 import { Account } from './Account';
 
-class Customer {
+class Role {
     id?: string;
     name!: string;
-    cpf!: string;
-    road!: string;
-    district!: string;
-    number!: string;
-    city!: string;
-    phone!: string;
-    zip_code!: string;
+    description!: string;
     created_at?: Date;
     id_account!: string;
     account?: Account;
@@ -24,4 +18,4 @@ class Customer {
     }
 }
 
-export { Customer };
+export { Role };

@@ -32,10 +32,12 @@ describe('List all producsts', () => {
             description: 'Pizza teste',
             price: new Decimal(45),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
-        const products = await listAllProductsUseCase.execute(account.id);
+        const products = await listAllProductsUseCase.execute(
+            account.id as string,
+        );
 
         expect(products).toEqual([product]);
     });

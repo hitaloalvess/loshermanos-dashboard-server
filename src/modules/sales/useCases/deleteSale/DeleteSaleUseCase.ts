@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { Sale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 @injectable()
@@ -12,7 +12,7 @@ class DeleteSaleUseCase {
         private salesRepository: ISalesRepository,
 
         @inject('SaleProductsRepository')
-        private saleProductsRepository: ISaleProductsRepository,
+        private saleProductsRepository: IProductsSaleRepository,
     ) {}
     async execute(id_sale: string): Promise<Sale> {
         const saleExists = await this.salesRepository.findById(id_sale);

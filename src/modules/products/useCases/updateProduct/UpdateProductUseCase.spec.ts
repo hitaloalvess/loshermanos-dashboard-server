@@ -1,6 +1,6 @@
-import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
+import { Product } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -31,7 +31,7 @@ describe('Update product', () => {
             description: 'Pizza teste',
             price: new Decimal(99),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 
@@ -40,7 +40,7 @@ describe('Update product', () => {
             description: 'Nova pizza',
             price: new Decimal(45),
             image_name: 'logo.png',
-            id_product: product.id,
+            id_product: product.id as string,
         });
 
         expect(productUpdated).toHaveProperty('id');

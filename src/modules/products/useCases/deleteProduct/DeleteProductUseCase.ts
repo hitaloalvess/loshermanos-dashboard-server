@@ -1,6 +1,6 @@
-import { Product } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { Product } from '../../../../database/entities';
 import { IStorageProvider } from '../../../../shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IProductsRepository } from '../../repositories/IProductsRepository';

@@ -1,7 +1,7 @@
-import { Account, Role, User } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, Role, User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -21,7 +21,7 @@ describe('Delete user', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -32,8 +32,8 @@ describe('Delete user', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
-                id_role: role.id,
+                id_account: account.id as string,
+                id_role: role.id as string,
             },
         });
 
@@ -44,8 +44,8 @@ describe('Delete user', () => {
                 username: 'hitalo123',
                 password: await hash('22222', 8),
                 telefone: '213213124',
-                id_account: account.id,
-                id_role: role.id,
+                id_account: account.id as string,
+                id_role: role.id as string,
             },
         });
 

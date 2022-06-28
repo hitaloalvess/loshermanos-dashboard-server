@@ -1,6 +1,6 @@
-import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
+import { Product } from '../../../../database/entities';
 import { LocalStorageProvider } from '../../../../shared/container/providers/StorageProvider/implementations/LocalStorageProvider';
 import { IStorageProvider } from '../../../../shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '../../../../shared/errors/AppError';
@@ -36,12 +36,14 @@ describe('Delete product', () => {
             description: 'Teste',
             price: new Decimal(44),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 
     it('should be able to delete product', async () => {
-        const deleteProduct = await deleteProductUseCase.execute(product.id);
+        const deleteProduct = await deleteProductUseCase.execute(
+            product.id as string,
+        );
 
         expect(deleteProduct).toHaveProperty('id');
     });

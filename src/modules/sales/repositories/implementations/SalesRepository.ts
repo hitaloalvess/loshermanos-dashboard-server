@@ -1,5 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
 import { Sale } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateSaleDTO } from '../../dtos/ICreateSaleDTO';
@@ -8,7 +6,7 @@ import { IUpdateSalePaymentDTO } from '../../dtos/IUpdateSalePaymentDTO';
 import { ISalesRepository } from '../ISalesRepository';
 
 class SalesRepository implements ISalesRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;

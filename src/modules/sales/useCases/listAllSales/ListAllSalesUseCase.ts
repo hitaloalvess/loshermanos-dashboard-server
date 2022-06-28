@@ -1,10 +1,9 @@
-import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
-import { Product, Sale, SaleWithProducts } from '../../../../database/entities';
+import { Product, SaleWithProducts } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 @injectable()
@@ -17,9 +16,9 @@ class ListAllSalesUseCase {
         private accountsRepository: IAccountsRepository,
 
         @inject('SaleProductsRepository')
-        private saleProductsRepository: ISaleProductsRepository,
+        private saleProductsRepository: IProductsSaleRepository,
     ) {}
-    async execute(id_account: string) {
+    async execute(id_account: string): Promise<SaleWithProducts[]> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );
@@ -39,7 +38,7 @@ class ListAllSalesUseCase {
                 const products = productsSale.map(item => {
                     return {
                         ...(item.product as Product),
-                        amount: item.amount,
+                        amount: item.amount || 0,
                     };
                 });
 

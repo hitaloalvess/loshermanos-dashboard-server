@@ -1,6 +1,6 @@
-import { Role } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { Role } from '../../../../database/entities';
 import { ICreateRoleDTO } from '../../dtos/ICreateRoleDTO';
 import { IRolesRepository } from '../IRolesRepository';
 

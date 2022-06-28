@@ -1,5 +1,4 @@
-import { Account, Role, User } from '@prisma/client';
-
+import { Account, Role, User } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -34,13 +33,13 @@ describe('Update user', () => {
         roleAtendente = await rolesRepositoryInMemory.create({
             name: 'atendent',
             description: 'Atendente',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         roleAdmin = await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         user = await usersRepositoryInMemory.create({
@@ -49,8 +48,8 @@ describe('Update user', () => {
             username: 'teste123',
             password: '12345',
             telefone: '11111',
-            id_role: roleAtendente.id,
-            id_account: account.id,
+            id_role: roleAtendente.id as string,
+            id_account: account.id as string,
         });
     });
 
@@ -60,12 +59,12 @@ describe('Update user', () => {
             email: 'hitalo.ralves@outlook.com',
             username: 'hitalo123',
             password: 'fut10@gol',
-            id_role: roleAdmin.id,
+            id_role: roleAdmin.id as string,
             telefone: 'XXXXX',
         };
 
         const newUser = await updateUserUseCase.execute({
-            id_user: user.id,
+            id_user: user.id as string,
             data,
         });
 
@@ -78,7 +77,7 @@ describe('Update user', () => {
             email: 'hitalo.ralves@outlook.com',
             username: 'hitalo123',
             password: 'fut10@gol',
-            id_role: roleAdmin.id,
+            id_role: roleAdmin.id as string,
             telefone: 'XXXXX',
         };
 

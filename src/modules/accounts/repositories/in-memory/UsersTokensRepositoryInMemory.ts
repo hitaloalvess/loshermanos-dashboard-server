@@ -1,6 +1,6 @@
-import { UserTokens } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { UserTokens } from '../../../../database/entities';
 import { ICreateUserTokenDTO } from '../../dtos/ICreateUserTokenDTO';
 import { IUsersTokensRepository } from '../IUsersTokensRepository';
 

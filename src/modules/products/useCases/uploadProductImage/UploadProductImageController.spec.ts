@@ -1,8 +1,8 @@
-import { Account } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import { resolve } from 'path';
 import request from 'supertest';
 
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -43,7 +43,7 @@ describe('Upload product image', () => {
                     create: {
                         name: 'admin',
                         description: 'Administrator',
-                        id_account: account.id,
+                        id_account: account.id as string,
                     },
                 },
             },
@@ -64,7 +64,7 @@ describe('Upload product image', () => {
     it('should be able to upload product image', async () => {
         const responseUploadImage = await request(app)
             .post(`/products/image`)
-            .attach('image', imageFile)
+            .attach('image_name', imageFile)
             .set({
                 Authorization: `Bearer ${token}`,
             });

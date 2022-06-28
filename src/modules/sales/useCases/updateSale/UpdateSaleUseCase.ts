@@ -1,11 +1,9 @@
-import { Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
-import { Product } from '../../../../database/entities';
+import { Product, SaleWithProducts } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
-import { ISaleResponseDTO } from '../../dtos/ISaleResponseDTO';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 interface IRequest {
@@ -13,7 +11,7 @@ interface IRequest {
     total: Decimal;
     value_pay: Decimal;
     descount: Decimal;
-    sale_type: Sale_type;
+    sale_type: 'PENDING' | 'PAID_OUT';
     updated_at: Date;
     products: Product[];
 }
@@ -25,7 +23,7 @@ class UpdateSaleUseCase {
         private salesRepository: ISalesRepository,
 
         @inject('SaleProductsRepository')
-        private saleProductsRepository: ISaleProductsRepository,
+        private saleProductsRepository: IProductsSaleRepository,
     ) {}
     async execute({
         id_sale,
@@ -35,7 +33,7 @@ class UpdateSaleUseCase {
         sale_type,
         updated_at,
         products,
-    }: IRequest): Promise<ISaleResponseDTO> {
+    }: IRequest): Promise<SaleWithProducts> {
         const saleExists = await this.salesRepository.findById(id_sale);
 
         if (!saleExists) {
@@ -67,7 +65,7 @@ class UpdateSaleUseCase {
             });
         });
 
-        const saleProducts: ISaleResponseDTO = {
+        const saleProducts: SaleWithProducts = {
             ...updatedSale,
             products,
         };

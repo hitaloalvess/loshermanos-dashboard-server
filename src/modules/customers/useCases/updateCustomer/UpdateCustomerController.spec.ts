@@ -1,7 +1,7 @@
-import { Account, Customer } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, Customer } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -20,7 +20,7 @@ describe('Update customer', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -34,7 +34,7 @@ describe('Update customer', () => {
                 city: 'Test city',
                 phone: '(17)2222222',
                 zip_code: '11111-111',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -45,7 +45,7 @@ describe('Update customer', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: role.id,
             },
         });

@@ -1,20 +1,20 @@
 import { v4 as uuid } from 'uuid';
 
 import { Account } from './Account';
+import { Role } from './Role';
 
-class Customer {
+class User {
     id?: string;
     name!: string;
-    cpf!: string;
-    road!: string;
-    district!: string;
-    number!: string;
-    city!: string;
-    phone!: string;
-    zip_code!: string;
+    email!: string;
+    username!: string;
+    password!: string;
+    telefone!: string;
     created_at?: Date;
     id_account!: string;
     account?: Account;
+    id_role!: string;
+    role?: Role;
 
     constructor() {
         if (!this.id) {
@@ -24,4 +24,4 @@ class Customer {
     }
 }
 
-export { Customer };
+export { User };

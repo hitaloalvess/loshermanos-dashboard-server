@@ -1,8 +1,8 @@
-import { Account, Product, Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -20,7 +20,7 @@ describe('List all sales', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -31,7 +31,7 @@ describe('List all sales', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: role.id,
             },
         });
@@ -46,7 +46,7 @@ describe('List all sales', () => {
                 city: 'Test city',
                 phone: '(17)2222222',
                 zip_code: '11111-111',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -55,7 +55,7 @@ describe('List all sales', () => {
                 description: 'Teste',
                 price: new Decimal(44),
                 image_name: 'logo.png',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -66,7 +66,7 @@ describe('List all sales', () => {
                 descount: new Decimal(0),
                 sale_type: 'PENDING',
                 updated_at: new Date(),
-                id_account: account.id,
+                id_account: account.id as string,
                 id_customer: customer.id,
             },
         });
@@ -92,7 +92,7 @@ describe('List all sales', () => {
 
     it('should be able to list all sales', async () => {
         const responseListAllSales = await request(app)
-            .get(`/sales/${account.id}`)
+            .get(`/sales/all/${account.id}`)
             .set({
                 Authorization: `Bearer ${token}`,
             });

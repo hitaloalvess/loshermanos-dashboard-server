@@ -1,11 +1,10 @@
-import { PrismaClient, Role } from '@prisma/client';
-
+import { Role } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateRoleDTO } from '../../dtos/ICreateRoleDTO';
 import { IRolesRepository } from '../IRolesRepository';
 
 class RolesRepository implements IRolesRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;

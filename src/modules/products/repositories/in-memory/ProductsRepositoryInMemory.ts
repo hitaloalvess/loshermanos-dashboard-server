@@ -1,6 +1,7 @@
-import { Product } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { IFunFindAllParams } from '../../../../@types';
+import { Product } from '../../../../database/entities';
 import { ICreateProductDTO } from '../../dtos/ICreateProductDTO';
 import { IUpdateProductDTO } from '../../dtos/IUpdateProductDTO';
 import { IProductsRepository } from '../IProductsRepository';
@@ -78,7 +79,11 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         return Promise.resolve(product);
     }
 
-    async findAll(id_account: string): Promise<Product[]> {
+    async findAll({
+        id_account,
+        limit,
+        page,
+    }: IFunFindAllParams): Promise<Product[]> {
         const products = this.products.filter(
             product => product.id_account === id_account,
         );

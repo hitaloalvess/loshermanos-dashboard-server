@@ -1,6 +1,6 @@
-import { Role } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { Role } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { IRolesRepository } from '../../repositories/IRolesRepository';

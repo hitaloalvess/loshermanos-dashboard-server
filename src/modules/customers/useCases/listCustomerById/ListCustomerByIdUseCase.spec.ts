@@ -34,7 +34,7 @@ describe('List customer by id', () => {
             city: 'Test city',
             phone: '(17)2222222',
             zip_code: '11111-111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 

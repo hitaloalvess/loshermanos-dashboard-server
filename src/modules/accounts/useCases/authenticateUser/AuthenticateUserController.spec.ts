@@ -1,7 +1,7 @@
-import { Account, User } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -26,7 +26,7 @@ describe('Authenticate user', () => {
                     create: {
                         name: 'admin',
                         description: 'Administrador',
-                        id_account: account.id,
+                        id_account: account.id as string,
                     },
                 },
                 account: {

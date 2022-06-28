@@ -1,7 +1,7 @@
-import { User } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
 import { IUserWithRegisteredAccount } from '../../../../@types';
+import { User } from '../../../../database/entities';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { IUpdateUserDTO } from '../../dtos/IUpdateUserDTO';
 import { IUsersRepository } from '../IUsersRepository';

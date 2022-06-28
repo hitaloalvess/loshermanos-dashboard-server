@@ -1,7 +1,7 @@
-import { User } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
+import { User } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { IRolesRepository } from '../../repositories/IRolesRepository';

@@ -1,5 +1,4 @@
-import { Account, Role, User } from '@prisma/client';
-
+import { Account, Role, User } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -36,7 +35,7 @@ describe('List users linked to account', () => {
         role = await rolesRepositoryInMemory.create({
             name: 'Admin',
             description: 'Administrador',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         user = await usersRepositoryInMemory.create({
@@ -45,14 +44,14 @@ describe('List users linked to account', () => {
             username: 'teste123',
             password: '12345',
             telefone: '21344324',
-            id_account: account.id,
-            id_role: role.id,
+            id_account: account.id as string,
+            id_role: role.id as string,
         });
     });
 
     it('should be able to list all users linked to account', async () => {
         const users = await listUsersLinkedToAccountUseCase.execute({
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         expect(users).toEqual([user]);

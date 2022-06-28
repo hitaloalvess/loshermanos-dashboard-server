@@ -1,8 +1,8 @@
-import { Product, Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Product, Sale } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -74,8 +74,8 @@ describe('Delete sale', () => {
 
         await prismaClient.saleProduct.create({
             data: {
-                id_sale: sale.id,
-                id_product: product.id,
+                id_sale: sale.id as string,
+                id_product: product.id as string,
             },
         });
 

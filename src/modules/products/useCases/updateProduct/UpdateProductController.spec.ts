@@ -1,8 +1,8 @@
-import { Account, Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, Product } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -21,7 +21,7 @@ describe('Update product', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -32,7 +32,7 @@ describe('Update product', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: role.id,
             },
         });
@@ -42,7 +42,7 @@ describe('Update product', () => {
                 description: 'Pizza de frango',
                 price: new Decimal(35),
                 image_name: 'logo.png',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 

@@ -1,5 +1,4 @@
-import { Account } from '@prisma/client';
-
+import { Account } from '../../../database/entities';
 import { ICreateAccountDTO } from '../dtos/ICreateAccountDTO';
 
 interface IAccountsRepository {

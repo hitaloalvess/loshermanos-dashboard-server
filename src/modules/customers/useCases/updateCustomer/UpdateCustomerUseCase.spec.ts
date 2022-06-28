@@ -1,6 +1,6 @@
-import { Customer } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { Customer } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -38,7 +38,7 @@ describe('Update customer', () => {
             phone: '12345',
             created_at: new Date(),
             zip_code: '111111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 
@@ -52,7 +52,7 @@ describe('Update customer', () => {
             city: 'City test 1',
             phone: '12345',
             zip_code: '111111',
-            id_customer: customer.id,
+            id_customer: customer.id as string,
         });
 
         expect(newCustomer).toHaveProperty('id');

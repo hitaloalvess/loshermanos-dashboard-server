@@ -1,7 +1,7 @@
-import { ProductSale } from '../../../database/entities/ProductSale';
+import { ProductSale } from '../../../database/entities';
 import { ICreateSaleProductDTO } from '../dtos/ICreateSaleProductDTO';
 
-interface ISaleProductsRepository {
+interface IProductsSaleRepository {
     create({
         id_sale,
         id_product,
@@ -11,4 +11,4 @@ interface ISaleProductsRepository {
     findAll(id_sale: string): Promise<ProductSale[]>;
 }
 
-export { ISaleProductsRepository };
+export { IProductsSaleRepository };

@@ -1,5 +1,4 @@
-import { Account, Customer } from '@prisma/client';
-
+import { Account, Customer } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -37,12 +36,14 @@ describe('List all users', () => {
             city: 'Test city',
             phone: '(17)2222222',
             zip_code: '11111-111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 
     it('should be able to list all users', async () => {
-        const customers = await listAllCustomersUseCase.execute(account.id);
+        const customers = await listAllCustomersUseCase.execute(
+            account.id as string,
+        );
 
         expect(customers).toContainEqual(customer);
     });

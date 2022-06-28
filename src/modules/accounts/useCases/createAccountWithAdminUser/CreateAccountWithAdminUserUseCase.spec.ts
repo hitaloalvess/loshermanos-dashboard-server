@@ -1,6 +1,4 @@
-import { Account } from '@prisma/client';
-
-import { AppError } from '../../../../shared/errors/AppError';
+import { Account } from '../../../../database/entities';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
@@ -41,12 +39,6 @@ describe('Create account with admin user', () => {
     });
 
     it('should be able to create a new account with admin user', async () => {
-        await rolesRepositoryInMemory.create({
-            name: 'admin',
-            description: 'Administrador',
-            id_account: account.id,
-        });
-
         const accountWithAdminUser =
             await createAccountWithAdminUserUseCase.execute({
                 name: 'Teste name',

@@ -1,5 +1,5 @@
-import { Product, Sale } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
+import { Product } from './Product';
+import { Sale } from './Sale';
 
 class ProductSale {
     id_sale?: string;

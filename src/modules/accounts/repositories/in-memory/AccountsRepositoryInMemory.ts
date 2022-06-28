@@ -1,6 +1,6 @@
-import { Account } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { Account } from '../../../../database/entities';
 import { ICreateAccountDTO } from '../../dtos/ICreateAccountDTO';
 import { IAccountsRepository } from '../IAccountsRepository';
 

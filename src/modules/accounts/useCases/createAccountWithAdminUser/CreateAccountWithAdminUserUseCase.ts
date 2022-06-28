@@ -2,7 +2,6 @@ import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
 import { IUserWithRegisteredAccount } from '../../../../@types';
-import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
@@ -47,7 +46,7 @@ class CreateAccountWithAdminUserUseCase {
             role = await this.rolesRepository.create({
                 name: 'admin',
                 description: 'Administrador',
-                id_account: account.id,
+                id_account: account.id as string,
             });
         }
 
@@ -58,8 +57,8 @@ class CreateAccountWithAdminUserUseCase {
             username,
             password: passwordHash,
             telefone,
-            id_account: account.id,
-            id_role: role.id,
+            id_account: account.id as string,
+            id_role: role.id as string,
         });
 
         const userWithRegisteredAccount: IUserWithRegisteredAccount = {

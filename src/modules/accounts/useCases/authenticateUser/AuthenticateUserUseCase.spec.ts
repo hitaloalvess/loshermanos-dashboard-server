@@ -64,7 +64,7 @@ describe('Authenticate user', () => {
         await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         user = await createAccountWithAdminUserUseCase.execute({

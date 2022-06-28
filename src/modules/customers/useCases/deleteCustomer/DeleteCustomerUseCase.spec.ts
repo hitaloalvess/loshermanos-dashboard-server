@@ -1,6 +1,6 @@
-import { Account, Customer } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
+import { Account, Customer } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -41,13 +41,15 @@ describe('Delete customer', () => {
             phone: '12345',
             created_at: new Date(),
             zip_code: '111111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         const deletedCustomer = await deleteCustomerUseCase.execute(
-            customer.id,
+            customer.id as string,
         );
-        const customers = await customersRepositoryInMemory.findAll(account.id);
+        const customers = await customersRepositoryInMemory.findAll(
+            account.id as string,
+        );
 
         expect(deletedCustomer).toHaveProperty('id');
         expect(customers).not.toContainEqual(deletedCustomer);

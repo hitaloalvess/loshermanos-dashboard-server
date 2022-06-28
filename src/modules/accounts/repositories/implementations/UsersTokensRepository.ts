@@ -1,11 +1,10 @@
-import { PrismaClient, UserTokens } from '@prisma/client';
-
+import { UserTokens } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateUserTokenDTO } from '../../dtos/ICreateUserTokenDTO';
 import { IUsersTokensRepository } from '../IUsersTokensRepository';
 
 class UsersTokensRepository implements IUsersTokensRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;

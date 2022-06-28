@@ -1,5 +1,4 @@
-import { Account, Role } from '@prisma/client';
-
+import { Account, Role } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -38,13 +37,13 @@ describe('List all roles', () => {
         roleMock = await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
-            id_account: accountMock.id,
+            id_account: accountMock.id as string,
         });
     });
 
     it('should be able to list all roles', async () => {
         const roles = await listRolesUseCase.execute({
-            id_account: accountMock.id,
+            id_account: accountMock.id as string,
         });
 
         expect(roles).toEqual([roleMock]);

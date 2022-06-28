@@ -1,6 +1,6 @@
-import { Account } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
+import { Account } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -34,7 +34,7 @@ describe('Create new product', () => {
             description: 'Pizza de frango',
             price: new Decimal(35),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         expect(product).toHaveProperty('id');
@@ -56,7 +56,7 @@ describe('Create new product', () => {
             description: 'Pizza de frango',
             price: new Decimal(35),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         await expect(
@@ -64,7 +64,7 @@ describe('Create new product', () => {
                 description: 'Pizza de frango',
                 price: new Decimal(39),
                 image_name: 'logo.png',
-                id_account: account.id,
+                id_account: account.id as string,
             }),
         ).rejects.toEqual(
             new AppError('There is already a product with this description'),

@@ -1,5 +1,4 @@
-import { Role } from '@prisma/client/index';
-
+import { Role } from '../../../database/entities';
 import { ICreateRoleDTO } from '../dtos/ICreateRoleDTO';
 
 interface IRolesRepository {
