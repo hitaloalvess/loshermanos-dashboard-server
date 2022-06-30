@@ -38,4 +38,11 @@ interface IPaginationResults<T> {
     data?: T;
 }
 
-export { IUserWithRegisteredAccount, IFunFindAllParams, IPaginationResults };
+type EnvironmentType = 's3' | 'local';
+
+export {
+    IUserWithRegisteredAccount,
+    IFunFindAllParams,
+    IPaginationResults,
+    EnvironmentType,
+};

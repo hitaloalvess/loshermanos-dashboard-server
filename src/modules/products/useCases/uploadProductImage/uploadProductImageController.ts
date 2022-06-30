@@ -14,9 +14,9 @@ class UploadProductImageController {
         );
         const { filename } = req.file as IFile;
 
-        const image_name = await uploadProductImageUseCase.execute(filename);
+        const response = await uploadProductImageUseCase.execute(filename);
 
-        return res.status(201).json({ image_name });
+        return res.status(201).json(response);
     }
 }
 

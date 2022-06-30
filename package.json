@@ -13,6 +13,7 @@
     "dependencies": {
         "@jest/environment": "^28.1.0",
         "@prisma/client": "^3.14.0",
+        "aws-sdk": "^2.1165.0",
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",
         "dayjs": "^1.11.2",
@@ -21,6 +22,7 @@
         "express-async-errors": "^3.1.1",
         "jest-environment-node": "^28.1.0",
         "jsonwebtoken": "^8.5.1",
+        "mime": "^3.0.0",
         "multer": "^1.4.4",
         "pg": "^8.7.3",
         "reflect-metadata": "^0.1.13",
@@ -38,6 +40,7 @@
         "@types/express": "^4.17.13",
         "@types/jest": "^27.5.0",
         "@types/jsonwebtoken": "^8.5.8",
+        "@types/mime": "^2.0.3",
         "@types/multer": "^1.4.7",
         "@types/pg": "^8.6.5",
         "@types/supertest": "^2.0.12",
