@@ -9,9 +9,9 @@ services:
         ports:
             - 5432:5432
         environment:
-            - POSTGRES_USER=docker
-            - POSTGRES_PASSWORD=loshermanos_dashboard
-            - POSTGRES_DB=loshermanos_dashboard
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+            - POSTGRES_DB=${DATABASE_NAME}
         volumes:
             - pgdata:/data/postgres
 
@@ -22,18 +22,19 @@ services:
             ports:
                 - 5433:5432
             environment:
-                - POSTGRES_USER=docker
-                - POSTGRES_PASSWORD=loshermanos_dashboard
-                - POSTGRES_DB=loshermanos_dashboard_test
+                POSTGRES_USER: ${DATABASE_USER}
+                POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+                POSTGRES_DB: ${DATABASE_NAME}
             volumes:
                 - pgdata:/data/postgres
 
     app:
         build: .
         container_name: loshermanos_dashboard
+        command: sh -c "npx prisma migrate dev && npm prisma migrate"
         restart: always
         ports:
-            - 3334:3334
+            - 5000:5000
         volumes:
             - .:/usr/app
         links:

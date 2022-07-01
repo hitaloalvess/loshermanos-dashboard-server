@@ -6,6 +6,7 @@
     "author": "Hitalo Rodrigo Alves <102977034+hitalodigo@users.noreply.github.com>",
     "license": "MIT",
     "scripts": {
+        "prisma-deploy": "prisma generate",
         "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
         "test:e2e": "jest --config jest-e2e.config.ts -i",
         "test": "cross-env NODE_ENV=test jest --runInBand --forceExit"
