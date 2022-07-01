@@ -5,10 +5,16 @@ import { app } from '../../../../shared/infra/http/app';
 
 describe('Create account with admin user', () => {
     beforeAll(async () => {
+        const account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'Teste',
+            },
+        });
         await prismaClient.role.create({
             data: {
                 name: 'admin',
                 description: 'Administrador',
+                id_account: account.id,
             },
         });
     });

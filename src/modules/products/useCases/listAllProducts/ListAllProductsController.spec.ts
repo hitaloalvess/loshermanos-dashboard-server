@@ -1,8 +1,8 @@
-import { Account, Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, Product } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -21,6 +21,7 @@ describe('List all products', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id as string,
             },
         });
 
@@ -31,7 +32,7 @@ describe('List all products', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: role.id,
             },
         });
@@ -41,7 +42,7 @@ describe('List all products', () => {
                 description: 'Pizza de frango',
                 price: new Decimal(35),
                 image_name: 'logo.png',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -67,6 +68,17 @@ describe('List all products', () => {
         expect(responseListAllProducts.status).toBe(200);
         expect(responseListAllProducts.error).toBeFalsy();
         expect(responseListAllProducts.body.length).toEqual(1);
+    });
+
+    it('should be able to list all products with pagination', async () => {
+        const responseListAllProducts = await request(app)
+            .get(`/products/${account.id}?limit=${10}&page=${1}`)
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(responseListAllProducts.status).toBe(200);
+        expect(responseListAllProducts.error).toBeFalsy();
     });
 
     it('should not be able to list products from non-existent accounts', async () => {

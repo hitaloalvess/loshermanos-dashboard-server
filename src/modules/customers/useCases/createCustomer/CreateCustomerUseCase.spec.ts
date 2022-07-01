@@ -1,5 +1,4 @@
-import { Account } from '@prisma/client';
-
+import { Account } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -38,7 +37,7 @@ describe('Create customer', () => {
             city: 'Test city',
             phone: '(17)2222222',
             zip_code: '11111-111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         expect(customer).toHaveProperty('id');
@@ -54,7 +53,7 @@ describe('Create customer', () => {
             city: 'Test city',
             phone: '(17)2222222',
             zip_code: '11111-111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         await expect(
@@ -67,7 +66,7 @@ describe('Create customer', () => {
                 city: 'Test city 1',
                 phone: '(17)3333333',
                 zip_code: '11111-111',
-                id_account: account.id,
+                id_account: account.id as string,
             }),
         ).rejects.toEqual(
             new AppError('There is already a customer with our cpf'),

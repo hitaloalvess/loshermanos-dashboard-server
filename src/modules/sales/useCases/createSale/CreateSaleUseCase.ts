@@ -1,19 +1,19 @@
-import { Product, Sale, Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { Product, Sale, SaleWithProducts } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
+import { avoidDuplicateElements } from '../../../../util/avoidDuplicateElements';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { ICustomersRepository } from '../../../customers/repositories/ICustomersRepository';
-import { ISaleResponseDTO } from '../../dtos/ISaleResponseDTO';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 
 interface IRequest {
     total: Decimal;
     value_pay: Decimal;
     descount: Decimal;
-    sale_type: Sale_type;
+    sale_type: 'PENDING' | 'PAID_OUT';
     updated_at: Date;
     id_account: string;
     id_customer: string;
@@ -33,7 +33,7 @@ class CreateSaleUseCase {
         private customersRepository: ICustomersRepository,
 
         @inject('SaleProductsRepository')
-        private saleProductsRepository: ISaleProductsRepository,
+        private saleProductsRepository: IProductsSaleRepository,
     ) {}
     async execute({
         total,
@@ -44,7 +44,7 @@ class CreateSaleUseCase {
         id_account,
         id_customer,
         products,
-    }: IRequest): Promise<ISaleResponseDTO> {
+    }: IRequest): Promise<SaleWithProducts> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
         );
@@ -65,7 +65,7 @@ class CreateSaleUseCase {
             throw new AppError('Cannot create a sale without product');
         }
 
-        const sale = await this.salesRepository.create({
+        const sale = (await this.salesRepository.create({
             total,
             value_pay,
             descount,
@@ -73,15 +73,24 @@ class CreateSaleUseCase {
             updated_at,
             id_account,
             id_customer,
+        })) as Sale;
+
+        // Evita produtos duplicados
+        const newProducts = avoidDuplicateElements<Product>({
+            elements: products,
         });
 
-        products.map(async product => {
-            await this.saleProductsRepository.create(sale.id, product.id);
+        newProducts.map(async product => {
+            await this.saleProductsRepository.create({
+                id_sale: sale.id as string,
+                id_product: product.id as string,
+                amount: product.amount as number,
+            });
         });
 
         return {
             ...sale,
-            products,
+            products: newProducts,
         };
     }
 }

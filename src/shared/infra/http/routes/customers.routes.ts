@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { CreateCustomerController } from '../../../../modules/customers/useCases/createCustomer/CreateCustomerController';
 import { DeleteCustomerController } from '../../../../modules/customers/useCases/deleteCustomer/DeleteCustomerController';
 import { ListAllCustomersController } from '../../../../modules/customers/useCases/listAllCustomers/ListAllCustomersController';
+import { ListCustomerByIdController } from '../../../../modules/customers/useCases/listCustomerById/ListCustomerByIdController';
 import { UpdateCustomerController } from '../../../../modules/customers/useCases/updateCustomer/UpdateCustomerController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
 import { is } from '../middlewares/permissions';
@@ -13,6 +14,7 @@ const createCustomerController = new CreateCustomerController();
 const updateCustomerController = new UpdateCustomerController();
 const deleteCustomerController = new DeleteCustomerController();
 const listAllCustomersController = new ListAllCustomersController();
+const listCustomerById = new ListCustomerByIdController();
 
 customersRoutes.post(
     '/',
@@ -36,9 +38,15 @@ customersRoutes.delete(
 );
 
 customersRoutes.get(
-    '/:id_account',
+    '/all/:id_account',
     ensuredAuthenticated,
     listAllCustomersController.handle,
+);
+
+customersRoutes.get(
+    '/:id_customer',
+    ensuredAuthenticated,
+    listCustomerById.handle,
 );
 
 export { customersRoutes };

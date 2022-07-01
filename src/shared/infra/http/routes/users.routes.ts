@@ -25,7 +25,7 @@ usersRoutes.post(
 usersRoutes.get(
     '/:id_account',
     ensuredAuthenticated,
-    is(['admin']),
+    // is(['admin']),
     listUsersLinkedToAccountController.handle,
 );
 

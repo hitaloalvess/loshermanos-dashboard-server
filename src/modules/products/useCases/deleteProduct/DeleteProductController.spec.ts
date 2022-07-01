@@ -1,8 +1,8 @@
-import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Product } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -20,6 +20,7 @@ describe('Delete product', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

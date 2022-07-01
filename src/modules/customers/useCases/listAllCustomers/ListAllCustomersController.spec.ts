@@ -1,7 +1,7 @@
-import { Account, Customer } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -20,6 +20,7 @@ describe('List all customers', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id as string,
             },
         });
 
@@ -33,7 +34,7 @@ describe('List all customers', () => {
                 city: 'Test city',
                 phone: '(17)2222222',
                 zip_code: '11111-111',
-                id_account: account.id,
+                id_account: account.id as string,
             },
         });
 
@@ -44,7 +45,7 @@ describe('List all customers', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: role.id,
             },
         });
@@ -63,7 +64,7 @@ describe('List all customers', () => {
 
     it('should be able to list all customers', async () => {
         const responseListAllCustomers = await request(app)
-            .get(`/customers/${account.id}`)
+            .get(`/customers/all/${account.id}`)
             .set({
                 Authorization: `Bearer ${token}`,
             });
@@ -75,7 +76,7 @@ describe('List all customers', () => {
 
     it('should not be ablet to list users from a non-existent account', async () => {
         const responseListAllCustomers = await request(app)
-            .get(`/customers/incorrectID`)
+            .get(`/customers/all/incorrectID`)
             .set({
                 Authorization: `Bearer ${token}`,
             });

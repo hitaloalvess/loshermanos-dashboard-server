@@ -1,7 +1,7 @@
-import { Account, Product, Sale, SaleProduct } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { v4 as uuid } from 'uuid';
 
+import { Account, Product, Sale } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -11,14 +11,14 @@ import { ProductsRepositoryInMemory } from '../../../products/repositories/in-me
 import { IProductsRepository } from '../../../products/repositories/IProductsRepository';
 import { SaleProductsRepositoryInMemory } from '../../repositories/in-memory/SaleProductsRepositoryInMemory';
 import { SalesRepositoryInMemory } from '../../repositories/in-memory/SalesRepositoryInMemory';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 import { UpdateSaleUseCase } from './UpdateSaleUseCase';
 
 let accountsRepositoryInMemory: IAccountsRepository;
 let productsRepositoryInMemory: IProductsRepository;
 let salesRepositoryInMemory: ISalesRepository;
-let saleProductsRepositoryInMemory: ISaleProductsRepository;
+let saleProductsRepositoryInMemory: IProductsSaleRepository;
 let customersRepositoryInMemory: ICustomersRepository;
 
 let updateSaleUseCase: UpdateSaleUseCase;
@@ -48,14 +48,14 @@ describe('Update sale', () => {
             description: 'Teste',
             price: new Decimal(44),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         product1 = await productsRepositoryInMemory.create({
             description: 'Teste1',
             price: new Decimal(22),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         const customer = await customersRepositoryInMemory.create({
@@ -69,7 +69,7 @@ describe('Update sale', () => {
             phone: '12345',
             created_at: new Date(),
             zip_code: '111111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         sale = await salesRepositoryInMemory.create({
@@ -78,16 +78,20 @@ describe('Update sale', () => {
             descount: new Decimal(0),
             sale_type: 'PAID_OUT',
             updated_at: new Date(),
-            id_account: account.id,
-            id_customer: customer.id,
+            id_account: account.id as string,
+            id_customer: customer.id as string,
         });
 
-        await saleProductsRepositoryInMemory.create(sale.id, product.id);
+        await saleProductsRepositoryInMemory.create({
+            id_sale: sale.id as string,
+            id_product: product.id as string,
+            amount: 1,
+        });
     });
 
     it('should be able to update a sale', async () => {
         const updatedSale = await updateSaleUseCase.execute({
-            id_sale: sale.id,
+            id_sale: sale.id as string,
             total: new Decimal(150),
             value_pay: new Decimal(50),
             descount: new Decimal(0),
@@ -119,7 +123,7 @@ describe('Update sale', () => {
     it('should not be able to update a sale and leave it with no products', async () => {
         await expect(
             updateSaleUseCase.execute({
-                id_sale: sale.id,
+                id_sale: sale.id as string,
                 total: new Decimal(150),
                 value_pay: new Decimal(50),
                 descount: new Decimal(0),

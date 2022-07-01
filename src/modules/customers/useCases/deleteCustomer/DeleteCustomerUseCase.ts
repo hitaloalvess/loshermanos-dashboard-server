@@ -1,6 +1,6 @@
-import { Customer } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { Customer } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { ICustomersRepository } from '../../repositories/ICustomersRepository';
 

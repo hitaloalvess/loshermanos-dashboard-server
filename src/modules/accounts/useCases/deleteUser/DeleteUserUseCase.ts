@@ -1,6 +1,6 @@
-import { User } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { User } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 

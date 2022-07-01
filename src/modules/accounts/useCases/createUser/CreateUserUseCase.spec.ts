@@ -1,5 +1,4 @@
-import { Account, Role } from '@prisma/client';
-
+import { Account, Role } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -27,7 +26,10 @@ describe('Create a new User', () => {
             accountsRepositoryInMemory,
         );
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
-        createRoleUseCase = new CreateRoleUseCase(rolesRepositoryInMemory);
+        createRoleUseCase = new CreateRoleUseCase(
+            accountsRepositoryInMemory,
+            rolesRepositoryInMemory,
+        );
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         createUserUseCase = new CreateUserUseCase(
             usersRepositoryInMemory,
@@ -42,6 +44,7 @@ describe('Create a new User', () => {
         role = await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
+            id_account: account.id as string,
         });
     });
 
@@ -52,8 +55,8 @@ describe('Create a new User', () => {
             username: 'hitalo123',
             password: '12345',
             telefone: '213213124',
-            id_account: account.id,
-            id_role: role.id,
+            id_account: account.id as string,
+            id_role: role.id as string,
         });
 
         expect(user).toHaveProperty('id');
@@ -66,8 +69,8 @@ describe('Create a new User', () => {
             username: 'hitalo123',
             password: '12345',
             telefone: '123243243',
-            id_account: account.id,
-            id_role: role.id,
+            id_account: account.id as string,
+            id_role: role.id as string,
         });
 
         expect(
@@ -77,8 +80,8 @@ describe('Create a new User', () => {
                 username: 'hitalo123',
                 password: '1234222',
                 telefone: '12312432',
-                id_account: account.id,
-                id_role: role.id,
+                id_account: account.id as string,
+                id_role: role.id as string,
             }),
         ).rejects.toEqual(new AppError('Username already exists'));
     });
@@ -92,7 +95,7 @@ describe('Create a new User', () => {
                 password: '1234222',
                 telefone: '12312412',
                 id_account: 'teste',
-                id_role: role.id,
+                id_role: role.id as string,
             }),
         ).rejects.toEqual(new AppError('Account not exist'));
     });
@@ -105,7 +108,7 @@ describe('Create a new User', () => {
                 username: 'hitalo123',
                 password: '1234222',
                 telefone: '12312414',
-                id_account: account.id,
+                id_account: account.id as string,
                 id_role: 'teste',
             }),
         ).rejects.toEqual(new AppError('Role not exist'));

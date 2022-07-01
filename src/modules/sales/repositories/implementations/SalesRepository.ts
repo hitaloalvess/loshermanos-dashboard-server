@@ -1,5 +1,4 @@
-import { PrismaClient, Sale } from '@prisma/client';
-
+import { Sale } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateSaleDTO } from '../../dtos/ICreateSaleDTO';
 import { IUpdateSaleDTO } from '../../dtos/IUpdateSaleDTO';
@@ -7,7 +6,7 @@ import { IUpdateSalePaymentDTO } from '../../dtos/IUpdateSalePaymentDTO';
 import { ISalesRepository } from '../ISalesRepository';
 
 class SalesRepository implements ISalesRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;
@@ -22,7 +21,7 @@ class SalesRepository implements ISalesRepository {
         id_account,
         id_customer,
     }: ICreateSaleDTO): Promise<Sale> {
-        const sale = await this.repository.sale.create({
+        const sale = (await this.repository.sale.create({
             data: {
                 total,
                 value_pay,
@@ -32,9 +31,9 @@ class SalesRepository implements ISalesRepository {
                 id_account,
                 id_customer,
             },
-        });
+        })) as Sale;
 
-        return sale;
+        return sale as Sale;
     }
 
     async update({
@@ -103,6 +102,9 @@ class SalesRepository implements ISalesRepository {
         const sales = await this.repository.sale.findMany({
             where: {
                 id_account,
+            },
+            include: {
+                customer: true,
             },
         });
 

@@ -1,8 +1,14 @@
-import { SaleProduct } from '@prisma/client';
+import { ProductSale } from '../../../database/entities';
+import { ICreateSaleProductDTO } from '../dtos/ICreateSaleProductDTO';
 
-interface ISaleProductsRepository {
-    create(id_sale: string, id_product: string): Promise<SaleProduct>;
+interface IProductsSaleRepository {
+    create({
+        id_sale,
+        id_product,
+        amount,
+    }: ICreateSaleProductDTO): Promise<ProductSale>;
     deleteAllProductsSale(id_sale: string): Promise<void>;
+    findAll(id_sale: string): Promise<ProductSale[]>;
 }
 
-export { ISaleProductsRepository };
+export { IProductsSaleRepository };

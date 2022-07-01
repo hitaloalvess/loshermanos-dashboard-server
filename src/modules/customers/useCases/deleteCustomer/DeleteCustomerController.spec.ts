@@ -1,7 +1,7 @@
-import { Account, Customer } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Customer } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -20,6 +20,7 @@ describe('Delete customer', () => {
             data: {
                 name: 'admin',
                 description: 'Administrator',
+                id_account: account.id,
             },
         });
 

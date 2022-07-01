@@ -3,13 +3,22 @@ import { sign } from 'jsonwebtoken';
 import request from 'supertest';
 
 import auth from '../../../../config/auth';
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
 let token: string;
 let refresh_token: string;
+let account: Account;
+
 describe('Refresh user token', () => {
     beforeAll(async () => {
+        account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'Teste',
+            },
+        });
+
         await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
@@ -18,14 +27,15 @@ describe('Refresh user token', () => {
                 password: await hash('11111', 8),
                 telefone: '213213124',
                 account: {
-                    create: {
-                        name_stablishment: 'Los Hermanos',
+                    connect: {
+                        id: account.id,
                     },
                 },
                 role: {
                     create: {
                         name: 'admin',
                         description: 'Administrator',
+                        id_account: account.id as string,
                     },
                 },
             },

@@ -2,9 +2,12 @@ import fs from 'fs';
 import { resolve } from 'path';
 import { inject, injectable } from 'tsyringe';
 
+import { EnvironmentType } from '../../../../@types';
 import upload from '../../../../config/upload';
 import { IStorageProvider } from '../../../../shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '../../../../shared/errors/AppError';
+import { getUrlProduct } from '../../../../util/getUrl';
+import { IUploadProductsResponseDTO } from '../../dtos/IUploadProductImageResponseDTO';
 
 @injectable()
 class UploadProductImageUseCase {
@@ -12,7 +15,7 @@ class UploadProductImageUseCase {
         @inject('StorageProvider')
         private storageProvider: IStorageProvider,
     ) {}
-    async execute(filename: string): Promise<string> {
+    async execute(filename: string): Promise<IUploadProductsResponseDTO> {
         const fileName = resolve(`${upload.tmpFolder}`, filename);
 
         try {
@@ -21,15 +24,25 @@ class UploadProductImageUseCase {
             throw new AppError('File does not exists');
         }
 
-        let image_name: string;
+        const response: IUploadProductsResponseDTO = {
+            image_name: '',
+            url_image: '',
+        };
 
         try {
-            image_name = await this.storageProvider.save(filename, 'products');
-        } catch {
+            response.image_name = await this.storageProvider.save(
+                filename,
+                'products',
+            );
+            response.url_image = getUrlProduct(
+                process.env.DISK as EnvironmentType,
+                response.image_name,
+            );
+        } catch (err) {
             throw new AppError('Could not save file to storage');
         }
 
-        return image_name;
+        return response;
     }
 }
 

@@ -2,10 +2,12 @@ import { hash } from 'bcryptjs';
 import { resolve } from 'path';
 import request from 'supertest';
 
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
 let token: string;
+let account: Account;
 describe('Upload product image', () => {
     const imageFile = resolve(
         __dirname,
@@ -19,6 +21,12 @@ describe('Upload product image', () => {
     );
 
     beforeAll(async () => {
+        account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'Teste',
+            },
+        });
+
         await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
@@ -27,14 +35,15 @@ describe('Upload product image', () => {
                 password: await hash('11111', 8),
                 telefone: '213213124',
                 account: {
-                    create: {
-                        name_stablishment: 'LosHermanos',
+                    connect: {
+                        id: account.id,
                     },
                 },
                 role: {
                     create: {
                         name: 'admin',
                         description: 'Administrator',
+                        id_account: account.id as string,
                     },
                 },
             },
@@ -55,7 +64,7 @@ describe('Upload product image', () => {
     it('should be able to upload product image', async () => {
         const responseUploadImage = await request(app)
             .post(`/products/image`)
-            .attach('image', imageFile)
+            .attach('image_name', imageFile)
             .set({
                 Authorization: `Bearer ${token}`,
             });

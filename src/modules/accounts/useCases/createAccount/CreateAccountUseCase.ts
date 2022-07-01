@@ -1,6 +1,6 @@
-import { Account } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
+import { Account } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 

@@ -1,13 +1,20 @@
-import { User } from '@prisma/client';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Account, User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
 let user: User;
+let account: Account;
 describe('Authenticate user', () => {
     beforeAll(async () => {
+        account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'Teste',
+            },
+        });
+
         user = await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
@@ -19,11 +26,12 @@ describe('Authenticate user', () => {
                     create: {
                         name: 'admin',
                         description: 'Administrador',
+                        id_account: account.id as string,
                     },
                 },
                 account: {
-                    create: {
-                        name_stablishment: 'LosHermanos',
+                    connect: {
+                        id: account.id,
                     },
                 },
             },

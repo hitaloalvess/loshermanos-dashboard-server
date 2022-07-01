@@ -1,11 +1,10 @@
-import { Account, PrismaClient } from '@prisma/client';
-
+import { Account } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateAccountDTO } from '../../dtos/ICreateAccountDTO';
 import { IAccountsRepository } from '../IAccountsRepository';
 
 class AccountsRepository implements IAccountsRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;

@@ -1,8 +1,8 @@
-import { Sale } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
+import { Sale } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
@@ -10,16 +10,17 @@ let sale: Sale;
 let token: string;
 describe('Sale payment', () => {
     beforeAll(async () => {
+        const account = await prismaClient.account.create({
+            data: {
+                name_stablishment: 'LosHermanos',
+            },
+        });
+
         const role = await prismaClient.role.create({
             data: {
                 name: 'admin',
                 description: 'Administrator',
-            },
-        });
-
-        const account = await prismaClient.account.create({
-            data: {
-                name_stablishment: 'LosHermanos',
+                id_account: account.id,
             },
         });
 
@@ -72,7 +73,7 @@ describe('Sale payment', () => {
 
         await prismaClient.saleProduct.create({
             data: {
-                id_sale: sale.id,
+                id_sale: sale.id as string,
                 id_product: product.id,
             },
         });

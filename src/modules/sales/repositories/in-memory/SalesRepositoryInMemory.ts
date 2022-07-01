@@ -1,7 +1,6 @@
-import { Sale } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
 import { v4 as uuid } from 'uuid';
 
+import { Sale } from '../../../../database/entities';
 import { ICreateSaleDTO } from '../../dtos/ICreateSaleDTO';
 import { IUpdateSaleDTO } from '../../dtos/IUpdateSaleDTO';
 import { IUpdateSalePaymentDTO } from '../../dtos/IUpdateSalePaymentDTO';

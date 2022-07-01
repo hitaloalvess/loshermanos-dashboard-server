@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'dotenv/config';
 import 'express-async-errors';
@@ -13,12 +14,12 @@ import { router } from './routes';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use(router);
-
 app.use('/products', express.static(`${upload.tmpFolder}/products`));
+app.use(router);
 
 app.use(
     (err: Error, _request: Request, response: Response, next: NextFunction) => {

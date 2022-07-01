@@ -1,21 +1,25 @@
-import { PrismaClient, Role } from '@prisma/client';
-
+import { Role } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateRoleDTO } from '../../dtos/ICreateRoleDTO';
 import { IRolesRepository } from '../IRolesRepository';
 
 class RolesRepository implements IRolesRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;
     }
 
-    async create({ name, description }: ICreateRoleDTO): Promise<Role> {
+    async create({
+        name,
+        description,
+        id_account,
+    }: ICreateRoleDTO): Promise<Role> {
         const role = this.repository.role.create({
             data: {
                 name,
                 description,
+                id_account,
             },
         });
 
@@ -40,6 +44,16 @@ class RolesRepository implements IRolesRepository {
         })) as Role;
 
         return role;
+    }
+
+    async findAll(id_account: string): Promise<Role[]> {
+        const roles = await this.repository.role.findMany({
+            where: {
+                id_account,
+            },
+        });
+
+        return roles;
     }
 }
 

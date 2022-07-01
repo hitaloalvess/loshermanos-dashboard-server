@@ -1,28 +1,39 @@
-import { SaleProduct } from '@prisma/client';
-import { v4 as uuid } from 'uuid';
+import { ProductSale } from '../../../../database/entities';
+import { ICreateSaleProductDTO } from '../../dtos/ICreateSaleProductDTO';
+import { IProductsSaleRepository } from '../ISaleProductsRepository';
 
-import { ISaleProductsRepository } from '../ISaleProductsRepository';
-
-class SaleProductsRepositoryInMemory implements ISaleProductsRepository {
-    private saleProducts: SaleProduct[] = [];
-    async create(id_sale: string, id_product: string): Promise<SaleProduct> {
-        const saleProduct: SaleProduct = {
-            id: uuid(),
+class SaleProductsRepositoryInMemory implements IProductsSaleRepository {
+    private productSales: ProductSale[] = [];
+    async create({
+        id_product,
+        id_sale,
+        amount,
+    }: ICreateSaleProductDTO): Promise<ProductSale> {
+        const productSale: ProductSale = {
             id_sale,
             id_product,
+            amount,
         };
 
-        this.saleProducts.push(saleProduct);
+        this.productSales.push(productSale);
 
-        return Promise.resolve(saleProduct);
+        return productSale;
     }
 
     async deleteAllProductsSale(id_sale: string): Promise<void> {
-        const newList = this.saleProducts.filter(
-            saleProduct => saleProduct.id_sale !== id_sale,
+        const newList = this.productSales.filter(
+            productSale => productSale.id_sale !== id_sale,
         );
 
-        this.saleProducts = newList;
+        this.productSales = newList;
+    }
+
+    async findAll(id_sale: string): Promise<ProductSale[]> {
+        const all = this.productSales.filter(
+            productSale => productSale.id_sale === id_sale,
+        );
+
+        return all;
     }
 }
 

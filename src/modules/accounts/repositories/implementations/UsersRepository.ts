@@ -1,13 +1,12 @@
-import { PrismaClient, User } from '@prisma/client';
-
 import { IUserWithRegisteredAccount } from '../../../../@types';
+import { User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { IUpdateUserDTO } from '../../dtos/IUpdateUserDTO';
 import { IUsersRepository } from '../IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
-    private repository: PrismaClient;
+    private repository;
 
     constructor() {
         this.repository = prismaClient;
@@ -42,6 +41,9 @@ class UsersRepository implements IUsersRepository {
             where: {
                 username,
             },
+            include: {
+                role: true,
+            },
         })) as User;
     }
 
@@ -71,6 +73,9 @@ class UsersRepository implements IUsersRepository {
         return this.repository.user.findMany({
             where: {
                 id_account,
+            },
+            include: {
+                role: true,
             },
         });
     }

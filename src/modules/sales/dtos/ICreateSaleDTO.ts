@@ -1,4 +1,3 @@
-import { Sale_type } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
 interface ICreateSaleDTO {
@@ -6,7 +5,7 @@ interface ICreateSaleDTO {
     total: Decimal;
     value_pay: Decimal;
     descount: Decimal;
-    sale_type: Sale_type;
+    sale_type: 'PENDING' | 'PAID_OUT';
     updated_at: Date;
     created_at?: Date;
     id_account: string;

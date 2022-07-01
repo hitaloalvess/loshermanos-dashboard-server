@@ -1,6 +1,6 @@
-import { Account, Customer, Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
+import { Account, Customer, Product } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
@@ -10,14 +10,14 @@ import { ProductsRepositoryInMemory } from '../../../products/repositories/in-me
 import { IProductsRepository } from '../../../products/repositories/IProductsRepository';
 import { SaleProductsRepositoryInMemory } from '../../repositories/in-memory/SaleProductsRepositoryInMemory';
 import { SalesRepositoryInMemory } from '../../repositories/in-memory/SalesRepositoryInMemory';
-import { ISaleProductsRepository } from '../../repositories/ISaleProductsRepository';
+import { IProductsSaleRepository } from '../../repositories/ISaleProductsRepository';
 import { ISalesRepository } from '../../repositories/ISalesRepository';
 import { CreateSaleUseCase } from './CreateSaleUseCase';
 
 let salesRepositoryInMemory: ISalesRepository;
 let accountsRepositoryInMemory: IAccountsRepository;
 let customersRepositoryInMemory: ICustomersRepository;
-let saleProductsRepositoryInMemory: ISaleProductsRepository;
+let saleProductsRepositoryInMemory: IProductsSaleRepository;
 let productsRepositoryInMemory: IProductsRepository;
 
 let createSaleUseCase: CreateSaleUseCase;
@@ -53,14 +53,14 @@ describe('Create a new sale', () => {
             city: 'Test city',
             phone: '(17)2222222',
             zip_code: '11111-111',
-            id_account: account.id,
+            id_account: account.id as string,
         });
 
         product = await productsRepositoryInMemory.create({
             description: 'Teste',
             price: new Decimal(44),
             image_name: 'logo.png',
-            id_account: account.id,
+            id_account: account.id as string,
         });
     });
 
@@ -71,8 +71,8 @@ describe('Create a new sale', () => {
             descount: new Decimal(0),
             sale_type: 'PAID_OUT',
             updated_at: new Date(),
-            id_account: account.id,
-            id_customer: customer.id,
+            id_account: account.id as string,
+            id_customer: customer.id as string,
             products: [product],
         });
 
@@ -88,7 +88,7 @@ describe('Create a new sale', () => {
                 sale_type: 'PAID_OUT',
                 updated_at: new Date(),
                 id_account: 'asfrwer123',
-                id_customer: customer.id,
+                id_customer: customer.id as string,
                 products: [product],
             }),
         ).rejects.toEqual(new AppError('Account does not exists'));
@@ -102,7 +102,7 @@ describe('Create a new sale', () => {
                 descount: new Decimal(0),
                 sale_type: 'PAID_OUT',
                 updated_at: new Date(),
-                id_account: account.id,
+                id_account: account.id as string,
                 id_customer: 'asdewr123213asdasd',
                 products: [product],
             }),
@@ -117,8 +117,8 @@ describe('Create a new sale', () => {
                 descount: new Decimal(0),
                 sale_type: 'PAID_OUT',
                 updated_at: new Date(),
-                id_account: account.id,
-                id_customer: customer.id,
+                id_account: account.id as string,
+                id_customer: customer.id as string,
                 products: [],
             }),
         ).rejects.toEqual(new AppError('Cannot create a sale without product'));

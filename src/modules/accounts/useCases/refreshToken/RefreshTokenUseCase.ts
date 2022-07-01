@@ -8,8 +8,16 @@ import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepositor
 
 interface IPayload {
     sub: string;
+    name: string;
     email: string;
     username: string;
+    telefone: string;
+    role: {
+        id: string;
+        name: string;
+        description: string;
+    };
+    id_account: string;
 }
 
 interface ITokenResponse {
@@ -29,11 +37,14 @@ class RefreshTokenUseCase {
 
     async execute(token: string): Promise<ITokenResponse | null> {
         const {
+            name,
             email,
             username,
+            telefone,
+            role,
+            id_account,
             sub: user_id,
         } = verify(token, auth.secret_refresh_token) as IPayload;
-
         const userToken =
             await this.usersTokensRepository.findByUserIdAndRefreshToken(
                 user_id,
@@ -44,16 +55,20 @@ class RefreshTokenUseCase {
             throw new AppError('Refresh token does not exists!');
         }
 
-        await this.usersTokensRepository.deleteById(userToken.id);
+        await this.usersTokensRepository.deleteById(userToken.id as string);
 
         const newRefreshToken = sign(
             {
-                username,
+                name,
                 email,
+                username,
+                telefone,
+                role,
+                id_account,
             },
             auth.secret_refresh_token,
             {
-                subject: userToken.id,
+                subject: userToken.id_user,
                 expiresIn: auth.expires_in_refresh_token,
             },
         );
@@ -68,10 +83,21 @@ class RefreshTokenUseCase {
             expires_date,
         });
 
-        const newToken = sign({}, auth.secret_token, {
-            subject: user_id,
-            expiresIn: auth.expires_in_token,
-        });
+        const newToken = sign(
+            {
+                name,
+                email,
+                username,
+                telefone,
+                role,
+                id_account,
+            },
+            auth.secret_token,
+            {
+                subject: user_id,
+                expiresIn: auth.expires_in_token,
+            },
+        );
 
         return {
             token: newToken,

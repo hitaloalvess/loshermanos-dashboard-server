@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { CreateSaleController } from '../../../../modules/sales/useCases/createSale/CreateSaleController';
 import { DeleteSaleController } from '../../../../modules/sales/useCases/deleteSale/DeleteSaleController';
 import { ListAllSalesController } from '../../../../modules/sales/useCases/listAllSales/ListAllSalesController';
+import { ListSaleByIdController } from '../../../../modules/sales/useCases/listSaleById/ListSaleByIdController';
 import { SalePaymentController } from '../../../../modules/sales/useCases/salePayment/SalePaymentController';
 import { UpdateSaleController } from '../../../../modules/sales/useCases/updateSale/UpdateSaleController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
@@ -15,6 +16,7 @@ const updateSaleController = new UpdateSaleController();
 const salePaymentController = new SalePaymentController();
 const deleteSaleController = new DeleteSaleController();
 const listAllSalesController = new ListAllSalesController();
+const listSaleByIdController = new ListSaleByIdController();
 
 salesRoutes.post('/', ensuredAuthenticated, createSaleController.handle);
 
@@ -39,7 +41,12 @@ salesRoutes.delete(
 );
 
 salesRoutes.get(
-    '/:id_account',
+    '/:id_sale',
+    ensuredAuthenticated,
+    listSaleByIdController.handle,
+);
+salesRoutes.get(
+    '/all/:id_account',
     ensuredAuthenticated,
     listAllSalesController.handle,
 );

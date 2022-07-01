@@ -10,6 +10,7 @@ import { UsersTokensRepositoryInMemory } from '../../repositories/in-memory/User
 import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
+import { CreateAccountUseCase } from '../createAccount/CreateAccountUseCase';
 import { CreateAccountWithAdminUserUseCase } from '../createAccountWithAdminUser/CreateAccountWithAdminUserUseCase';
 import { CreateRoleUseCase } from '../createRole/CreateRoleUseCase';
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
@@ -23,6 +24,7 @@ let usersRepositoryInMemory: IUsersRepository;
 let createRoleUseCase: CreateRoleUseCase;
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 let authenticateUserUseCase: AuthenticateUserUseCase;
+let createAccountUseCase: CreateAccountUseCase;
 
 let user: IUserWithRegisteredAccount;
 describe('Authenticate user', () => {
@@ -33,7 +35,14 @@ describe('Authenticate user', () => {
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
 
-        createRoleUseCase = new CreateRoleUseCase(rolesRepositoryInMemory);
+        createAccountUseCase = new CreateAccountUseCase(
+            accountsRepositoryInMemory,
+        );
+
+        createRoleUseCase = new CreateRoleUseCase(
+            accountsRepositoryInMemory,
+            rolesRepositoryInMemory,
+        );
         createAccountWithAdminUserUseCase =
             new CreateAccountWithAdminUserUseCase(
                 accountsRepositoryInMemory,
@@ -45,11 +54,17 @@ describe('Authenticate user', () => {
             usersRepositoryInMemory,
             dayjsDateProvider,
             usersTokensRepositoryInMemory,
+            rolesRepositoryInMemory,
         );
+
+        const account = await createAccountUseCase.execute({
+            name_stablishment: 'Teste',
+        });
 
         await createRoleUseCase.execute({
             name: 'admin',
             description: 'Administrador',
+            id_account: account.id as string,
         });
 
         user = await createAccountWithAdminUserUseCase.execute({

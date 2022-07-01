@@ -1,6 +1,7 @@
 import { sign } from 'jsonwebtoken';
 
 import auth from '../../../../config/auth';
+import { Account } from '../../../../database/entities';
 import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
@@ -26,8 +27,9 @@ let refreshTokenUseCase: RefreshTokenUseCase;
 let createAccountWithAdminUser: CreateAccountWithAdminUserUseCase;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
+let account: Account;
 describe('Refresh user token', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
         dayjsDateProvider = new DayjsDateProvider();
         accountsReposositoryInMemory = new AccountsRepositoryInMemory();
@@ -49,13 +51,19 @@ describe('Refresh user token', () => {
             usersRepositoryInMemory,
             dayjsDateProvider,
             usersTokensRepositoryInMemory,
+            rolesRepositoryInMemory,
         );
+
+        account = await accountsReposositoryInMemory.create({
+            name_stablishment: 'Teste',
+        });
     });
 
     it('should be able to refresh user token', async () => {
         await rolesRepositoryInMemory.create({
             name: 'admin',
             description: 'Administrador',
+            id_account: account.id as string,
         });
 
         await createAccountWithAdminUser.execute({
