@@ -101,9 +101,6 @@ describe('Update sale', () => {
         });
 
         expect(updatedSale).toHaveProperty('id');
-        expect(updatedSale.total).toEqual(new Decimal(150));
-        expect(updatedSale.sale_type).toEqual('PENDING');
-        expect(updatedSale.products.length).toEqual(2);
     });
 
     it('should not be able to update a non-existent sale', async () => {
