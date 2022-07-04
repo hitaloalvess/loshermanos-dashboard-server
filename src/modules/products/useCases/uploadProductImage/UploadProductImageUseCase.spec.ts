@@ -37,7 +37,8 @@ describe('Upload product image', () => {
 
         const url = await uploadProductImageUseCase.execute(imageFile);
 
-        expect(typeof url).toBe('string');
+        expect(url).toHaveProperty('image_name');
+        expect(url).toHaveProperty('url_image');
         expect(uploadImageMock).toHaveReturned();
     });
 

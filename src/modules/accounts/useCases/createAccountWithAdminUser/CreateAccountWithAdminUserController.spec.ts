@@ -1,26 +1,28 @@
 import request from 'supertest';
 
-import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
+
+const accountData = {
+    name_stablishment: 'LosHermanos - Teste',
+};
+
+const roleData = {
+    name: 'admin',
+    description: 'Administrador',
+};
 
 describe('Create account with admin user', () => {
     beforeAll(async () => {
-        const account = await prismaClient.account.create({
-            data: {
-                name_stablishment: 'Teste',
-            },
-        });
-        await prismaClient.role.create({
-            data: {
-                name: 'admin',
-                description: 'Administrador',
-                id_account: account.id,
-            },
-        });
-    });
+        const {
+            body: { id: id_account },
+        } = await request(app).post('/account').send(accountData);
 
-    afterAll(async () => {
-        await prismaClient.$disconnect();
+        const roleCreated = await request(app)
+            .post('/role')
+            .send({
+                ...roleData,
+                id_account,
+            });
     });
 
     it('should be able to create a new account with admin user', async () => {
