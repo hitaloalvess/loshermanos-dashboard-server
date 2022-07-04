@@ -1,44 +1,43 @@
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
-import { Account, User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
-let user: User;
-let account: Account;
 describe('Authenticate user', () => {
     beforeAll(async () => {
-        account = await prismaClient.account.create({
+        const account = await prismaClient.account.create({
             data: {
-                name_stablishment: 'Teste',
+                name_stablishment: 'LosHermanos - Test',
             },
         });
 
-        user = await prismaClient.user.create({
+        await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
                 email: 'hitalo.ralves@hotmail.com',
                 username: 'admin',
                 password: await hash('12345', 8),
                 telefone: '213213124',
-                role: {
-                    create: {
-                        name: 'admin',
-                        description: 'Administrador',
-                        id_account: account.id as string,
-                    },
-                },
                 account: {
                     connect: {
                         id: account.id,
                     },
                 },
+                role: {
+                    create: {
+                        name: 'admin',
+                        description: 'Administrador',
+                        id_account: account.id,
+                    },
+                },
             },
         });
     });
+
     afterAll(async () => {
-        await prismaClient.$disconnect();
+        await prismaClient.user.deleteMany();
+        await prismaClient.account.deleteMany();
     });
 
     it('should be able to authenticate user', async () => {

@@ -1,6 +1,8 @@
 import { Decimal } from '@prisma/client/runtime';
 
+import { EnvironmentType } from '../../../../@types';
 import { AppError } from '../../../../shared/errors/AppError';
+import { getUrlProduct } from '../../../../util/getUrl';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import { ProductsRepositoryInMemory } from '../../repositories/in-memory/ProductsRepositoryInMemory';
@@ -39,7 +41,17 @@ describe('List all producsts', () => {
             account.id as string,
         );
 
-        expect(products).toEqual([product]);
+        const newListProducts = products.map(product => {
+            return {
+                ...product,
+                url: getUrlProduct(
+                    process.env.DISK as EnvironmentType,
+                    product.image_name,
+                ),
+            };
+        });
+
+        expect(products).toEqual([newListProducts[0]]);
     });
 
     it('should not be able to list products from non-existent accounts', async () => {

@@ -1,30 +1,21 @@
 import { IUserWithRegisteredAccount } from '../../../../@types';
-import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
-import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
 import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
 import { UsersTokensRepositoryInMemory } from '../../repositories/in-memory/UsersTokensRepositoryInMemory';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
-import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
-import { CreateAccountUseCase } from '../createAccount/CreateAccountUseCase';
 import { CreateAccountWithAdminUserUseCase } from '../createAccountWithAdminUser/CreateAccountWithAdminUserUseCase';
-import { CreateRoleUseCase } from '../createRole/CreateRoleUseCase';
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
-let dayjsDateProvider: IDateProvider;
-let usersTokensRepositoryInMemory: IUsersTokensRepository;
-let accountsRepositoryInMemory: IAccountsRepository;
-let rolesRepositoryInMemory: IRolesRepository;
-let usersRepositoryInMemory: IUsersRepository;
+let dayjsDateProvider: DayjsDateProvider;
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
+let accountsRepositoryInMemory: AccountsRepositoryInMemory;
+let rolesRepositoryInMemory: RolesRepositoryInMemory;
+let usersRepositoryInMemory: UsersRepositoryInMemory;
 
-let createRoleUseCase: CreateRoleUseCase;
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 let authenticateUserUseCase: AuthenticateUserUseCase;
-let createAccountUseCase: CreateAccountUseCase;
 
 let user: IUserWithRegisteredAccount;
 describe('Authenticate user', () => {
@@ -35,14 +26,6 @@ describe('Authenticate user', () => {
         rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
 
-        createAccountUseCase = new CreateAccountUseCase(
-            accountsRepositoryInMemory,
-        );
-
-        createRoleUseCase = new CreateRoleUseCase(
-            accountsRepositoryInMemory,
-            rolesRepositoryInMemory,
-        );
         createAccountWithAdminUserUseCase =
             new CreateAccountWithAdminUserUseCase(
                 accountsRepositoryInMemory,
@@ -56,16 +39,6 @@ describe('Authenticate user', () => {
             usersTokensRepositoryInMemory,
             rolesRepositoryInMemory,
         );
-
-        const account = await createAccountUseCase.execute({
-            name_stablishment: 'Teste',
-        });
-
-        await createRoleUseCase.execute({
-            name: 'admin',
-            description: 'Administrador',
-            id_account: account.id as string,
-        });
 
         user = await createAccountWithAdminUserUseCase.execute({
             name: 'Teste',
