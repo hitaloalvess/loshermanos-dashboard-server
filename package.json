@@ -11,7 +11,9 @@
         "pretest:e2e": "docker-compose up -d database_test",
         "test:e2e": "jest --config jest-e2e.config.ts -i --logHeapUsage --forceExit",
         "posttest:e2e": "docker-compose stop database_test",
-        "test": "cross-env NODE_ENV=test jest -i --logHeapUsage --detectOpenHandles --forceExit"
+        "pretest": "docker-compose up -d app",
+        "test": "cross-env NODE_ENV=test jest -i ",
+        "posttest": "docker-compose stop"
     },
     "dependencies": {
         "@jest/environment": "^28.1.0",
