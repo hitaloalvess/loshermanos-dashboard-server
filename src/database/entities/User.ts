@@ -9,6 +9,7 @@ class User {
     username!: string;
     password!: string;
     telefone!: string;
+    admin?: boolean;
     created_at?: Date;
     id_account!: string;
     account?: Account;
@@ -17,6 +18,10 @@ class User {
         if (!this.id) {
             this.id = uuid();
             this.created_at = new Date();
+        }
+
+        if (!this.admin) {
+            this.admin = false;
         }
     }
 }
