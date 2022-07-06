@@ -39,6 +39,7 @@ describe('Create a new User', () => {
             username: 'hitalo123',
             password: '12345',
             telefone: '213213124',
+            admin: true,
             id_account: account.id as string,
         });
 
@@ -52,6 +53,7 @@ describe('Create a new User', () => {
             username: 'hitalo123',
             password: '12345',
             telefone: '123243243',
+            admin: true,
             id_account: account.id as string,
         });
 
@@ -62,6 +64,7 @@ describe('Create a new User', () => {
                 username: 'hitalo123',
                 password: '1234222',
                 telefone: '12312432',
+                admin: true,
                 id_account: account.id as string,
             }),
         ).rejects.toEqual(new AppError('Username already exists'));
@@ -75,6 +78,7 @@ describe('Create a new User', () => {
                 username: 'hitalo123',
                 password: '1234222',
                 telefone: '12312412',
+                admin: true,
                 id_account: 'teste',
             }),
         ).rejects.toEqual(new AppError('Account not exist'));

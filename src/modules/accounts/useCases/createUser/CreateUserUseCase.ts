@@ -12,6 +12,7 @@ interface IRequest {
     username: string;
     password: string;
     telefone: string;
+    admin?: boolean;
     id_account: string;
 }
 
@@ -31,6 +32,7 @@ class CreateUserUseCase {
         username,
         password,
         telefone,
+        admin,
         id_account,
     }: IRequest): Promise<User> {
         const accountExists = await this.accountsRepository.findById(
@@ -56,6 +58,7 @@ class CreateUserUseCase {
             username,
             password: passwordHash,
             telefone,
+            admin,
             id_account,
         });
 

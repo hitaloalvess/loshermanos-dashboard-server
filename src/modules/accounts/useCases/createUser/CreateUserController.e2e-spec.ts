@@ -22,6 +22,7 @@ describe('Create a new user', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
+                admin: true,
                 id_account: account.id as string,
             },
         });
@@ -47,6 +48,7 @@ describe('Create a new user', () => {
                 username: 'hitalo123',
                 password: '12345',
                 telefone: '213213124',
+                admin: true,
                 id_account: account.id,
             })
             .set({
@@ -66,6 +68,7 @@ describe('Create a new user', () => {
                 username: 'hitalo123',
                 password: '12345',
                 telefone: '213213124',
+                admin: true,
                 id_account: account.id,
             })
             .set({
@@ -85,6 +88,7 @@ describe('Create a new user', () => {
                 username: 'hitalo123',
                 password: '12345',
                 telefone: '213213124',
+                admin: true,
                 id_account: 'incorrectID',
             })
             .set({

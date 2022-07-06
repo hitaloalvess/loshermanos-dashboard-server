@@ -5,6 +5,7 @@ interface ICreateUserDTO {
     username: string;
     password: string;
     telefone: string;
+    admin?: boolean;
     created_at?: Date;
     id_account: string;
 }
