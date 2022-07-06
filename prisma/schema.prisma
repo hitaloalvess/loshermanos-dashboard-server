@@ -7,18 +7,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Role {
-    id          String   @id @default(uuid())
-    name        String
-    description String
-    created_at  DateTime @default(now())
-    id_account  String
-    account     Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
-
-    User User[]
-    @@map("roles")
-}
-
 model Account {
     id                String   @id @default(uuid())
     name_stablishment String
@@ -28,7 +16,6 @@ model Account {
     Product  Product[]
     Customer Customer[]
     Sale     Sale[]
-    Role     Role[]
     @@map("accounts")
 }
 
@@ -42,8 +29,6 @@ model User {
     created_at DateTime @default(now())
     id_account String
     account    Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
-    id_role    String
-    role       Role     @relation(fields: [id_role], references: [id], onDelete: Cascade)
 
     UserTokens UserTokens[]
     @@map("users")
