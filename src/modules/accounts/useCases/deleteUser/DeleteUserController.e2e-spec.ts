@@ -23,6 +23,7 @@ describe('Delete user', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
+                admin: true,
                 id_account: account.id as string,
             },
         });
