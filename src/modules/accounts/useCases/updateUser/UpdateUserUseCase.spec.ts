@@ -30,6 +30,7 @@ describe('Update user', () => {
             username: 'teste123',
             password: '12345',
             telefone: '11111',
+            admin: true,
             id_account: account.id as string,
         });
     });
@@ -41,6 +42,7 @@ describe('Update user', () => {
             username: 'hitalo123',
             password: 'fut10@gol',
             telefone: 'XXXXX',
+            admin: true,
         };
 
         const newUser = await updateUserUseCase.execute({
@@ -58,6 +60,7 @@ describe('Update user', () => {
             username: 'hitalo123',
             password: 'fut10@gol',
             telefone: 'XXXXX',
+            admin: true,
         };
 
         expect(

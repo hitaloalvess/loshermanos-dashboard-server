@@ -23,6 +23,7 @@ describe('Update user', () => {
                 username: 'admin123',
                 password: await hash('11111', 8),
                 telefone: '213213124',
+                admin: true,
                 id_account: account.id as string,
             },
         });
@@ -34,6 +35,7 @@ describe('Update user', () => {
                 username: 'hitalo123',
                 password: await hash('22222', 8),
                 telefone: '213213124',
+                admin: false,
                 id_account: account.id as string,
             },
         });
@@ -59,6 +61,7 @@ describe('Update user', () => {
                 username: 'teste123',
                 password: '12345',
                 telefone: '11111',
+                admin: true,
             })
             .set({
                 Authorization: `Bearer ${token}`,
@@ -77,6 +80,7 @@ describe('Update user', () => {
                 username: 'teste123',
                 password: '12345',
                 telefone: '11111',
+                admin: true,
             })
             .set({
                 Authorization: `Bearer ${token}`,

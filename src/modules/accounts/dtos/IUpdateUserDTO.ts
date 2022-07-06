@@ -6,6 +6,7 @@ interface IUpdateUserDTO {
         username: string;
         password: string;
         telefone: string;
+        admin?: boolean;
     };
 }
 
