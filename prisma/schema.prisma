@@ -26,6 +26,7 @@ model User {
     username   String   @unique
     password   String
     telefone   String
+    admin      Boolean  @default(false)
     created_at DateTime @default(now())
     id_account String
     account    Account  @relation(fields: [id_account], references: [id], onDelete: Cascade)
