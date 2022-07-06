@@ -43,6 +43,7 @@ class CreateAccountWithAdminUserUseCase {
             username,
             password: passwordHash,
             telefone,
+            admin: true,
             id_account: account.id as string,
         });
 
