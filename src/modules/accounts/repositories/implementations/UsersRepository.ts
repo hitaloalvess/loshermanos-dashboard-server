@@ -1,4 +1,3 @@
-import { IUserWithRegisteredAccount } from '../../../../@types';
 import { User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
@@ -18,6 +17,7 @@ class UsersRepository implements IUsersRepository {
         username,
         password,
         telefone,
+        admin,
         id_account,
     }: ICreateUserDTO): Promise<User> {
         const user = await this.repository.user.create({
@@ -27,6 +27,7 @@ class UsersRepository implements IUsersRepository {
                 username,
                 password,
                 telefone,
+                admin,
                 id_account,
             },
         });
@@ -50,9 +51,7 @@ class UsersRepository implements IUsersRepository {
         })) as User;
     }
 
-    async listUserAndAccountDataById(
-        id_user: string,
-    ): Promise<IUserWithRegisteredAccount> {
+    async listUserAndAccountDataById(id_user: string): Promise<User> {
         return (await this.repository.user.findFirst({
             where: {
                 id: id_user,
@@ -60,7 +59,7 @@ class UsersRepository implements IUsersRepository {
             include: {
                 account: true,
             },
-        })) as IUserWithRegisteredAccount;
+        })) as User;
     }
 
     async listUsersByAccountId(id_account: string): Promise<User[]> {

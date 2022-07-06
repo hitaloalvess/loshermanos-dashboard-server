@@ -11,7 +11,7 @@ class User {
     telefone!: string;
     admin?: boolean;
     created_at?: Date;
-    id_account!: string;
+    id_account?: string;
     account?: Account;
 
     constructor() {

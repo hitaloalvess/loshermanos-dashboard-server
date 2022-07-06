@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
-import { IUserWithRegisteredAccount } from '../../../../@types';
+import { User } from '../../../../database/entities';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
@@ -31,7 +31,7 @@ class CreateAccountWithAdminUserUseCase {
         password,
         telefone,
         name_stablishment,
-    }: IRequest): Promise<IUserWithRegisteredAccount> {
+    }: IRequest): Promise<User> {
         const account = await this.accountsReposository.create({
             name_stablishment,
         });
@@ -46,7 +46,7 @@ class CreateAccountWithAdminUserUseCase {
             id_account: account.id as string,
         });
 
-        const userWithRegisteredAccount: IUserWithRegisteredAccount = {
+        const userWithRegisteredAccount: User = {
             ...user,
             account: {
                 ...account,

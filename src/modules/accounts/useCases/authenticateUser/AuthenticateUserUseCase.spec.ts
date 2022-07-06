@@ -1,4 +1,4 @@
-import { IUserWithRegisteredAccount } from '../../../../@types';
+import { User } from '../../../../database/entities';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
@@ -15,7 +15,7 @@ let usersRepositoryInMemory: UsersRepositoryInMemory;
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
-let user: IUserWithRegisteredAccount;
+let user: User;
 describe('Authenticate user', () => {
     beforeEach(async () => {
         dayjsDateProvider = new DayjsDateProvider();

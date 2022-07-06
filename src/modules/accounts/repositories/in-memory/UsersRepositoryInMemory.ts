@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 
-import { IUserWithRegisteredAccount } from '../../../../@types';
 import { User } from '../../../../database/entities';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { IUpdateUserDTO } from '../../dtos/IUpdateUserDTO';
@@ -42,9 +41,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
         return Promise.resolve(this.users.find(user => user.id === id) as User);
     }
 
-    async listUserAndAccountDataById(
-        id_user: string,
-    ): Promise<IUserWithRegisteredAccount> {
+    async listUserAndAccountDataById(id_user: string): Promise<User> {
         const user = (await this.users.find(
             user => user.id === id_user,
         )) as User;

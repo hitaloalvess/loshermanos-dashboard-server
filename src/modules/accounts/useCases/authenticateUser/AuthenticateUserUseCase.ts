@@ -108,7 +108,7 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                id_account: user.id_account,
+                id_account: user.id_account as string,
             },
             refresh_token,
         };

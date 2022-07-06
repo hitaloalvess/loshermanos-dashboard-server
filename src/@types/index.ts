@@ -1,18 +1,3 @@
-interface IUserWithRegisteredAccount {
-    id?: string;
-    name: string;
-    email: string;
-    username: string;
-    password: string;
-    telefone: string;
-    created_at?: Date;
-    account: {
-        id?: string;
-        name_stablishment: string;
-        created_at?: Date;
-    };
-}
-
 interface IFunFindAllParams {
     id_account: string;
     page?: number;
@@ -34,9 +19,4 @@ interface IPaginationResults<T> {
 
 type EnvironmentType = 's3' | 'local';
 
-export {
-    IUserWithRegisteredAccount,
-    IFunFindAllParams,
-    IPaginationResults,
-    EnvironmentType,
-};
+export { IFunFindAllParams, IPaginationResults, EnvironmentType };
