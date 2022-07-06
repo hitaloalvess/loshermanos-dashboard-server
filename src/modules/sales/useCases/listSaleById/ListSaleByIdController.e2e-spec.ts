@@ -16,14 +16,6 @@ describe('List sale by id', () => {
             },
         });
 
-        const role = await prismaClient.role.create({
-            data: {
-                name: 'admin',
-                description: 'Administrator',
-                id_account: account.id,
-            },
-        });
-
         await prismaClient.user.create({
             data: {
                 name: 'Hitalo',
@@ -32,7 +24,6 @@ describe('List sale by id', () => {
                 password: await hash('11111', 8),
                 telefone: '213213124',
                 id_account: account.id,
-                id_role: role.id,
             },
         });
 

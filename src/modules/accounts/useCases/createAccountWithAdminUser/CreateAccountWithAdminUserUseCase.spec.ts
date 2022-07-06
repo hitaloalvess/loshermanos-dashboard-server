@@ -1,9 +1,7 @@
 import { Account } from '../../../../database/entities';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
-import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { CreateAccountUseCase } from '../createAccount/CreateAccountUseCase';
 import { CreateAccountWithAdminUserUseCase } from './CreateAccountWithAdminUserUseCase';
@@ -12,7 +10,6 @@ let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
 let createAccountUseCase: CreateAccountUseCase;
 
 let accountsRepositoryInMemory: IAccountsRepository;
-let rolesRepositoryInMemory: IRolesRepository;
 let usersRepositoryInMemory: IUsersRepository;
 
 let account: Account;
@@ -20,12 +17,10 @@ let account: Account;
 describe('Create account with admin user', () => {
     beforeEach(async () => {
         accountsRepositoryInMemory = new AccountsRepositoryInMemory();
-        rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         createAccountWithAdminUserUseCase =
             new CreateAccountWithAdminUserUseCase(
                 accountsRepositoryInMemory,
-                rolesRepositoryInMemory,
                 usersRepositoryInMemory,
             );
 
@@ -51,6 +46,5 @@ describe('Create account with admin user', () => {
 
         expect(accountWithAdminUser).toHaveProperty('id');
         expect(accountWithAdminUser.account).toHaveProperty('id');
-        expect(accountWithAdminUser.role.name).toEqual('admin');
     });
 });

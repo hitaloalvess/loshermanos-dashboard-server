@@ -11,12 +11,6 @@ interface IUserWithRegisteredAccount {
         name_stablishment: string;
         created_at?: Date;
     };
-    role: {
-        id?: string;
-        name: string;
-        description: string;
-        created_at?: Date;
-    };
 }
 
 interface IFunFindAllParams {

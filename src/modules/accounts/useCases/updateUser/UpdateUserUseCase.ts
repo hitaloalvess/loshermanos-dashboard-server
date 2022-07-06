@@ -11,7 +11,6 @@ interface IRequest {
         email: string;
         username: string;
         password: string;
-        id_role: string;
         telefone: string;
     };
 }
@@ -25,7 +24,7 @@ class UpdateUserUseCase {
 
     async execute({
         id_user,
-        data: { name, email, username, password, id_role, telefone },
+        data: { name, email, username, password, telefone },
     }: IRequest): Promise<User> {
         const userExists = await this.usersRepository.findById(id_user);
 
@@ -40,7 +39,6 @@ class UpdateUserUseCase {
                 email,
                 username,
                 password,
-                id_role,
                 telefone,
             },
         });

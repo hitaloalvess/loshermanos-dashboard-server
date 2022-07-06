@@ -6,23 +6,11 @@ const accountData = {
     name_stablishment: 'LosHermanos - Teste',
 };
 
-const roleData = {
-    name: 'admin',
-    description: 'Administrador',
-};
-
 describe('Create account with admin user', () => {
     beforeAll(async () => {
         const {
             body: { id: id_account },
         } = await request(app).post('/account').send(accountData);
-
-        const roleCreated = await request(app)
-            .post('/role')
-            .send({
-                ...roleData,
-                id_account,
-            });
     });
 
     it('should be able to create a new account with admin user', async () => {

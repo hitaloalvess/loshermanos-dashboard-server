@@ -15,7 +15,6 @@ class UsersRepositoryInMemory implements IUsersRepository {
         password,
         telefone,
         id_account,
-        id_role,
     }: ICreateUserDTO): Promise<User> {
         const user: User = {
             id: uuid(),
@@ -26,7 +25,6 @@ class UsersRepositoryInMemory implements IUsersRepository {
             telefone,
             created_at: new Date(),
             id_account,
-            id_role,
         };
 
         this.users.push(user);
@@ -44,7 +42,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
         return Promise.resolve(this.users.find(user => user.id === id) as User);
     }
 
-    async listUserAndRoleAndAccountDataById(
+    async listUserAndAccountDataById(
         id_user: string,
     ): Promise<IUserWithRegisteredAccount> {
         const user = (await this.users.find(
@@ -58,12 +56,6 @@ class UsersRepositoryInMemory implements IUsersRepository {
                 name_stablishment: 'Teste',
                 created_at: new Date(),
             },
-            role: {
-                id: user.id_role,
-                name: 'Teste',
-                description: 'Teste description',
-                created_at: new Date(),
-            },
         });
     }
 
@@ -75,7 +67,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
 
     async updateUser({
         id_user,
-        data: { name, email, username, password, telefone, id_role },
+        data: { name, email, username, password, telefone },
     }: IUpdateUserDTO): Promise<User> {
         const user = this.users.find(user => user.id === id_user) as User;
 
@@ -88,7 +80,6 @@ class UsersRepositoryInMemory implements IUsersRepository {
             username,
             password,
             telefone,
-            id_role,
         };
 
         this.users.splice(index, 1, newUser);

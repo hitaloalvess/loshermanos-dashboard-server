@@ -7,7 +7,7 @@ interface IUsersRepository {
     create(data: ICreateUserDTO): Promise<User>;
     findByUsername(username: string): Promise<User>;
     findById(id: string): Promise<User>;
-    listUserAndRoleAndAccountDataById(
+    listUserAndAccountDataById(
         id_user: string,
     ): Promise<IUserWithRegisteredAccount>;
     listUsersByAccountId(id_account: string): Promise<User[]>;

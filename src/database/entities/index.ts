@@ -6,4 +6,3 @@ export { Customer } from './Customer';
 export { User } from './User';
 export { UserTokens } from './UserTokens';
 export { Account } from './Account';
-export { Role } from './Role';

@@ -19,7 +19,6 @@ class UsersRepository implements IUsersRepository {
         password,
         telefone,
         id_account,
-        id_role,
     }: ICreateUserDTO): Promise<User> {
         const user = await this.repository.user.create({
             data: {
@@ -29,7 +28,6 @@ class UsersRepository implements IUsersRepository {
                 password,
                 telefone,
                 id_account,
-                id_role,
             },
         });
 
@@ -40,9 +38,6 @@ class UsersRepository implements IUsersRepository {
         return (await this.repository.user.findFirst({
             where: {
                 username,
-            },
-            include: {
-                role: true,
             },
         })) as User;
     }
@@ -55,7 +50,7 @@ class UsersRepository implements IUsersRepository {
         })) as User;
     }
 
-    async listUserAndRoleAndAccountDataById(
+    async listUserAndAccountDataById(
         id_user: string,
     ): Promise<IUserWithRegisteredAccount> {
         return (await this.repository.user.findFirst({
@@ -63,7 +58,6 @@ class UsersRepository implements IUsersRepository {
                 id: id_user,
             },
             include: {
-                role: true,
                 account: true,
             },
         })) as IUserWithRegisteredAccount;
@@ -73,9 +67,6 @@ class UsersRepository implements IUsersRepository {
         return this.repository.user.findMany({
             where: {
                 id_account,
-            },
-            include: {
-                role: true,
             },
         });
     }

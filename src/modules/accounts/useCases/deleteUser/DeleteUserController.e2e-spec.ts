@@ -1,27 +1,18 @@
 import { hash } from 'bcryptjs';
 import request from 'supertest';
 
-import { Account, Role, User } from '../../../../database/entities';
+import { Account, User } from '../../../../database/entities';
 import { prismaClient } from '../../../../database/prismaClient';
 import { app } from '../../../../shared/infra/http/app';
 
 let user: User;
 let token: string;
-let role: Role;
 let account: Account;
 describe('Delete user', () => {
     beforeAll(async () => {
         account = await prismaClient.account.create({
             data: {
                 name_stablishment: 'LosHermanos',
-            },
-        });
-
-        role = await prismaClient.role.create({
-            data: {
-                name: 'admin',
-                description: 'Administrator',
-                id_account: account.id as string,
             },
         });
 
@@ -33,7 +24,6 @@ describe('Delete user', () => {
                 password: await hash('11111', 8),
                 telefone: '213213124',
                 id_account: account.id as string,
-                id_role: role.id as string,
             },
         });
 
@@ -45,7 +35,6 @@ describe('Delete user', () => {
                 password: await hash('22222', 8),
                 telefone: '213213124',
                 id_account: account.id as string,
-                id_role: role.id as string,
             },
         });
 

@@ -2,7 +2,6 @@ import { IUserWithRegisteredAccount } from '../../../../@types';
 import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
-import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
 import { UsersTokensRepositoryInMemory } from '../../repositories/in-memory/UsersTokensRepositoryInMemory';
 import { CreateAccountWithAdminUserUseCase } from '../createAccountWithAdminUser/CreateAccountWithAdminUserUseCase';
@@ -11,7 +10,6 @@ import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 let dayjsDateProvider: DayjsDateProvider;
 let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
 let accountsRepositoryInMemory: AccountsRepositoryInMemory;
-let rolesRepositoryInMemory: RolesRepositoryInMemory;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 
 let createAccountWithAdminUserUseCase: CreateAccountWithAdminUserUseCase;
@@ -23,13 +21,11 @@ describe('Authenticate user', () => {
         dayjsDateProvider = new DayjsDateProvider();
         usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
         accountsRepositoryInMemory = new AccountsRepositoryInMemory();
-        rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
 
         createAccountWithAdminUserUseCase =
             new CreateAccountWithAdminUserUseCase(
                 accountsRepositoryInMemory,
-                rolesRepositoryInMemory,
                 usersRepositoryInMemory,
             );
 
@@ -37,7 +33,6 @@ describe('Authenticate user', () => {
             usersRepositoryInMemory,
             dayjsDateProvider,
             usersTokensRepositoryInMemory,
-            rolesRepositoryInMemory,
         );
 
         user = await createAccountWithAdminUserUseCase.execute({

@@ -1,7 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
 import { Account } from './Account';
-import { Role } from './Role';
 
 class User {
     id?: string;
@@ -13,8 +12,6 @@ class User {
     created_at?: Date;
     id_account!: string;
     account?: Account;
-    id_role!: string;
-    role?: Role;
 
     constructor() {
         if (!this.id) {

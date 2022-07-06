@@ -9,7 +9,7 @@ class UpdateUserController {
 
         const { id_user } = req.params;
 
-        const { name, email, username, password, telefone, id_role } = req.body;
+        const { name, email, username, password, telefone } = req.body;
 
         const newUser = await updateUserUseCase.execute({
             id_user,
@@ -19,7 +19,6 @@ class UpdateUserController {
                 username,
                 password,
                 telefone,
-                id_role,
             },
         });
 

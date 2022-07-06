@@ -6,7 +6,6 @@ import auth from '../../../../config/auth';
 import { User } from '../../../../database/entities';
 import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider';
 import { AppError } from '../../../../shared/errors/AppError';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
 
@@ -22,11 +21,6 @@ interface IResponse {
         email: string;
         username: string;
         telefone: string;
-        role: {
-            id: string;
-            name: string;
-            description: string;
-        };
         id_account: string;
     };
     refresh_token: string;
@@ -43,9 +37,6 @@ class AuthenticateUserUseCase {
 
         @inject('UsersTokensRepository')
         private usersTokensRepository: IUsersTokensRepository,
-
-        @inject('RolesRepository')
-        private rolesRepository: IRolesRepository,
     ) {}
 
     async execute({ username, password }: IRequest): Promise<IResponse> {
@@ -70,19 +61,12 @@ class AuthenticateUserUseCase {
             throw new AppError('Username or password incorrect', 401);
         }
 
-        const role = await this.rolesRepository.findById(user.id_role);
-
         const token = sign(
             {
                 name: user.name,
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: {
-                    id: role.id,
-                    name: role.name,
-                    description: role.description,
-                },
                 id_account: user.id_account,
             },
             secret_token,
@@ -98,11 +82,6 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: {
-                    id: role.id,
-                    name: role.name,
-                    description: role.description,
-                },
                 id_account: user.id_account,
             },
             secret_refresh_token,
@@ -129,11 +108,6 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
-                role: {
-                    id: role.id as string,
-                    name: role.name,
-                    description: role.description,
-                },
                 id_account: user.id_account,
             },
             refresh_token,

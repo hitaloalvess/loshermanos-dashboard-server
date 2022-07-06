@@ -3,21 +3,21 @@ import { NextFunction, Request, Response } from 'express';
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
 import { AppError } from '../../../errors/AppError';
 
-function is(roles: string[]) {
+function is(isAdmin: boolean) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.user;
 
         const userRepository = new UsersRepository();
 
-        const user = await userRepository.listUserAndRoleAndAccountDataById(id);
+        const user = await userRepository.listUserAndAccountDataById(id);
 
         if (!user) {
             throw new AppError('User does not exists');
         }
 
-        const roleExists = roles.includes(user.role.name);
+        const allowedUser = isAdmin === user.isAdmin;
 
-        if (!roleExists) {
+        if (!allowedUser) {
             throw new AppError('User does not have permission');
         }
 

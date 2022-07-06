@@ -24,13 +24,6 @@ describe('Authenticate user', () => {
                         id: account.id,
                     },
                 },
-                role: {
-                    create: {
-                        name: 'admin',
-                        description: 'Administrador',
-                        id_account: account.id,
-                    },
-                },
             },
         });
     });

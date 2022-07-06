@@ -5,7 +5,6 @@ interface IUpdateUserDTO {
         email: string;
         username: string;
         password: string;
-        id_role: string;
         telefone: string;
     };
 }

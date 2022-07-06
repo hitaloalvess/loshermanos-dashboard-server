@@ -4,7 +4,6 @@ import { inject, injectable } from 'tsyringe';
 import { User } from '../../../../database/entities';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
@@ -14,7 +13,6 @@ interface IRequest {
     password: string;
     telefone: string;
     id_account: string;
-    id_role: string;
 }
 
 @injectable()
@@ -25,9 +23,6 @@ class CreateUserUseCase {
 
         @inject('AccountsRepository')
         private accountsRepository: IAccountsRepository,
-
-        @inject('RolesRepository')
-        private rolesRepository: IRolesRepository,
     ) {}
 
     async execute({
@@ -37,7 +32,6 @@ class CreateUserUseCase {
         password,
         telefone,
         id_account,
-        id_role,
     }: IRequest): Promise<User> {
         const accountExists = await this.accountsRepository.findById(
             id_account,
@@ -45,12 +39,6 @@ class CreateUserUseCase {
 
         if (!accountExists) {
             throw new AppError('Account not exist');
-        }
-
-        const roleExists = await this.rolesRepository.findById(id_role);
-
-        if (!roleExists) {
-            throw new AppError('Role not exist');
         }
 
         const usernameExists = await this.usersRepository.findByUsername(
@@ -69,7 +57,6 @@ class CreateUserUseCase {
             password: passwordHash,
             telefone,
             id_account,
-            id_role,
         });
 
         return user;

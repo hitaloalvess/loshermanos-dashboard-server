@@ -7,10 +7,8 @@ import { DayjsDateProvider } from '../../../../shared/container/providers/DatePr
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
-import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
 import { UsersTokensRepositoryInMemory } from '../../repositories/in-memory/UsersTokensRepositoryInMemory';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { IUsersTokensRepository } from '../../repositories/IUsersTokensRepository';
 import { AuthenticateUserUseCase } from '../authenticateUser/AuthenticateUserUseCase';
@@ -20,7 +18,6 @@ import { RefreshTokenUseCase } from './RefreshTokenUseCase';
 let usersTokensRepositoryInMemory: IUsersTokensRepository;
 let dayjsDateProvider: IDateProvider;
 let accountsReposositoryInMemory: IAccountsRepository;
-let rolesRepositoryInMemory: IRolesRepository;
 let usersRepositoryInMemory: IUsersRepository;
 
 let refreshTokenUseCase: RefreshTokenUseCase;
@@ -33,7 +30,6 @@ describe('Refresh user token', () => {
         usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
         dayjsDateProvider = new DayjsDateProvider();
         accountsReposositoryInMemory = new AccountsRepositoryInMemory();
-        rolesRepositoryInMemory = new RolesRepositoryInMemory();
         usersRepositoryInMemory = new UsersRepositoryInMemory();
 
         refreshTokenUseCase = new RefreshTokenUseCase(
@@ -43,7 +39,6 @@ describe('Refresh user token', () => {
 
         createAccountWithAdminUser = new CreateAccountWithAdminUserUseCase(
             accountsReposositoryInMemory,
-            rolesRepositoryInMemory,
             usersRepositoryInMemory,
         );
 
@@ -51,7 +46,6 @@ describe('Refresh user token', () => {
             usersRepositoryInMemory,
             dayjsDateProvider,
             usersTokensRepositoryInMemory,
-            rolesRepositoryInMemory,
         );
 
         account = await accountsReposositoryInMemory.create({
@@ -60,12 +54,6 @@ describe('Refresh user token', () => {
     });
 
     it('should be able to refresh user token', async () => {
-        await rolesRepositoryInMemory.create({
-            name: 'admin',
-            description: 'Administrador',
-            id_account: account.id as string,
-        });
-
         await createAccountWithAdminUser.execute({
             name: 'Teste',
             email: 'teste@teste.com',

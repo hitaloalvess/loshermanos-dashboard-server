@@ -525,9 +525,6 @@
                                     },
                                     "telefone": {
                                         "type": "string"
-                                    },
-                                    "id_role": {
-                                        "type": "string"
                                     }
                                 }
                             }
@@ -738,37 +735,6 @@
                 }
             }
         },
-        "/role": {
-            "post": {
-                "tags": ["Accounts"],
-                "summary": "Create role",
-                "description": "Create a new role",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Role already exists"
-                    }
-                }
-            }
-        },
         "/permission": {
             "post": {
                 "tags": ["Accounts"],
@@ -817,9 +783,6 @@
                 "responses": {
                     "201": {
                         "description": "Created"
-                    },
-                    "400": {
-                        "description": "Role does not exists"
                     }
                 }
             }
@@ -900,9 +863,6 @@
                     "type": "string"
                 },
                 "id_account": {
-                    "type": "string"
-                },
-                "id_role": {
                     "type": "string"
                 }
             }

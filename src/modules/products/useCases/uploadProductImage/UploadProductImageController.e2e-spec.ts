@@ -39,13 +39,6 @@ describe('Upload product image', () => {
                         id: account.id,
                     },
                 },
-                role: {
-                    create: {
-                        name: 'admin',
-                        description: 'Administrator',
-                        id_account: account.id as string,
-                    },
-                },
             },
         });
 

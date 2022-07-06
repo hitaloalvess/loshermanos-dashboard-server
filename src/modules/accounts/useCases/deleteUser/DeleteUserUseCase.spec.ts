@@ -1,15 +1,12 @@
 import { AppError } from '../../../../shared/errors/AppError';
 import { IAccountsRepository } from '../../repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../repositories/in-memory/AccountsRepositoryInMemory';
-import { RolesRepositoryInMemory } from '../../repositories/in-memory/RolesRepositoryInMemory';
 import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
-import { IRolesRepository } from '../../repositories/IRolesRepository';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { DeleteUserUseCase } from './DeleteUserUseCase';
 
 let usersRepositoryInMemory: IUsersRepository;
 let accountsRepositoryInMemory: IAccountsRepository;
-let rolesRepositoryInMemory: IRolesRepository;
 
 let deleteUserUseCase: DeleteUserUseCase;
 
@@ -17,7 +14,6 @@ describe('Delete user', () => {
     beforeEach(async () => {
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         accountsRepositoryInMemory = new AccountsRepositoryInMemory();
-        rolesRepositoryInMemory = new RolesRepositoryInMemory();
 
         deleteUserUseCase = new DeleteUserUseCase(usersRepositoryInMemory);
     });
@@ -27,12 +23,6 @@ describe('Delete user', () => {
             name_stablishment: 'Teste',
         });
 
-        const role = await rolesRepositoryInMemory.create({
-            name: 'admin',
-            description: 'Administrador',
-            id_account: account.id as string,
-        });
-
         const user = await usersRepositoryInMemory.create({
             name: 'Teste',
             email: 'teste@teste.com',
@@ -40,7 +30,6 @@ describe('Delete user', () => {
             password: '123455',
             telefone: '123455',
             id_account: account.id as string,
-            id_role: role.id as string,
         });
 
         const userDelete = await deleteUserUseCase.execute(user.id as string);
