@@ -5,7 +5,7 @@ import { DeleteUserController } from '../../../../modules/accounts/useCases/dele
 import { ListUsersLinkedToAccountController } from '../../../../modules/accounts/useCases/listUsersLinkedToAccount/ListUsersLinkedToAccountController';
 import { UpdateUserController } from '../../../../modules/accounts/useCases/updateUser/UpdateUserController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
-import { is } from '../middlewares/permissions';
+import { isAdmin } from '../middlewares/permissions';
 
 const usersRoutes = Router();
 
@@ -18,28 +18,27 @@ const deleteUserController = new DeleteUserController();
 usersRoutes.post(
     '/',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     createUserController.handle,
 );
 
 usersRoutes.get(
     '/:id_account',
     ensuredAuthenticated,
-    // is(['admin']),
     listUsersLinkedToAccountController.handle,
 );
 
 usersRoutes.put(
     '/:id_user',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     updateUserController.handle,
 );
 
 usersRoutes.delete(
     '/:id_user',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     deleteUserController.handle,
 );
 

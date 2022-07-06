@@ -6,7 +6,7 @@ import { ListAllCustomersController } from '../../../../modules/customers/useCas
 import { ListCustomerByIdController } from '../../../../modules/customers/useCases/listCustomerById/ListCustomerByIdController';
 import { UpdateCustomerController } from '../../../../modules/customers/useCases/updateCustomer/UpdateCustomerController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
-import { is } from '../middlewares/permissions';
+import { isAdmin } from '../middlewares/permissions';
 
 const customersRoutes = Router();
 
@@ -19,21 +19,21 @@ const listCustomerById = new ListCustomerByIdController();
 customersRoutes.post(
     '/',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     createCustomerController.handle,
 );
 
 customersRoutes.put(
     '/:id_customer',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     updateCustomerController.handle,
 );
 
 customersRoutes.delete(
     '/:id_customer',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     deleteCustomerController.handle,
 );
 

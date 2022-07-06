@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { UsersRepository } from '../../../../modules/accounts/repositories/implementations/UsersRepository';
 import { AppError } from '../../../errors/AppError';
 
-function is(isAdmin: boolean) {
+function isAdmin(isAdmin: boolean) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.user;
 
@@ -15,7 +15,7 @@ function is(isAdmin: boolean) {
             throw new AppError('User does not exists');
         }
 
-        const allowedUser = isAdmin === user.isAdmin;
+        const allowedUser = isAdmin === user.admin;
 
         if (!allowedUser) {
             throw new AppError('User does not have permission');
@@ -25,4 +25,4 @@ function is(isAdmin: boolean) {
     };
 }
 
-export { is };
+export { isAdmin };

@@ -7,7 +7,7 @@ import { ListSaleByIdController } from '../../../../modules/sales/useCases/listS
 import { SalePaymentController } from '../../../../modules/sales/useCases/salePayment/SalePaymentController';
 import { UpdateSaleController } from '../../../../modules/sales/useCases/updateSale/UpdateSaleController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
-import { is } from '../middlewares/permissions';
+import { isAdmin } from '../middlewares/permissions';
 
 const salesRoutes = Router();
 
@@ -23,7 +23,7 @@ salesRoutes.post('/', ensuredAuthenticated, createSaleController.handle);
 salesRoutes.put(
     '/:id_sale',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     updateSaleController.handle,
 );
 
@@ -36,7 +36,7 @@ salesRoutes.patch(
 salesRoutes.delete(
     '/:id_sale',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     deleteSaleController.handle,
 );
 

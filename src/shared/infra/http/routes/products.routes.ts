@@ -9,7 +9,7 @@ import { UpdateProductController } from '../../../../modules/products/useCases/u
 import { UploadProductImageController } from '../../../../modules/products/useCases/uploadProductImage/uploadProductImageController';
 import ensuredAuthenticated from '../middlewares/ensuredAuthenticated';
 import pagination from '../middlewares/pagination';
-import { is } from '../middlewares/permissions';
+import { isAdmin } from '../middlewares/permissions';
 
 const productsRoutes = Router();
 const upload = multer(uploadConfig);
@@ -23,7 +23,7 @@ const listAllProductsController = new ListAllProductsController();
 productsRoutes.post(
     '/image',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     upload.single('image_name'),
     uploadProductImageController.handle,
 );
@@ -31,21 +31,21 @@ productsRoutes.post(
 productsRoutes.post(
     '/',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     createProductController.handle,
 );
 
 productsRoutes.put(
     '/:id_product',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     updateProductController.handle,
 );
 
 productsRoutes.delete(
     '/:id_product',
     ensuredAuthenticated,
-    is(['admin']),
+    isAdmin(true),
     deleteProductController.handle,
 );
 
