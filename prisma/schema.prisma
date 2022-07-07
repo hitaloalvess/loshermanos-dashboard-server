@@ -63,7 +63,7 @@ model Customer {
 
     id         String   @id @default(uuid())
     name       String
-    cpf        String   @unique
+    cpf        String
     road       String
     district   String
     number     String
