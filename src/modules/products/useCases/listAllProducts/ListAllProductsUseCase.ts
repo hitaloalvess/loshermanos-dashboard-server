@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { EnvironmentType } from '../../../../@types';
 import { AppError } from '../../../../shared/errors/AppError';
-import { getUrlProduct } from '../../../../util/getUrl';
+import { getUrlProduct } from '../../../../util/handleUrl';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { IProductResponseDTO } from '../../dtos/IProductResponseDTO';
 import { IProductsRepository } from '../../repositories/IProductsRepository';

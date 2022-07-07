@@ -6,7 +6,7 @@ import { EnvironmentType } from '../../../../@types';
 import upload from '../../../../config/upload';
 import { IStorageProvider } from '../../../../shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '../../../../shared/errors/AppError';
-import { getUrlProduct } from '../../../../util/getUrl';
+import { getUrlProduct } from '../../../../util/handleUrl';
 import { IUploadProductsResponseDTO } from '../../dtos/IUploadProductImageResponseDTO';
 
 @injectable()

@@ -2,7 +2,7 @@ import { Decimal } from '@prisma/client/runtime';
 
 import { EnvironmentType } from '../../../../@types';
 import { AppError } from '../../../../shared/errors/AppError';
-import { getUrlProduct } from '../../../../util/getUrl';
+import { getUrlProduct } from '../../../../util/handleUrl';
 import { IAccountsRepository } from '../../../accounts/repositories/IAccountsRepository';
 import { AccountsRepositoryInMemory } from '../../../accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import { ProductsRepositoryInMemory } from '../../repositories/in-memory/ProductsRepositoryInMemory';
