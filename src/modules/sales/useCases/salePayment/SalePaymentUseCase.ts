@@ -8,6 +8,7 @@ import { ISalesRepository } from '../../repositories/ISalesRepository';
 interface IRequest {
     id_sale: string;
     value_pay: Decimal;
+    descount: Decimal;
 }
 
 @injectable()
@@ -17,14 +18,15 @@ class SalePaymentUseCase {
         private salesRepository: ISalesRepository,
     ) {}
 
-    async execute({ id_sale, value_pay }: IRequest): Promise<Sale> {
+    async execute({ id_sale, value_pay, descount }: IRequest): Promise<Sale> {
         const sale = await this.salesRepository.findById(id_sale);
 
         if (!sale) {
             throw new AppError('Sale does not exists');
         }
 
-        const calc_payment = Number(sale.value_pay) + Number(value_pay);
+        const calc_payment =
+            Number(sale.value_pay) + Number(descount) + Number(value_pay);
         const new_value_pay = new Decimal(calc_payment);
 
         const saleWasFullyPaid = !(Number(sale.total) > calc_payment);

@@ -10,11 +10,12 @@ class SalePaymentController {
 
         const { id_sale } = req.params;
 
-        const { value_pay } = req.body;
+        const { value_pay, descount } = req.body;
 
         const updatedSale = await salePaymentUseCase.execute({
             id_sale,
             value_pay: new Decimal(value_pay),
+            descount: new Decimal(descount),
         });
 
         return res.json(updatedSale);

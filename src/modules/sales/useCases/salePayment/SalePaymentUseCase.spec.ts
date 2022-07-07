@@ -85,10 +85,12 @@ describe('Sale payment', () => {
         const current_amount_paid = new Decimal(
             Number(sale.value_pay) + Number(value_pay),
         );
+        const descount = new Decimal(0);
 
         const updatedSale = await salePaymentUseCase.execute({
             id_sale: sale.id as string,
             value_pay,
+            descount,
         });
 
         expect(updatedSale).toHaveProperty('id');
@@ -97,19 +99,24 @@ describe('Sale payment', () => {
 
     it('should not be able to pay for a non-existent sale', async () => {
         const value_pay = new Decimal(10);
+        const descount = new Decimal(0);
 
         await expect(
             salePaymentUseCase.execute({
                 id_sale: 'incorrectID',
                 value_pay,
+                descount,
             }),
         ).rejects.toEqual(new AppError('Sale does not exists'));
     });
 
     it('should not be able to update the value of sale_type when value_pay is less than total', async () => {
+        const descount = new Decimal(0);
+
         const updatedSale = await salePaymentUseCase.execute({
             id_sale: sale.id as string,
             value_pay: new Decimal(5),
+            descount,
         });
 
         expect(updatedSale.sale_type).toEqual('PENDING');

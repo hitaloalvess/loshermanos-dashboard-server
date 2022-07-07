@@ -86,6 +86,7 @@ describe('Sale payment', () => {
             .send({
                 id_sale: sale.id,
                 value_pay: 10,
+                descount: 0,
             })
             .set({
                 Authorization: `Bearer ${token}`,
@@ -101,6 +102,7 @@ describe('Sale payment', () => {
             .send({
                 id_sale: sale.id,
                 value_pay: 10,
+                descount: 0,
             })
             .set({
                 Authorization: `Bearer ${token}`,
