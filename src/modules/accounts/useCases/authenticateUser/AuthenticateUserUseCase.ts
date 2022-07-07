@@ -21,6 +21,7 @@ interface IResponse {
         email: string;
         username: string;
         telefone: string;
+        admin: boolean;
         id_account: string;
     };
     refresh_token: string;
@@ -67,6 +68,7 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
+                admin: user.admin,
                 id_account: user.id_account,
             },
             secret_token,
@@ -82,6 +84,7 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
+                admin: user.admin,
                 id_account: user.id_account,
             },
             secret_refresh_token,
@@ -108,6 +111,7 @@ class AuthenticateUserUseCase {
                 email: user.email,
                 username: user.username,
                 telefone: user.telefone,
+                admin: user.admin as boolean,
                 id_account: user.id_account as string,
             },
             refresh_token,

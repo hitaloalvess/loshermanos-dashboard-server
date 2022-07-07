@@ -12,6 +12,7 @@ interface IPayload {
     email: string;
     username: string;
     telefone: string;
+    admin: boolean;
     id_account: string;
 }
 
@@ -36,6 +37,7 @@ class RefreshTokenUseCase {
             email,
             username,
             telefone,
+            admin,
             id_account,
             sub: user_id,
         } = verify(token, auth.secret_refresh_token) as IPayload;
@@ -57,6 +59,7 @@ class RefreshTokenUseCase {
                 email,
                 username,
                 telefone,
+                admin,
                 id_account,
             },
             auth.secret_refresh_token,
@@ -82,6 +85,7 @@ class RefreshTokenUseCase {
                 email,
                 username,
                 telefone,
+                admin,
                 id_account,
             },
             auth.secret_token,
