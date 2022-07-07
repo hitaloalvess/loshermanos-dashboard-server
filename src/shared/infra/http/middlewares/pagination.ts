@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { IPaginationResults } from '../../../../@types';
+import { AccountsRepository } from '../../../../modules/accounts/repositories/implementations/AccountsRepository';
 import { ProductsRepository } from '../../../../modules/products/repositories/implementations/ProductsRepository';
 import { AppError } from '../../../errors/AppError';
 
@@ -23,6 +24,15 @@ export default function pagination({ entity }: IPaginationProps) {
         }
 
         const { id_account } = req.params;
+
+        const accountsRepository = new AccountsRepository();
+
+        const accountExists = await accountsRepository.findById(id_account);
+
+        if (!accountExists) {
+            next();
+            throw new AppError('Account does not exists');
+        }
 
         const repository = repositories[entity];
 
