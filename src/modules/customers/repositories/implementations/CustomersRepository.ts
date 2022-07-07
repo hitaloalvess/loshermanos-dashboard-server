@@ -79,10 +79,11 @@ class CustomersRepository implements ICustomersRepository {
         return deletedCustomer;
     }
 
-    async findByCpf(cpf: string): Promise<Customer> {
+    async findByCpf(cpf: string, id_account: string): Promise<Customer> {
         const customer = (await this.repository.customer.findFirst({
             where: {
                 cpf,
+                id_account,
             },
         })) as Customer;
 

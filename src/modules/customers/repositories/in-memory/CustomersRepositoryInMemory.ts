@@ -71,9 +71,10 @@ class CustomersRepositoryInMemory implements ICustomersRepository {
         return Promise.resolve(newCustomer);
     }
 
-    async findByCpf(cpf: string): Promise<Customer> {
+    async findByCpf(cpf: string, id_account: string): Promise<Customer> {
         const customer = this.customers.find(
-            customer => customer.cpf === cpf,
+            customer =>
+                customer.cpf === cpf && customer.id_account === id_account,
         ) as Customer;
 
         return Promise.resolve(customer);

@@ -26,7 +26,10 @@ class CreateCustomerUseCase {
         zip_code,
         id_account,
     }: ICreateCustomerDTO): Promise<Customer> {
-        const customerExists = await this.customersRepository.findByCpf(cpf);
+        const customerExists = await this.customersRepository.findByCpf(
+            cpf,
+            id_account,
+        );
 
         if (customerExists) {
             throw new AppError('There is already a customer with our cpf');
