@@ -62,10 +62,12 @@ class ProductsRepository implements IProductsRepository {
 
     async findByDescription(
         description: string,
-    ): Promise<Product | null | undefined> {
+        id_account: string,
+    ): Promise<Product | null> {
         const product = await this.repository.product.findFirst({
             where: {
                 description,
+                id_account,
             },
         });
 

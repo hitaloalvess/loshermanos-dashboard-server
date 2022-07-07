@@ -39,6 +39,7 @@ class CreateProductUseCase {
 
         const productExists = await this.productsRepository.findByDescription(
             description,
+            id_account,
         );
 
         if (productExists) {
