@@ -101,11 +101,12 @@ enum Sale_type {
 }
 
 model SaleProduct {
-    id_sale    String
-    sale       Sale    @relation(fields: [id_sale], references: [id], onDelete: Cascade)
-    id_product String
-    product    Product @relation(fields: [id_product], references: [id], onDelete: Cascade)
-    amount     Int     @default(dbgenerated("0"))
+    id_sale       String
+    sale          Sale    @relation(fields: [id_sale], references: [id], onDelete: Cascade)
+    id_product    String
+    product       Product @relation(fields: [id_product], references: [id], onDelete: Cascade)
+    amount        Int     @default(dbgenerated("0"))
+    product_value Decimal @db.Decimal(6, 2)
 
     @@id([id_sale, id_product])
     @@map("sale_products")
