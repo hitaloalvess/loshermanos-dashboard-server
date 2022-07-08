@@ -14,12 +14,14 @@ class SaleProductsRepository implements IProductsSaleRepository {
         id_sale,
         id_product,
         amount,
+        product_value,
     }: ICreateSaleProductDTO): Promise<ProductSale> {
         const saleProduct = await this.repository.saleProduct.create({
             data: {
                 id_sale,
                 id_product,
                 amount,
+                product_value,
             },
         });
 

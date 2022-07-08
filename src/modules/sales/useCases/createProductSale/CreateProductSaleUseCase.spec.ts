@@ -80,6 +80,7 @@ describe('Create relationship between sale and product', () => {
             id_sale: sale.id as string,
             id_product: product.id as string,
             amount: 1,
+            product_value: new Decimal(product.price),
         });
 
         expect(saleProduct).toHaveProperty('id_sale');
@@ -92,6 +93,7 @@ describe('Create relationship between sale and product', () => {
                 id_sale: sale.id as string,
                 id_product: '123123asdqwe',
                 amount: 1,
+                product_value: new Decimal(product.price),
             }),
         ).rejects.toEqual(new AppError('Product does not exists'));
     });
@@ -102,6 +104,7 @@ describe('Create relationship between sale and product', () => {
                 id_sale: 'sadiuwwdw123asd',
                 id_product: product.id as string,
                 amount: 1,
+                product_value: new Decimal(product.price),
             }),
         ).rejects.toEqual(new AppError('Sale does not exists'));
     });

@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime';
 import { inject } from 'tsyringe';
 
 import { ProductSale } from '../../../../database/entities';
@@ -10,6 +11,7 @@ interface IRequest {
     id_sale: string;
     id_product: string;
     amount: number;
+    product_value: Decimal;
 }
 class CreateProductSaleUseCase {
     constructor(
@@ -26,6 +28,7 @@ class CreateProductSaleUseCase {
         id_product,
         id_sale,
         amount,
+        product_value,
     }: IRequest): Promise<ProductSale> {
         const productsExists = await this.productsRepository.findById(
             id_product,
@@ -45,6 +48,7 @@ class CreateProductSaleUseCase {
             id_sale,
             id_product,
             amount,
+            product_value,
         });
 
         return productSale;
