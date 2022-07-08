@@ -86,6 +86,7 @@ describe('Update sale', () => {
             id_sale: sale.id as string,
             id_product: product.id as string,
             amount: 1,
+            product_value: product.price,
         });
     });
 
