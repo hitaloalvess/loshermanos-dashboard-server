@@ -1,3 +1,5 @@
+import { Decimal } from '@prisma/client/runtime';
+
 import { ProductSale } from '../../../../database/entities';
 import { ICreateSaleProductDTO } from '../../dtos/ICreateSaleProductDTO';
 import { IProductsSaleRepository } from '../ISaleProductsRepository';
@@ -8,11 +10,13 @@ class SaleProductsRepositoryInMemory implements IProductsSaleRepository {
         id_product,
         id_sale,
         amount,
+        product_value,
     }: ICreateSaleProductDTO): Promise<ProductSale> {
         const productSale: ProductSale = {
             id_sale,
             id_product,
             amount,
+            product_value: new Decimal(product_value),
         };
 
         this.productSales.push(productSale);

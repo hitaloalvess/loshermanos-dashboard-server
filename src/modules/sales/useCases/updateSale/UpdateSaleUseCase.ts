@@ -62,6 +62,7 @@ class UpdateSaleUseCase {
                 id_sale,
                 id_product: product.id as string,
                 amount: product.amount as number,
+                product_value: product.price,
             });
         });
 

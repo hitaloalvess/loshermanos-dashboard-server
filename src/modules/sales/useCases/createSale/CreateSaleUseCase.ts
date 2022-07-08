@@ -85,6 +85,7 @@ class CreateSaleUseCase {
                 id_sale: sale.id as string,
                 id_product: product.id as string,
                 amount: product.amount as number,
+                product_value: product.price,
             });
         });
 

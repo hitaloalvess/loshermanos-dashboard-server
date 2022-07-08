@@ -39,6 +39,7 @@ class ListAllSalesUseCase {
                     return {
                         ...(item.product as Product),
                         amount: item.amount || 0,
+                        price: item.product_value,
                     };
                 });
 
