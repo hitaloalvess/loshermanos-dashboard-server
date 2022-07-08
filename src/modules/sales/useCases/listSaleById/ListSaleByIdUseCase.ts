@@ -28,6 +28,7 @@ class ListSaleByIdUseCase {
             return {
                 ...(item.product as Product),
                 amount: item.amount,
+                price: item.product_value,
             };
         });
 
