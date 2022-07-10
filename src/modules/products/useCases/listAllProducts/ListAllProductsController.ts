@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import { addUrlInProduct } from '../../../../util/handleUrl';
 import { ListAllProductsUseCase } from './ListAllProductsUseCase';
 
 class ListAllProductsController {
@@ -14,7 +15,9 @@ class ListAllProductsController {
         const pagination = res.paginatedResults;
 
         if (pagination) {
-            return res.json(pagination);
+            const listProducts = addUrlInProduct(pagination);
+
+            return res.json(listProducts);
         }
 
         const products = await listAllProductsUseCase.execute(id_account);

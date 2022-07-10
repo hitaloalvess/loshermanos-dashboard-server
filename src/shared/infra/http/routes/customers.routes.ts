@@ -19,7 +19,6 @@ const listCustomerById = new ListCustomerByIdController();
 customersRoutes.post(
     '/',
     ensuredAuthenticated,
-    isAdmin(true),
     createCustomerController.handle,
 );
 
