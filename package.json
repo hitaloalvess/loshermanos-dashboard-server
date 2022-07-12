@@ -6,15 +6,12 @@
     "author": "Hitalo Rodrigo Alves <102977034+hitalodigo@users.noreply.github.com>",
     "license": "MIT",
     "scripts": {
-        "build": "yarn prisma generate && tsc",
         "prisma-deploy": "prisma generate",
         "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
         "pretest:e2e": "docker-compose up -d database_test",
         "test:e2e": "jest --config jest-e2e.config.ts -i --logHeapUsage --forceExit",
         "posttest:e2e": "docker-compose stop database_test",
-        "pretest": "docker-compose up -d app",
-        "test": "cross-env NODE_ENV=test jest -i ",
-        "posttest": "docker-compose stop"
+        "test": "cross-env NODE_ENV=test jest -i "
     },
     "dependencies": {
         "@jest/environment": "^28.1.0",
