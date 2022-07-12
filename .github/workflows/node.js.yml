@@ -25,9 +25,9 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - run: npm ci
-            - run: npm build --if-present
-            - run: npm test
+            - run: yarn install --frozen-lockfile
+            - run: yarn build --if-present
+            - run: yarn test
     deploy:
         needs: build
         runs-on: ubuntu-latest
