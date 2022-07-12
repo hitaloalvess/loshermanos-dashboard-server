@@ -17,6 +17,7 @@
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-instalaçã">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-iniciar-projeto">Iniciar projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-estrutura-do-banco-de-dados">Estrura do banco de dados</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-coverage">Coverage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
@@ -29,11 +30,12 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 -   <a href="https://www.typescriptlang.org/">Typescript</a>
 -   <a href="https://www.prisma.io/">Prisma</a>
 -   <a href="https://jestjs.io/pt-BR/">Jest</a>
+-   <a href="https://aws.amazon.com/pt/s3/">Amazon s3</a>
 -   <a href="https://www.postgresql.org/">PostgreSQL</a>
 
 ## 💻 Projeto
 
-Los Hermanos dashboard é uma API desenvolvida para o projeto de dashboard para gerenciamento da pizzaria Los Hermanos, a aplicação tem como objetivo controlar as vendas do estabelecimento e gerar gráficos de desempenho para que os proprietários possam analisar seu negócio e identificar pontos que com capacidade de melhora.
+Los Hermanos dashboard é uma API desenvolvida para um projeto de gerenciamento da pizzaria Los Hermanos, a aplicação tem como objetivo controlar as vendas do estabelecimento e gerar gráficos de desempenho para que os proprietários possam analisar seu negócio e identificar pontos com capacidade de melhora.
 O sistema atualmente conta com as seguintes funcionalidades:
 
 -   Cadastro de conta
@@ -95,6 +97,14 @@ yarn dev
 ```
 
 Na sequência basta acessar `http://localhost:3333/` para utilizar as rotas disponibilizadas pela API.
+
+## Estrutura do banco de dados
+
+### Diagrama de classes
+
+<div align="center" width="800px">
+<img alt="imagem do diagrama contendo as classes da api" title="diagrama de classes" src=".github/diagrama-classes.png"/>  
+</div>
 
 ## Coverage
 
