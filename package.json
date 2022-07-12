@@ -6,6 +6,7 @@
     "author": "Hitalo Rodrigo Alves <102977034+hitalodigo@users.noreply.github.com>",
     "license": "MIT",
     "scripts": {
+        "build": "yarn prisma generate && tsc",
         "prisma-deploy": "prisma generate",
         "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
         "pretest:e2e": "docker-compose up -d database_test",
