@@ -87,7 +87,7 @@ describe('Refresh user token', () => {
             },
         );
         expect(refreshTokenUseCase.execute(refresh_token)).rejects.toEqual(
-            new AppError('Refresh token does not exists!'),
+            new AppError('Refresh token does not exists!', 401),
         );
     });
 });
